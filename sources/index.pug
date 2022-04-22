@@ -1,0 +1,25 @@
+html(lang="ru") 
+	head
+		include pug-includes/head.pug
+		title Вход
+	body
+		main#app.messenger-wrapper
+			div.reg-form-page
+				div.reg-form-wrapper
+					h2 Вход
+					form
+						fieldset
+							div.form-block
+								label Логин
+								div.input-wrapper
+									input.form-control.input-styles(type="text" value="" name="login")
+									div.error-text-block.none-block
+							div.form-block
+								label Пароль
+								div.input-wrapper
+									input.form-control.input-styles(type="password" value="" name="password")
+									div.error-text-block.none-block
+							div.orm-block.info-block.none-block
+							div.form-block.buttons-wrapper
+								a.button-link.add-link(href="chat.html") Авторизоваться
+								a.button-link.reg-link(href="reg-form.html") Зарегистрироваться

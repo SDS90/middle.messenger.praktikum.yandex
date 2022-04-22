@@ -1,0 +1,38 @@
+{
+  "name": "praktikum-messager",
+  "version": "1.0.0",
+  "description": "Messager Yandex Praktikum",
+  "main": "index.js",
+  "scripts": {
+    "dev": "parcel sources/index.html",
+    "test": "echo \\\"Error: no test specified\\\" && exit 1",
+    "start": "node server/server.js",
+    "scss": "npx node-sass --include-path node_modules --output-style compressed sources/scss/init.scss > sources/css/style.css",
+    "scss:watch": "npx node-sass --watch --include-path node_modules --output-style compressed sources/scss/init.scss > sources/css/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDS90/ya.praktikum.messager.git"
+  },
+  "keywords": [
+    "yandex",
+    "praktikum",
+    "messager"
+  ],
+  "author": "SDS90",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDS90/ya.praktikum.messager/issues"
+  },
+  "homepage": "https://github.com/SDS90/ya.praktikum.messager#readme",
+  "dependencies": {
+    "express": "^4.17.3",
+    "node-sass": "^7.0.1"
+  },
+  "devDependencies": {
+    "cssnano": "^5.1.7",
+    "postcss": "^8.4.12",
+    "pug": "^3.0.2",
+    "sass": "^1.50.1"
+  }
+}

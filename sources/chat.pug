@@ -1,0 +1,72 @@
+html(lang="ru") 
+	head
+		include pug-includes/head.pug
+		title Чат
+	body
+		main#app.messenger-wrapper
+			div.chat-form-page.clear
+				div.chat-list-column
+					div.profile-block.clear
+						a.create-chat-link(href="#") Создать чат
+						a.profile-link(href="profile.html") Мой профиль >
+					form.search-wrapper
+						input.search-input.input-styles(type="text" value="" placeholder="Поиск" name="search")
+					div.chat-list
+						div.chat-block
+							div.chat-photo-wrapper
+								img.chat-photo(src="#" alt="")
+							div.chat-name Андрей Андрейченков
+							div.chat-preview-text
+								strong Вы: 
+								span Круто!
+							div.chat-time 15.04.2022 15:31
+							div.new-messages-info 10
+							a.delete-chat-button(href="#") X
+						div.chat-block
+							div.chat-photo-wrapper
+								img.chat-photo(src="#" alt="")
+							div.chat-name Андрей Андрейченков
+							div.chat-preview-text
+								strong Вы: 
+								span Круто!
+							div.chat-time 15.04.2022 15:31
+							div.new-messages-info 10
+							a.delete-chat-button(href="#") X
+				div.chat-full-block
+					div.chat-full-name Андрей Андрейченков
+						a.chat-back-button(href="#") Назад
+					//div.select-chat-wrapper.none-block
+					//	div.select-chat-cell
+					//		span Выберите чат
+					div.chat-wrapper
+						div.chat-message-date 15.04.2022
+						div.chat-message-wrapper.message-to-me
+							div.chat-message-block
+								div.chat-message-time 12:37
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.
+						div.chat-message-wrapper
+							div.chat-message-block
+								div.chat-message-time 12:37
+								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.
+					form.chat-send-box
+						a.add-file-button(title="Добавить файл") 📎
+						textarea(name="message")
+						a.chat-send-button(title="Отправить") >
+			div.warning-message-wrapper //warning-on установить класс для показа
+						
+				div.warning-message-table
+					div.warning-message-block
+						div.loader.none-block //убрать none-block для показа
+						div.warning-message
+							span Введите имя пользователя
+							div.form-block
+								label Логин
+								div.input-wrapper
+									input.form-control.input-styles(type="text" value="")
+									div.error-text-block.none-block
+							div.warning-buttons-wrapper
+								a.warning-button.warning-add(href="#") Да
+								a.warning-button.warning-back(href="#") Нет
+
+
+
