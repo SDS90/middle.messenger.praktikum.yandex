@@ -1,28 +1,33 @@
-div.form-block
-	label E-mail
-	div.input-wrapper
-		input.form-control.email-input.input-styles(type="text" value="" name="email")
-		div.error-text-block.none-block
-div.form-block
-	label Логин
-	div.input-wrapper
-		input.form-control.input-styles(type="text" value="" name="login")
-		div.error-text-block.none-block
-div.form-block
-	label Фамилия
-	div.input-wrapper
-		input.form-control.input-styles(type="text" value="" name="second_name")
-		div.error-text-block.none-block
-div.form-block
-	label Имя
-	div.input-wrapper
-		input.form-control.input-styles(type="text" value="" name="first_name")
-		div.error-text-block.none-block
-div.form-block
-	label Телефон
-	div.input-wrapper
-		input.form-control.input-styles.phone-input(type="text" value="" name="phone")
-		div.error-text-block.none-block
+- 
+	const regFormDatas = [
+		{
+			label: 'E-mail',
+			name: 'email'
+		},
+		{
+			label: 'Логин',
+			name: 'login'
+		},
+		{
+			label: 'Фамилия',
+			name: 'second_name'
+		},
+		{
+			label: 'Имя',
+			name: 'first_name'
+		},
+		{
+			label: 'Телефон',
+			name: 'phone'
+		},
+	];
+
+each data in regFormDatas
+	div.form-block
+		label= data.label
+		div.input-wrapper
+			input.form-control.input-styles(type="text" value="" name=data.name)
+			div.error-text-block.none-block
 // Позже предусмотреть ссылку для открытия полей в случае изменения пароляы
 div.form-block
 	label Пароль

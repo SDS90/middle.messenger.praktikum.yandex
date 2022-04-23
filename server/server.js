@@ -25,7 +25,7 @@ app.get('/error/', (req, res) => {
 });
 
 app.get('/profile/', (req, res) => {
-  res.render('profile', { title: 'Мой рофиль' });
+  res.render('profile', { title: 'Мой профиль' });
 });
 
 
