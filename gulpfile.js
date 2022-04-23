@@ -16,7 +16,7 @@ function defaultTask(cb) {
             });
     });
 
-    gulp.task('build', gulp.series('clean');
+    gulp.task('build', gulp.series('clean'));
 
     cb();
 }
