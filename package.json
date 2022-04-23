@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/SDS90/ya.praktikum.messager.git"
+    "url": "git+https://github.com/SDS90/middle.messenger.praktikum.yandex"
   },
   "keywords": [
     "yandex",
@@ -22,17 +22,20 @@
   "author": "SDS90",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/SDS90/ya.praktikum.messager/issues"
+    "url": "https://github.com/SDS90/middle.messenger.praktikum.yandex/issues"
   },
-  "homepage": "https://github.com/SDS90/ya.praktikum.messager#readme",
+  "homepage": "https://github.com/SDS90/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
     "express": "^4.17.3",
+    "gulp": "^4.0.2",
     "node-sass": "^7.0.1"
   },
   "devDependencies": {
+    "browser-sync": "^2.27.9",
     "cssnano": "^5.1.7",
     "postcss": "^8.4.12",
     "pug": "^3.0.2",
+    "run-sequence": "^2.2.1",
     "sass": "^1.50.1"
   }
 }
