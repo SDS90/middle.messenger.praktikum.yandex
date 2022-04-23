@@ -2,23 +2,38 @@
 	const regFormDatas = [
 		{
 			label: 'E-mail',
-			name: 'email'
+			name: 'email',
+			type: 'text'
 		},
 		{
 			label: 'Логин',
-			name: 'login'
+			name: 'login',
+			type: 'text'
 		},
 		{
 			label: 'Фамилия',
-			name: 'second_name'
+			name: 'second_name',
+			type: 'text'
 		},
 		{
 			label: 'Имя',
-			name: 'first_name'
+			name: 'first_name',
+			type: 'text'
 		},
 		{
 			label: 'Телефон',
-			name: 'phone'
+			name: 'phone',
+			type: 'text'
+		},
+		{
+			label: 'Пароль',
+			name: 'password',
+			type: 'password'
+		},
+		{
+			label: 'Повторите пароль',
+			name: 'repeat_password',
+			type: 'password'
 		},
 	];
 
@@ -26,19 +41,9 @@ each data in regFormDatas
 	div.form-block
 		label= data.label
 		div.input-wrapper
-			input.form-control.input-styles(type="text" value="" name=data.name)
+			input.form-control.input-styles(type=data.type value="" name=data.name)
 			div.error-text-block.none-block
-// Позже предусмотреть ссылку для открытия полей в случае изменения пароляы
-div.form-block
-	label Пароль
-	div.input-wrapper
-		input.form-control.input-styles(type="password" value="" name="password")
-		div.error-text-block.none-block
-div.form-block
-	label Повторите пароль
-	div.input-wrapper
-		input.form-control.input-styles(type="password" value="" name="")
-		div.error-text-block.none-block
+// Позже предусмотреть ссылку для открытия полей в случае изменения пароля
 div.form-block.info-block.none-block
 		
 		

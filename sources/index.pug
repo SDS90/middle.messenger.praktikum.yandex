@@ -9,16 +9,25 @@ html(lang="ru")
 					h2 #{title}
 					form
 						fieldset
-							div.form-block
-								label Логин
-								div.input-wrapper
-									input.form-control.input-styles(type="text" value="" name="login")
-									div.error-text-block.none-block
-							div.form-block
-								label Пароль
-								div.input-wrapper
-									input.form-control.input-styles(type="password" value="" name="password")
-									div.error-text-block.none-block
+							- 
+								const loginFormDatas = [
+									{
+										label: 'Логин',
+										name: 'login',
+										type: 'text'
+									},
+									{
+										label: 'Пароль',
+										name: 'password',
+										type: 'password'
+									},
+								]
+							each data in loginFormDatas
+								div.form-block
+									label= data.label
+									div.input-wrapper
+										input.form-control.input-styles(type=data.type value="" name=data.name)
+										div.error-text-block.none-block
 							div.orm-block.info-block.none-block
 							div.form-block.buttons-wrapper
 								a.button-link.add-link(href="chat") Авторизоваться
