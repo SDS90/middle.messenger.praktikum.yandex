@@ -1,12 +1,12 @@
 html(lang="ru") 
 	head
 		include pug-includes/head.pug
-		title Мой профиль
+		title #{title}
 	body
 		main#app.messenger-wrapper
 			div.reg-form-page
 				div.reg-form-wrapper
-					h2 Мой профиль
+					h2 #{title}
 					form
 						fieldset
 							label.image-form-block(for="photoImageUpload")
@@ -14,5 +14,5 @@ html(lang="ru")
 								img#photoImage(src="#" alt="" title="Загрузка изображения")
 							include pug-includes/reg-form-inner.pug
 							div.form-block.buttons-wrapper
-								a.button-link.add-link(href="chat.html") Изменить данные
-								a.button-link.reg-link(href="chat.html") Назад
+								a.button-link.add-link(href="chat") Изменить данные
+								a.button-link.reg-link(href="chat") Назад

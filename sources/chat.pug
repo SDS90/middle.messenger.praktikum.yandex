@@ -1,14 +1,14 @@
 html(lang="ru") 
 	head
 		include pug-includes/head.pug
-		title Чат
+		title #{title}
 	body
 		main#app.messenger-wrapper
 			div.chat-form-page.clear
 				div.chat-list-column
 					div.profile-block.clear
 						a.create-chat-link(href="#") Создать чат
-						a.profile-link(href="profile.html") Мой профиль >
+						a.profile-link(href="profile") Мой профиль >
 					form.search-wrapper
 						input.search-input.input-styles(type="text" value="" placeholder="Поиск" name="search")
 					div.chat-list
