@@ -16,4 +16,4 @@
 - `npm run start` - проект запускается на http://localhost:3000
 - `npm run dev` - сборка проекта, проект запускается на http://localhost:1234
 
-Ссылка на pull request: https://github.com/SDS90/middle.messenger.praktikum.yandex/pull/1
+Ссылка на pull request: https://github.com/SDS90/middle.messenger.praktikum.yandex/pull/2
