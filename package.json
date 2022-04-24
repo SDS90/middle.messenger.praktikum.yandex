@@ -5,6 +5,10 @@
   "targets": {
     "main": false
   },
+  "engines": {
+    "node": "16.14.2",
+    "npm": "8.5.0"
+  },
   "scripts": {
     "start": "node server/server.js",
     "dev": "parcel src/index.pug --open",
