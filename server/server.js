@@ -2,11 +2,18 @@ const express = require('express');
 
 const app = express();
 const PORT = 3000;
+const path = require('path');
 
-app.set('views', './sources');
+app.use(express.static(path.join(__dirname, '..', 'dist')))
+
+app.listen(PORT, () => {
+  console.log(`Server is started at port: ${PORT}!`)
+});
+
+/*app.set('views', './src');
 app.set('view engine', 'pug');
 
-app.use(express.static('./sources/'));
+app.use(express.static('./src/'));
 
 app.get('/', (req, res) => {
   res.render('index', { title: 'Вход' });
@@ -31,4 +38,4 @@ app.get('/profile/', (req, res) => {
 
 app.listen(PORT, function () {
   console.log(`Example app listening on port ${PORT}!`);
-}); 
+}); */

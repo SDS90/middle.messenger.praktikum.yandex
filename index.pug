@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        script(src='./main.js' type='module')
+        title Document
+    body
+        main#app.messenger-wrapper
+			div.reg-form-page
+				div.reg-form-wrapper
+					h2 #{title}
+					form
+						fieldset
+							- 
+								const loginFormDatas = [
+									{
+										label: 'Логин',
+										name: 'login',
+										type: 'text'
+									},
+									{
+										label: 'Пароль',
+										name: 'password',
+										type: 'password'
+									},
+								]
+							each data in loginFormDatas
+								div.form-block
+									label= data.label
+									div.input-wrapper
+										input.form-control.input-styles(type=data.type value="" name=data.name)
+										div.error-text-block.none-block
+							div.orm-block.info-block.none-block
+							div.form-block.buttons-wrapper
+								a.button-link.add-link(href="chat") Авторизоваться
+								a.button-link.reg-link(href="reg-form") Зарегистрироваться
+        
