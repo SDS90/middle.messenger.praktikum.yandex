@@ -4,32 +4,32 @@
 
 .input-styles{
 	width: 100%;
-    background: #fff;
-    border: 1px solid #a0a0a0;
-    color: #282828;    
-    padding: 0 5px;
-    outline: none;
+	background: $white;
+	border: 1px solid $formInputColor;
+	color: $chatFirstColor;
+	padding: 0 5px;
+	outline: none;
 }
 
 .reg-form-wrapper{
 	max-width: 400px;
-    margin: 20px auto;
-    padding: 30px 50px;
-    border-radius: 50px;
-    background-color: #fff;
-     h2 {
-     	text-align: center;
-	    font-size: 25px;
-	    line-height: 32px;
-	    font-weight: 700;
-	    color: #282828;
-	    margin-bottom: 20px;
+	margin: 20px auto;
+	padding: 30px 50px;
+	border-radius: 50px;
+	background-color: $white;
+	 h2 {
+		text-align: center;
+		font-size: 25px;
+		line-height: 32px;
+		font-weight: 700;
+		color: $chatFirstColor;
+		margin-bottom: 20px;
 	}
 
 	.form-block,
 	.form-block label{
 		display: block;
-	    margin-bottom: 5px;
+		margin-bottom: 5px;
 	}
 }
 
@@ -39,7 +39,7 @@
 	width: 100px;
 	height: 100px;
 	border-radius: 50%;
-	background-color: #9d9999;
+	background-color: $chatBorderColor;
 	overflow: hidden;
 	cursor: pointer;
 	img{
@@ -50,26 +50,26 @@
 
 .form-block{
 	width: 100%;
-	label {		    
-	    color: #888;
+	.form-label {	
+		color: #888;
 	}
 	.input-wrapper {
 		position: relative;
 	}
 
-	input {
+	.form-control {
 		font-size: 17px;
-	    height: 35px;
-	    margin-bottom: 5px;
-	    &.error-input{
-	    	color: #f80000;
-	    }
+		height: 35px;
+		margin-bottom: 5px;
+		&.error-input{
+			color: $formErrorColor;
+		}
 	}
 
 	.info-block{
 		width: 100%;
 		font-size: 20px;
-		color: #282828;
+		color: $chatFirstColor;
 		line-height: 24px;
 	}
 
@@ -81,8 +81,8 @@
 		font-size:14px;
 		line-height:16px;
 		z-index:2;
-		background-color:#f80000;
-		color:#fff;
+		background-color: $formErrorColor;
+		color: $white;
 		border-radius:5px;
 		padding:5px;
 
@@ -93,10 +93,10 @@
 			left: 20px;
 			top: -14px;
 			border: 7px solid transparent;
-			border-bottom: 7px solid #f80000
+			border-bottom: 7px solid $formErrorColor;
 		}
 		&:after{
-			border-bottom:7px solid #f80000;
+			border-bottom:7px solid $formErrorColor;
 			top: -13px
 		}
 	}
@@ -106,42 +106,42 @@
 		margin-top: 20px;
 	}
 
-	.button-link{			
-	    font-size: 18px;
-	    line-height: 24px;
-	    text-decoration: none;		    
-	    cursor: pointer;
-	    outline: none;
+	.button-link{
+		font-size: 18px;
+		line-height: 24px;
+		text-decoration: none;
+		cursor: pointer;
+		outline: none;
 
-	    &.add-link{
-	    	display: block;
-		    width: 100%;
-		    padding: 10px 35px;
-		    margin-bottom: 15px;
-		    background-color: #aaa;
-    		color: #fff;
-    		border: 1px solid #aaa;
-	    	border-radius: 15px;
-		    &:hover{
-		    	background-color: #fff;
-    			color: #282828;
-		    }
+		&.add-link{
+			display: block;
+			width: 100%;
+			padding: 10px 35px;
+			margin-bottom: 15px;
+			background-color: $formAddLinkColor;
+			color: $white;
+			border: 1px solid $formAddLinkColor;
+			border-radius: 15px;
+			&:hover{
+				background-color: $white;
+				color: $chatFirstColor;
+			}
 		}
 
 		&.reg-link{
 			border: none;
 			background-color: transparent;
-			color: #0078d4;
+			color: $formRegLinkColor;
 			&:hover{
-		    	text-decoration: underline;
-		    }
+				text-decoration: underline;
+			}
 		}
 	}
 }
 
 @media (max-width: 960px){
 	.reg-form-page{
-		padding: 5px;	
+		padding: 5px;
 	}
 	.reg-form-wrapper{
 		width: 100%;

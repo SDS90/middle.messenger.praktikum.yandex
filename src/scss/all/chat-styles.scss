@@ -11,7 +11,7 @@
 	float: left;
 	width: 350px;
 	padding: 5px;
-	border-right: 1px solid #282828;
+	border-right: 1px solid $chatFirstColor;
 
 	.profile-block{
 		margin-bottom: 10px;
@@ -20,11 +20,11 @@
 
 	a{
 		font-size: 14px;
-		color: #0078d4;
+		color: $chatSecondColor;
 		text-decoration: none;
 		&:hover{
-	    	text-decoration: underline;
-	    }
+			text-decoration: underline;
+		}
 	}
 
 	.create-chat-link{
@@ -42,7 +42,7 @@
 
 		.search-input{
 			font-size: 17px;
-		    padding: 5px;
+			padding: 5px;
 		}
 	}
 }
@@ -50,15 +50,15 @@
 .chat-block{
 	position: relative;	
 	padding: 20px 15px 25px 60px;
-	border-top: 1px solid #9d9999;
-	color: #282828;
+	border-top: 1px solid $chatBorderColor;
+	color: $chatFirstColor;
 
 	.chat-photo-wrapper{
 		position: absolute;
 		left: 0px; top: 8px;
 		height: 55px;
 		width: 55px;
-		background-color: #9d9999;
+		background-color: $chatBorderColor;
 		border-radius: 50%;
 	}
 	.chat-name{
@@ -75,7 +75,7 @@
 
 	.chat-time{
 		font-size: 12px;
-		color: #9d9999;
+		color: $chatBorderColor;
 		position: absolute;
 		right: 0px; top: 5px;
 		z-index: 10;
@@ -85,38 +85,38 @@
 	.delete-chat-button{
 		display: none;
 		font-size: 12px;
-		color: #282828;
+		color: $chatFirstColor;
 		position: absolute;
-		background-color: rgba(157,153,153, 0.5);
+		background-color: $chatButtonColorOpacity;
 		padding: 5px 7px;
 		right: 0px; top: 0px;
 		z-index: 15;
 		text-decoration: none;
 		text-align: right;
 		&:hover{
-			background-color: rgba(157,153,153, 1);
+			background-color: $chatButtonColor;
 		}
 	}
 
 	&:hover{
 		cursor: pointer;
-		background-color: rgba(157,153,153, 0.5);
+		background-color: $chatButtonColorOpacity;
 		.delete-chat-button{
 			display: block;
 		}
 	}
 
 	.new-messages-info{
-	    font-size: 14px;
-	    color: #fff;
-	    background-color: #0078d4;
-	    position: absolute;
-	    right: 0px;
-	    min-width: 24px;
-    	border-radius: 12px;
-	    padding: 5px;
-	    top: 35px;
-	    text-align: center;
+		font-size: 14px;
+		color: $white;
+		background-color: $chatSecondColor;
+		position: absolute;
+		right: 0px;
+		min-width: 24px;
+		border-radius: 12px;
+		padding: 5px;
+		top: 35px;
+		text-align: center;
 	}
 }
 
@@ -130,12 +130,12 @@
 		white-space: nowrap;
 		text-overflow: ellipsis;
 		top: 0px;
-		background-color: #efefef;
+		background-color: $chatBackgroundColor;
 		left: 5px; right: 5px;
 		padding: 5px 55px 10px 15px;
 		font-weight: bold;
 		font-size: 20px;
-		border-bottom: 1px solid #282828;
+		border-bottom: 1px solid $chatFirstColor;
 	}
 
 	.chat-back-button{
@@ -144,11 +144,11 @@
 		font-size: 14px;
 		top: 8px;
 		right: 5px;
-		color: #0078d4;
+		color: $chatSecondColor;
 		text-decoration: none;
 		&:hover{
-	    	text-decoration: underline;
-	    }
+			text-decoration: underline;
+		}
 	}
 
 	.chat-wrapper{
@@ -168,7 +168,7 @@
 		width: 100%;
 		height: 100%;
 		text-align: center;
-    	vertical-align: middle;
+		vertical-align: middle;
 	}
 
 	.chat-send-box{
@@ -176,9 +176,9 @@
 		bottom: 0px;
 		height: 50px;
 		left: 5px; right: 5px;
-		background-color: #efefef;
+		background-color: $chatBackgroundColor;
 		padding: 5px 50px 5px 50px;
-		border-top: 1px solid #282828;
+		border-top: 1px solid $chatFirstColor;
 
 		.chat-send-button,
 		.add-file-button{
@@ -189,11 +189,11 @@
 			width: 40px;
 			line-height: 40px;
 			border: none;
-			background-color: rgba(157,153,153, 0.5);
+			background-color: $chatButtonColorOpacity;
 			cursor: pointer;
 
 			&:hover{
-				background-color: rgba(157,153,153, 1);
+				background-color: $chatButtonColor;
 			}
 		}
 
@@ -219,7 +219,7 @@
 	}
 
 	.chat-message-date{
-		color: #9d9999;
+		color: $chatBorderColor;
 		text-align: center;
 	}
 
@@ -233,9 +233,9 @@
 			font-size: 14px;
 			line-height: 18px;
 			text-align: left;
-			border: 1px solid #282828;
+			border: 1px solid $chatFirstColor;
 			border-radius: 10px;
-			background-color: #fff;			
+			background-color: $white;			
 		}
 
 		img{
@@ -244,7 +244,7 @@
 
 		.chat-message-time{
 			font-size: 12px;
-			color: #9d9999;
+			color: $chatBorderColor;
 			margin-bottom: 5px;
 		}
 
@@ -271,6 +271,4 @@
 			}
 		}
 	}
-
-
 }

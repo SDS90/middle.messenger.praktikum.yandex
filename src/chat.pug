@@ -1,3 +1,38 @@
+- 
+	const chatList = [
+		{
+			name: 'Андрей Андрейченков',
+			fromYou: true,
+			text: 'Круто!',
+			time: '15.04.2022 15:31',
+			count: 10
+		},
+		{
+			name: 'Михалыч',
+			fromYou: false,
+			text: 'Текст сообщения',
+			time: '15.04.2022 15:31',
+			count: 0
+		}
+	];
+- 
+	const messagesList = [
+		{
+			fromYou: true,
+			text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			time: '15.04.2022 12:37'
+		},
+		{
+			fromYou: false,
+			text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			time: '15.04.2022 12:37'
+		},
+		{
+			fromYou: false,
+			text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
+			time: '15.04.2022 12:37'
+		},
+	];
 html(lang="ru")
 	head
 		include pug-includes/head.pug
@@ -12,30 +47,13 @@ html(lang="ru")
 					form.search-wrapper
 						input.search-input.input-styles(type="text" value="" placeholder="Поиск" name="search")
 					div.chat-list
-						- 
-							const chatList = [
-								{
-									name: 'Андрей Андрейченков',
-									fromyou: true,
-									text: 'Круто!',
-									time: '15.04.2022 15:31',
-									count: 10
-								},
-								{
-									name: 'Михалыч',
-									fromyou: false,
-									text: 'Текст сообщения',
-									time: '15.04.2022 15:31',
-									count: 0
-								}
-							];
 						each chat in chatList
 							div.chat-block
 								div.chat-photo-wrapper
-									img.chat-photo(src=chat.photosrc alt=chat.photosrc)
+									img.chat-photo(src=chat.photoSrc alt=chat.photoSrc)
 								div.chat-name= chat.name
 								div.chat-preview-text
-									strong(class= (chat.fromyou ? "" : "none-block")) Вы: 
+									strong(class= (chat.fromYou ? "" : "none-block")) Вы: 
 									span= chat.text
 								div.chat-time= chat.time
 								div(class= (chat.count > 0 ? "new-messages-info" : "none-block"))= chat.count
@@ -47,27 +65,9 @@ html(lang="ru")
 					//	div.select-chat-cell
 					//		span Выберите чат
 					div.chat-wrapper
-						- 
-							const messagesList = [
-								{
-									fromyou: true,
-									text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
-									time: '15.04.2022 12:37'
-								},
-								{
-									fromyou: false,
-									text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
-									time: '15.04.2022 12:37'
-								},
-								{
-									fromyou: false,
-									text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
-									time: '15.04.2022 12:37'
-								},
-							]
 						//div.chat-message-date 15.04.2022
 						each message in messagesList
-							div(class= (message.fromyou ? "message-to-me chat-message-wrapper" : "chat-message-wrapper"))
+							div(class= (message.fromYou ? "message-to-me chat-message-wrapper" : "chat-message-wrapper"))
 								div.chat-message-block
 									div.chat-message-time= message.time
 									div= message.text
