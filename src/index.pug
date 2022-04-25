@@ -1,3 +1,16 @@
+- 
+	const loginFormDatas = [
+		{
+			label: 'Логин',
+			name: 'login',
+			type: 'text'
+		},
+		{
+			label: 'Пароль',
+			name: 'password',
+			type: 'password'
+		},
+	]
 html(lang="ru")
 	head
 		include pug-includes/head.pug
@@ -9,26 +22,13 @@ html(lang="ru")
 					h2 Вход
 					form
 						fieldset
-							- 
-								const loginFormDatas = [
-									{
-										label: 'Логин',
-										name: 'login',
-										type: 'text'
-									},
-									{
-										label: 'Пароль',
-										name: 'password',
-										type: 'password'
-									},
-								]
 							each data in loginFormDatas
 								div.form-block
-									label= data.label
+									label.form-label= data.label
 									div.input-wrapper
 										input.form-control.input-styles(type=data.type value="" name=data.name)
 										div.error-text-block.none-block
-							div.orm-block.info-block.none-block
+							div.form-block.info-block.none-block
 							div.form-block.buttons-wrapper
 								a.button-link.add-link(href="chat.pug") Авторизоваться
 								a.button-link.reg-link(href="reg-form.pug") Зарегистрироваться
