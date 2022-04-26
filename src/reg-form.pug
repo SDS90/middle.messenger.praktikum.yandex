@@ -1,0 +1,15 @@
+html(lang="ru") 
+	head
+		include pug-includes/head.pug
+		title Регистрация
+	body
+		main#app.messenger-wrapper
+			div.reg-form-page
+				div.reg-form-wrapper
+					h2 Регистрация
+					form
+						fieldset
+							include pug-includes/reg-form-inner.pug
+							div.form-block.buttons-wrapper
+								a.button-link.add-link(href="chat.pug") Зарегистрироваться
+								a.button-link.reg-link(href="index.pug") Назад

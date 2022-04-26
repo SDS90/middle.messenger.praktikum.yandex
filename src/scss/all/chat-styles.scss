@@ -1,0 +1,280 @@
+.chat-form-page{
+	padding: 5px;
+	height: 100%;	
+}
+
+.chat-list-column,
+.chat-full-block{
+	height: 100%;	
+}
+.chat-list-column{
+	float: left;
+	width: 350px;
+	padding: 5px;
+	border-right: 1px solid $chatFirstColor;
+
+	.profile-block{
+		margin-bottom: 10px;
+		text-align: right;
+	}
+
+	a{
+		font-size: 14px;
+		color: $chatSecondColor;
+		text-decoration: none;
+		&:hover{
+			text-decoration: underline;
+		}
+	}
+
+	.create-chat-link{
+		float: left;
+	}
+
+	.profile-link{
+		float: right;
+		
+	}
+
+	.search-wrapper{
+		display: block;
+		margin-bottom: 15px;
+
+		.search-input{
+			font-size: 17px;
+			padding: 5px;
+		}
+	}
+
+	.chat-list{
+		height: 100%;
+		width: 100%;
+		overflow-y: scroll;
+	}
+}
+
+.chat-block{
+	position: relative;	
+	padding: 20px 15px 25px 60px;
+	border-top: 1px solid $chatBorderColor;
+	color: $chatFirstColor;
+
+	.chat-photo-wrapper{
+		position: absolute;
+		left: 0px; top: 8px;
+		height: 55px;
+		width: 55px;
+		background-color: $chatBorderColor;
+		border-radius: 50%;
+	}
+	.chat-name{
+		font-size: 14px;
+		font-weight: bold;
+		margin-bottom: 10px;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+	}
+
+	.chat-preview-text{
+		font-size: 12px;
+	}
+
+	.chat-time{
+		font-size: 12px;
+		color: $chatBorderColor;
+		position: absolute;
+		right: 0px; top: 5px;
+		z-index: 10;
+		text-align: right;
+	}
+
+	.delete-chat-button{
+		display: none;
+		font-size: 12px;
+		color: $chatFirstColor;
+		position: absolute;
+		background-color: $chatButtonColorOpacity;
+		padding: 5px 7px;
+		right: 0px; top: 0px;
+		z-index: 15;
+		text-decoration: none;
+		text-align: right;
+		&:hover{
+			background-color: $chatButtonColor;
+		}
+	}
+
+	&:hover{
+		cursor: pointer;
+		background-color: $chatButtonColorOpacity;
+		.delete-chat-button{
+			display: block;
+		}
+	}
+
+	.new-messages-info{
+		font-size: 14px;
+		color: $white;
+		background-color: $chatSecondColor;
+		position: absolute;
+		right: 0px;
+		min-width: 24px;
+		border-radius: 12px;
+		padding: 5px;
+		top: 35px;
+		text-align: center;
+	}
+}
+
+.chat-full-block{
+	position: relative;
+	margin-left: 351px;
+	text-align: left;
+	padding: 41px 5px 50px 5px;
+	.chat-full-name{
+		position: absolute;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		top: 0px;
+		background-color: $chatBackgroundColor;
+		left: 5px; right: 5px;
+		padding: 5px 55px 10px 15px;
+		font-weight: bold;
+		font-size: 20px;
+		border-bottom: 1px solid $chatFirstColor;
+	}
+
+	.chat-back-button{
+		//display: none;
+		position: absolute;
+		font-size: 14px;
+		top: 8px;
+		right: 5px;
+		color: $chatSecondColor;
+		text-decoration: none;
+		&:hover{
+			text-decoration: underline;
+		}
+	}
+
+	.chat-wrapper{
+		height: 100%;
+		width: 100%;
+		overflow-y: scroll;
+	}
+
+	.select-chat-wrapper{
+		display: table;
+		height: 100%;
+		width: 100%;		
+	}
+
+	.select-chat-cell{
+		display: table-cell;
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		vertical-align: middle;
+	}
+
+	.chat-send-box{
+		position: absolute;
+		bottom: 0px;
+		height: 50px;
+		left: 5px; right: 5px;
+		background-color: $chatBackgroundColor;
+		padding: 5px 50px 5px 50px;
+		border-top: 1px solid $chatFirstColor;
+
+		.chat-send-button,
+		.add-file-button{
+			position: absolute;
+			text-align: center;
+			top: 5px;
+			bottom: 5px;
+			width: 40px;
+			line-height: 40px;
+			border: none;
+			background-color: $chatButtonColorOpacity;
+			cursor: pointer;
+
+			&:hover{
+				background-color: $chatButtonColor;
+			}
+		}
+
+		.add-file-button{
+			left: 0px;
+		}
+
+		.chat-send-button{
+			right: 0px;
+		}
+
+		textarea{
+			width: 100%;
+			height: 100%;
+			resize: none;
+			outline: none;
+		}
+	}
+
+	.chat-message-date,
+	.chat-message-wrapper{
+		margin-bottom: 10px;
+	}
+
+	.chat-message-date{
+		color: $chatBorderColor;
+		text-align: center;
+	}
+
+	.chat-message-wrapper{		
+		text-align: right;
+
+		.chat-message-block{
+			display: inline-block;
+			max-width: 50%;
+			padding: 10px 15px;
+			font-size: 14px;
+			line-height: 18px;
+			text-align: left;
+			border: 1px solid $chatFirstColor;
+			border-radius: 10px;
+			background-color: $white;			
+		}
+
+		img{
+			width: 100%;
+		}
+
+		.chat-message-time{
+			font-size: 12px;
+			color: $chatBorderColor;
+			margin-bottom: 5px;
+		}
+
+		&.message-to-me,
+		&.message-to-me * {
+			text-align: left;
+		}
+	}
+}
+
+
+@media (max-width: 960px){
+	.chat-list-column{
+		width: 100%;
+	}
+	.chat-full-block{
+		display: none;	
+		.chat-back-button{
+			display: block;
+		}
+		.chat-message-wrapper{
+			.chat-message-block{
+				max-width: 100%;
+			}
+		}
+	}
+}

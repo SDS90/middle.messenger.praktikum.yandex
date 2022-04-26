@@ -1,0 +1,41 @@
+{
+  "name": "middle.messenger.praktikum.yandex",
+  "version": "1.0.0",
+  "description": "Проект мессенджера, выполняемый в рамках курса \"Миддл фронтенд-разработчик\" Яндекс.Практикума.",
+  "targets": {
+    "main": false
+  },
+  "engines": {
+    "node": "16.14.2",
+    "npm": "8.5.0"
+  },
+  "scripts": {
+    "start": "node server/server.js",
+    "dev": "parcel src/index.pug --open",
+    "build": "parcel build src/index.pug --dist-dir dist --public-url ./",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SDS90/middle.messenger.praktikum.yandex.git"
+  },
+  "keywords": [],
+  "author": "SDS90",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SDS90/middle.messenger.praktikum.yandex/issues"
+  },
+  "homepage": "https://github.com/SDS90/middle.messenger.praktikum.yandex#readme",
+  "dependencies": {
+    "express": "^4.17.3"
+  },
+  "devDependencies": {
+    "@parcel/transformer-pug": "^2.5.0",
+    "@parcel/transformer-sass": "^2.5.0",
+    "cssnano": "^4.1.11",
+    "parcel": "^2.5.0",
+    "postcss": "^8.4.12",
+    "pug": "^3.0.2",
+    "sass": "^1.50.1"
+  }
+}
