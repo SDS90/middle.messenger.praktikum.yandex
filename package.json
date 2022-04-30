@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "node server/server.js",
-    "dev": "parcel src/index.pug --open",
+    "dev": "parcel src/index.pug",
     "build": "parcel build src/index.pug --dist-dir dist --public-url ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
