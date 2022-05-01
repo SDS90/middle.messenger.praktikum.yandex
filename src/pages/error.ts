@@ -5,7 +5,7 @@ import Button, { ButtonParams }  from '../elements/button-block';
 import Error, { ErrorParams }  from '../elements/error-block';
 import authorization from './authorization';
 
-//import profile from './profile';
+const documentTitle: string = "Ошибка"
 
 const errorBlock: ErrorParams = {
 	title: 'Ошибка 404',
@@ -25,11 +25,16 @@ const errorButtons: ButtonParams[] = [
 	},
 ];
 
-export default function(): void {
+export function showError(ErrorParams: ErrorParams, errorButtons: errorButtons): void {
+	document.title = documentTitle;
 
 	new Error(errorBlock).insertBlock("#app", true);
 
 	errorButtons.forEach(function(button) {
 		new Button(button).insertBlock(button.element);
 	});
+}
+
+export default function(): void {
+	showError(errorBlock, errorButtons);	
 }

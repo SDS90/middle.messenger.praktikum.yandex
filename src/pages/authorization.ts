@@ -7,6 +7,8 @@ import Button, { ButtonParams }  from '../elements/button-block';
 import registration from './registration';
 import chat from './chat';
 
+const documentTitle: string = "Вход"
+
 const authorizationForm: FormParams = {
 	title: 'Вход',
 }
@@ -65,6 +67,8 @@ const authorizationButtons: ButtonParams[] = [
 ]
 
 export default function(): void {
+
+	document.title = documentTitle;
 
 	new Form(authorizationForm).insertBlock("#app", true);
 

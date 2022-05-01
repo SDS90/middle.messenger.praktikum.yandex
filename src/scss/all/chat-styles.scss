@@ -147,6 +147,7 @@
 	.chat-back-button{
 		//display: none;
 		position: absolute;
+		z-index: 12;
 		font-size: 14px;
 		top: 8px;
 		right: 5px;
@@ -164,9 +165,17 @@
 	}
 
 	.select-chat-wrapper{
+		position: absolute;
+		left: 0px; right: 0px;
+		top: 0px; bottom: 0px;
+		z-index: 10;
+		background-color: $chatBackgroundColor;
 		display: table;
 		height: 100%;
-		width: 100%;		
+		width: 100%;	
+		&.none-block{
+			display: none;
+		}	
 	}
 
 	.select-chat-cell{

@@ -9,10 +9,13 @@ import Link, { LinkParams }  from '../elements/link-block';
 import Chat, { ChatParams }  from '../elements/chat-wrapper';
 import ChatBlock, { ChatBlockParams }  from '../elements/chat-block';
 import MessageBlock, { MessageBlockParams }  from '../elements/message-block';
+import Modal, { ModalParams }  from '../elements/modal-block';
 import registration from './registration';
 import authorization from './authorization';
-import error from './error';
+import error, {showError} from './error';
 import profile from './profile';
+
+const documentTitle: string = "Чат"
 
 const chatParams: ChatParams = {
 	chatUserName: 'Андрей Андрейченков',
@@ -52,7 +55,7 @@ const chatProfileLinks: LinkParams[] = [
 		href: '#',
 		onClick: (event) => {
 			event.preventDefault();
-			error();		
+			error(); //в дальнейшем использовать showError с передачей параметров ошибки
 		},
 	},
 	{
@@ -142,16 +145,53 @@ const textareaParams: TextareaParams = {
 	required: true,
 }
 
+const deleteWarningMessage: ModalParams = {
+	element: '#app',
+	id: 'deleteWarningMessage',
+	MessageText: 'Вы действительно хотите удалить этот чат?',
+}
+
+const deleteButtons: ButtonParams[] = [
+	{
+		element: '.warning-buttons-wrapper',
+		id: '',
+		name: 'Да',
+		classes: 'warning-add warning-button',
+		onClick: (event) => {
+			event.preventDefault();
+			//Вызывать удаление
+			document.getElementById("deleteWarningMessage").remove();
+		},
+	},
+	{
+		element: '.warning-buttons-wrapper',
+		id: '',
+		name: 'Нет',
+		classes: 'warning-back warning-button',
+		onClick: (event) => {
+			event.preventDefault();
+			document.getElementById("deleteWarningMessage").remove();
+		},
+	},
+]
+
 function onChatClick(event){
 	if (event.target.classList.contains("delete-chat-button")){
-		console.log("удаление")
+		new Modal(deleteWarningMessage).insertBlock("#app");
+		deleteButtons.forEach(function(button) {
+			new Button(button, '').insertBlock(button.element);
+		});
 	} else {
-		console.log("открытие чата")
+		document.getElementById("selectChat").classList.add("none-block");
+		messageList.forEach(function(message){
+			new MessageBlock(message, '').insertBlock(message.element);
+		});
 	}
 }
 
 export default function(): void {
 
+	document.title = documentTitle;
 	new Chat(chatParams).insertBlock("#app", true);
 
 	chatProfileLinks.forEach(function(link) {
@@ -162,10 +202,7 @@ export default function(): void {
 		new ChatBlock(chat, '').insertBlock(chat.element);
 	});
 
-	messageList.forEach(function(message){
-		new MessageBlock(message, '').insertBlock(message.element);
-	});
-
+	
 	new Form(sendForm, '<form class="chat-send-box"></form>').insertBlock(".chat-full-block");
 	new Button(sendButton).insertBlock(".chat-send-box");
 	new Button(addFileButton, '<label for="{{id}}" class="button-link {{classes}}">{{name}}<input class="load-image" hidden accept="image/*" type="file" id="{{id}}"></label>').insertBlock(".chat-send-box");

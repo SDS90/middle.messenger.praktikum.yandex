@@ -13,14 +13,15 @@ const chatWrapperTemplate = `
 		</div>
 		<div class="chat-full-block">
 			<div class="chat-full-name">{{chatUserName}}</div>
-			<!--<div class="select-chat-wrapper ">
+			<div class="select-chat-wrapper" id="selectChat">
 				<div class="select-chat-cell">
 					<span>Выберите чат</span>
 				</div>
-			</div>-->
+			</div>
 			<div class="chat-wrapper"></div>
 		</div>
-	</div>`;
+	</div>
+	`;
 
 export type ChatParams = {
 	chatUserName: string

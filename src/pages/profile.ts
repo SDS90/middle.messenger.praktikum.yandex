@@ -8,6 +8,8 @@ import ImageInput, { InputImageParams }  from '../elements/image-input-block';
 import authorization from './authorization';
 import chat from './chat';
 
+const documentTitle: string = "Мой профиль"
+
 const profileForm: FormParams = {
 	title: ''
 };
@@ -169,6 +171,8 @@ const profileButtons: ButtonParams[] = [
 ]
 
 export default function(): void {
+
+	document.title = documentTitle;
 
 	new Form(profileForm).insertBlock("#app", true);
 
