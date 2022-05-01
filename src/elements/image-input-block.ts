@@ -1,6 +1,6 @@
 //Блок загрузки изображения
 
-import TemplateGen from '../utilities/TemplateGen';
+import Block from '../elements/block';
 
 const inputImageTemplate = `
 	<label class="image-form-block" for="{{id}}">
@@ -16,30 +16,20 @@ export type InputImageParams = {
 	imageTitle: string,
 }
 
-export default class ImageInput /*extends Block*/ {
-	params: InputImageParams
+export default class ImageInput extends Block {
 
-	constructor(params: InputImageParams) {
-		this.params = params;
-		//super('button', props, props.className)
+	constructor(params: InputImageParams, template: string) {
+		if (!template){
+			template = inputImageTemplate;
+		}
+		super(params, template);
 	}
 
-	render(): string {
-		return new TemplateGen(inputImageTemplate).generateTemplate(this.params);
-	}
-
-	insertBlock(element: string, clean: boolean): void {
-		const inner = new DOMParser().parseFromString(new TemplateGen(inputImageTemplate).generateTemplate(this.params), "text/html").getElementsByTagName("label")[0]; //this.element;
-		const wrapper = document.querySelector(element);
-		if (!inner || !wrapper) return;
-		for (let key in this.params){
-			if (!this.params[key]){
-				inner.removeAttribute(key);
-			}
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+		let insertedBlock = super.insertBlock(element, clean);
+		if (insertedBlock.inner && insertedBlock.wrapper){
+			insertedBlock.wrapper.appendChild(insertedBlock.inner);
 		}
-		if (clean){
-			wrapper.innerHTML = "";
-		}
-		wrapper.appendChild(inner);
+		return insertedBlock;
 	}
 }

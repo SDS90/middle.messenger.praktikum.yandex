@@ -1,6 +1,6 @@
 //Блок ошибки
 
-import TemplateGen from '../utilities/TemplateGen';
+import Block from '../elements/block';
 
 //<a class="warning-add warning-button" href="chat.html">Назад</a>-
 
@@ -24,30 +24,22 @@ export type ErrorParams = {
 	errorText: string
 };
 
-export default class Error /*extends Block*/ {
-	params: ErrorParams
+export default class Error extends Block {
 
-	constructor(params: ErrorParams) {
-		this.params = params;
-		//super('button', props, props.className)
+	constructor(params: ErrorParams, template: string) {
+		if (!template){
+			template = errorBlockTemplate;
+		}
+		super(params, template);
 	}
 
-	render(): string {
-		return new TemplateGen(errorBlockTemplate).generateTemplate(this.params);
-	}
-
-	insertBlock(element: string, clean: boolean): void {
-		const inner = new DOMParser().parseFromString(new TemplateGen(errorBlockTemplate).generateTemplate(this.params), "text/html").getElementsByTagName("div")[0]; //this.element;
-		const wrapper = document.querySelector(element);
-		if (!inner || !wrapper) return;
-		for (let key in this.params){
-			if (!this.params[key]){
-				inner.removeAttribute(key);
-			}
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+		let insertedBlock = super.insertBlock(element, clean);
+		if (insertedBlock.inner && insertedBlock.wrapper){
+			let inner = insertedBlock.inner;
+			let wrapper = insertedBlock.wrapper;
+			wrapper.appendChild(inner);
 		}
-		if (clean){
-			wrapper.innerHTML = "";
-		}
-		wrapper.appendChild(inner);
+		return insertedBlock;
 	}
 }

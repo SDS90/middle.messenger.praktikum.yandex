@@ -1,6 +1,6 @@
 //Блок кнопки
 
-import TemplateGen from '../utilities/TemplateGen';
+import Block from '../elements/block';
 
 const buttonBlockTemplate = `<button id="{{id}}" class="button-link {{classes}}">{{name}}</button>`;
 
@@ -12,31 +12,23 @@ export type ButtonParams = {
 	onClick: (event: Event) => void
 }
 
-export default class Button /*extends Block*/ {
-	params: ButtonParams
+export default class Button extends Block {
 
-	constructor(params: ButtonParams) {
-		this.params = params;
-		//super('button', props, props.className)
+	constructor(params: ButtonParams, template: string) {
+		if (!template){
+			template = buttonBlockTemplate;
+		}
+		super(params, template);
 	}
 
-	render(): string {
-		return new TemplateGen(buttonBlockTemplate).generateTemplate(this.params);
-	}
-
-	insertBlock(element: string, clean: boolean): void {
-		const inner = new DOMParser().parseFromString(new TemplateGen(buttonBlockTemplate).generateTemplate(this.params), "text/html").getElementsByTagName("button")[0]; //this.element;
-		const wrapper = document.querySelector(element);
-		if (!inner || !wrapper) return;
-		for (let key in this.params){
-			if (!this.params[key]){
-				inner.removeAttribute(key);
-			}
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+		let insertedBlock = super.insertBlock(element, clean);
+		if (insertedBlock.inner && insertedBlock.wrapper){
+			let inner = insertedBlock.inner;
+			let wrapper = insertedBlock.wrapper;
+			inner.addEventListener('click', this.params.onClick);
+			wrapper.appendChild(inner);
 		}
-		if (clean){
-			wrapper.innerHTML = "";
-		}
-		inner.addEventListener('click', this.params.onClick);
-		wrapper.appendChild(inner);
+		return insertedBlock;
 	}
 }

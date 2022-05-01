@@ -6,6 +6,7 @@ import Input, { InputParams }  from '../elements/input-block';
 import Button, { ButtonParams }  from '../elements/button-block';
 import ImageInput, { InputImageParams }  from '../elements/image-input-block';
 import authorization from './authorization';
+import chat from './chat';
 
 const profileForm: FormParams = {
 	title: ''
@@ -150,7 +151,9 @@ const profileButtons: ButtonParams[] = [
 		classes: 'add-link',
 		onClick: (event) => {
 			event.preventDefault();
-			onSubmitForm();
+			onSubmitForm('.reg-form', function(){
+				chat();
+			});
 		},
 	},
 	{
@@ -160,7 +163,7 @@ const profileButtons: ButtonParams[] = [
 		classes: 'reg-link',
 		onClick: (event) => {
 			event.preventDefault();
-			//Переход на страницу чата
+			chat();
 		},
 	},
 ]

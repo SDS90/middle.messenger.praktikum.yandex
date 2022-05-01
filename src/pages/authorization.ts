@@ -5,8 +5,7 @@ import Form, { FormParams, onSubmitForm }  from '../elements/form-block';
 import Input, { InputParams }  from '../elements/input-block';
 import Button, { ButtonParams }  from '../elements/button-block';
 import registration from './registration';
-
-//import profile from './profile';
+import chat from './chat';
 
 const authorizationForm: FormParams = {
 	title: 'Вход',
@@ -47,7 +46,9 @@ const authorizationButtons: ButtonParams[] = [
 		classes: 'add-link',
 		onClick: (event) => {
 			event.preventDefault();
-			onSubmitForm();
+			onSubmitForm('.reg-form', function(){
+				chat();
+			});			
 		},
 	},
 	{
@@ -68,7 +69,7 @@ export default function(): void {
 	new Form(authorizationForm).insertBlock("#app", true);
 
 	authorizationInputs.forEach(function(input) {
-		new Input(input).insertBlock(input.element);
+		new Input(input, '').insertBlock(input.element);
 	});
 
 	authorizationButtons.forEach(function(button) {

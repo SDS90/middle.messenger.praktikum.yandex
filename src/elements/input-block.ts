@@ -1,6 +1,6 @@
 //Блок input
 
-import TemplateGen from '../utilities/TemplateGen';
+import Block from '../elements/block';
 import {validValue} from "../utilities/validation";
 
 const inputBlockTemplate = `
@@ -25,38 +25,33 @@ export type InputParams = {
 	classList: string,
 }
 
-export default class Input /*extends Block*/ {
-	params: InputParams
+export default class Input extends Block {
+	//params: InputParams
 
-	constructor(params: InputParams) {
-		this.params = params;
-		//super('button', props, props.className)
+	constructor(params: InputParams, template: string) {
+		if (!template){
+			template = inputBlockTemplate;
+		}
+		super(params, template);
 	}
 
-	render(): string {
-		return new TemplateGen(inputBlockTemplate).generateTemplate(this.params);
-	}
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
 
-	insertBlock(element: string, clean: boolean): void {
-		const inner = new DOMParser().parseFromString(new TemplateGen(inputBlockTemplate).generateTemplate(this.params), "text/html").getElementsByTagName("div")[0]; //this.element;
-		const wrapper = document.querySelector(element);
-		if (!inner || !wrapper) return;
-		for (let key in this.params){
-			if (!this.params[key]){
-				inner.removeAttribute(key);
-			}
+		let insertedBlock = super.insertBlock(element, clean);
+		if (insertedBlock.inner && insertedBlock.wrapper){
+			let inner = insertedBlock.inner;
+			let wrapper = insertedBlock.wrapper;
+
+			let input = inner.querySelector('input')
+			input.addEventListener('focus', function(){
+				input.classList.add('focus-input');
+			});
+			input.addEventListener('blur', function(){
+				input.classList.remove('focus-input');
+				validValue(input);
+			});
+			wrapper.appendChild(inner);
 		}
-		if (clean){
-			wrapper.innerHTML = "";
-		}
-		let input = inner.querySelector('input')
-		input.addEventListener('focus', function(){
-			input.classList.add('focus-input');
-		});
-		input.addEventListener('blur', function(){
-			input.classList.remove('focus-input');
-			validValue(input);
-		});
-		wrapper.appendChild(inner);
+		return insertedBlock;
 	}
 }

@@ -47,17 +47,21 @@ export const validForm = function(form: HTMLFormElement): boolean {
 	let isFormValid = true;
 	let password = "", repeatPassword = "";
 
-	infoBlock.textContent = "";
+	if (infoBlock){
+		infoBlock.textContent = "";
+	}
 
 	formBlocks.forEach(function(formBlock) {
-		let input = formBlock.querySelector("input");
+		let input = formBlock.querySelector("input") || formBlock.querySelector("textarea");
 		if (input){
 			if (!formBlock.classList.contains("none-block") && !validValue(input)) {
 				isFormValid = false;
 			}
 			if (!input.value && input.getAttribute("data-required") && !formBlock.classList.contains("none-block")){
 				isFormValid = false;
-				infoBlock.textContent = requiredFieldsErrorMessage;
+				if (infoBlock){
+					infoBlock.textContent = requiredFieldsErrorMessage;
+				}
 			}
 			if (input.name == "password"){
 				password = input.value;

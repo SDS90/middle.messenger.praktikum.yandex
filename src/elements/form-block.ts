@@ -1,6 +1,6 @@
 //Блок input
 
-import TemplateGen from '../utilities/TemplateGen';
+import Block from '../elements/block';
 import {validForm} from "../utilities/validation";
 
 const formBlockTemplate = `
@@ -21,41 +21,34 @@ export type FormParams = {
 	title: string
 };
 
-export default class Form /*extends Block*/ {
-	params: FormParams
+export default class Form extends Block {
 
-	constructor(params: FormParams) {
-		this.params = params;
-		//super('button', props, props.className)
+	constructor(params: FormParams, template: string) {
+		if (!template){
+			template = formBlockTemplate;
+		}
+		super(params, template);
 	}
 
-	render(): string {
-		return new TemplateGen(formBlockTemplate).generateTemplate(this.params);
-	}
-
-	insertBlock(element: string, clean: boolean): void {
-		const inner = new DOMParser().parseFromString(new TemplateGen(formBlockTemplate).generateTemplate(this.params), "text/html").getElementsByTagName("div")[0]; //this.element;
-		const wrapper = document.querySelector(element);
-		if (!inner || !wrapper) return;
-		for (let key in this.params){
-			if (!this.params[key]){
-				inner.removeAttribute(key);
-			}
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+		let insertedBlock = super.insertBlock(element, clean);
+		if (insertedBlock.inner && insertedBlock.wrapper){
+			insertedBlock.wrapper.appendChild(insertedBlock.inner);
 		}
-		if (clean){
-			wrapper.innerHTML = "";
-		}
-		wrapper.appendChild(inner);
+		return insertedBlock;
 	}
 }
 
-export function onSubmitForm(): void {
-	const form: HTMLFormElement  = document.querySelector('.reg-form');
+export function onSubmitForm(selector: string, callback): void {
+	const form: HTMLFormElement  = document.querySelector(selector);
 	if (!form) return
 
 	if (validForm(form)){
 		const data: FormData = new FormData(form);
 		console.log(...data);
+		if (callback){
+			callback();
+		}
 	}
 	return;
 }
