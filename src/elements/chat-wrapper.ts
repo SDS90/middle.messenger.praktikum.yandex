@@ -12,7 +12,7 @@ const chatWrapperTemplate = `
 			<div class="chat-list"></div>
 		</div>
 		<div class="chat-full-block">
-			<div class="chat-full-name">{{chatUserName}}</div>
+			<div class="chat-full-name"></div>
 			<div class="select-chat-wrapper" id="selectChat">
 				<div class="select-chat-cell">
 					<span>Выберите чат</span>
@@ -23,9 +23,7 @@ const chatWrapperTemplate = `
 	</div>
 	`;
 
-export type ChatParams = {
-	chatUserName: string
-};
+export type ChatParams = {};
 
 export default class Chat extends Block {
 

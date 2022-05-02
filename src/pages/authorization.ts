@@ -79,4 +79,6 @@ export default function(): void {
 	authorizationButtons.forEach(function(button) {
 		new Button(button).insertBlock(button.element);
 	});
+
+	
 }

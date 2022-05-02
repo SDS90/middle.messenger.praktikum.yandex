@@ -27,7 +27,7 @@ export default class Link extends Block {
 		if (insertedBlock.inner && insertedBlock.wrapper){
 			let inner = insertedBlock.inner;
 			let wrapper = insertedBlock.wrapper;
-			inner.addEventListener('click', this.params.onClick);
+			inner.addEventListener('click', this.props.onClick);
 			wrapper.appendChild(inner);
 		}
 		return insertedBlock;

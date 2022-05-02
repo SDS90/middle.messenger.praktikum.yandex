@@ -3,7 +3,7 @@
 import Block from '../elements/block';
 
 const chatBlockTemplate = `
-	<div class="chat-block" id="{{id}}">
+	<div class="chat-block" id="{{id}}" data-user-name="{{name}}">
 		<div class="chat-photo-wrapper">
 			<img class="chat-photo" src="{{photoLink}}" alt="{{photoAlt}}">
 		</div>
@@ -28,7 +28,7 @@ export type ChatBlockParams = {
 	time: string,
 	newMessageHideClass: string,
 	newMessageCount: number,
-	onClick: (event: Event) => void
+	onClick: (this, event: Event) => void
 };
 
 export default class ChatBlock extends Block {
@@ -45,7 +45,7 @@ export default class ChatBlock extends Block {
 		if (insertedBlock.inner && insertedBlock.wrapper){
 			let inner = insertedBlock.inner;
 			let wrapper = insertedBlock.wrapper;
-			inner.addEventListener('click', this.params.onClick);
+			inner.addEventListener('click', this.props.onClick);
 			wrapper.appendChild(inner);
 		}
 		return insertedBlock;

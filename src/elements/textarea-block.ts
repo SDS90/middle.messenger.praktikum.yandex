@@ -5,7 +5,7 @@ import {validValue} from "../utilities/validation";
 
 const textareaBlockTemplate = `
 	<div class="form-block">
-		<textarea id="{{id}}"  data-required="{{required}}" name="{{name}}"></textarea>
+		<textarea id="{{id}}"  data-required="{{required}}" name="{{name}}" value="{{value}}"></textarea>
 	</div>
 	`;
 
@@ -13,6 +13,7 @@ export type TextareaParams = {
 	element: string,
 	id: string,
 	name: string,
+	value: string,
 	required: boolean,
 }
 

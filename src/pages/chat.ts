@@ -5,9 +5,12 @@ import Form, { FormParams, onSubmitForm }  from '../elements/form-block';
 import Input, { InputParams }  from '../elements/input-block';
 import Textarea, { TextareaParams }  from '../elements/textarea-block';
 import Button, { ButtonParams }  from '../elements/button-block';
+import AddFileButton, { AddFileButtonParams }  from '../elements/add-file-block';
 import Link, { LinkParams }  from '../elements/link-block';
 import Chat, { ChatParams }  from '../elements/chat-wrapper';
 import ChatBlock, { ChatBlockParams }  from '../elements/chat-block';
+import ChatName, { ChatNameData }  from '../elements/chat-name';
+import FilesName, { FilesNameData }  from '../elements/files-name';
 import MessageBlock, { MessageBlockParams }  from '../elements/message-block';
 import Modal, { ModalParams }  from '../elements/modal-block';
 import registration from './registration';
@@ -15,16 +18,25 @@ import authorization from './authorization';
 import error, {showError} from './error';
 import profile from './profile';
 
-const documentTitle: string = "Чат"
+const documentTitle: string = "Чат";
 
-const chatParams: ChatParams = {
-	chatUserName: 'Андрей Андрейченков',
-}
+const chatParams: ChatParams = {};
+let chatName: ChatName;
+const chatNameParams: ChatNameData = {
+	element: '.chat-full-name',
+	name: '',
+};
 
 const sendForm: FormParams = {
 	title: ''
 };
 
+let textArea: Textarea;
+let filesName: FilesName;
+const filesNameParams: FilesNameData = {
+	element: '.chat-send-box',
+	name: '',
+};
 const sendButton: ButtonParams = {
 	element: '.chat-send-box',
 	id: '',
@@ -33,17 +45,27 @@ const sendButton: ButtonParams = {
 	onClick: (event) => {
 		event.preventDefault();
 		onSubmitForm('.chat-send-box', function(){
-			document.getElementById("chatSendBox").value = "";
+			textArea.setProps({ value: "" });
+			addFile.setProps({ value: "" });
+			//document.getElementById("chatSendBox").value = "";
 		});
 	},
 }
 
-const addFileButton: ButtonParams = {
+let addFile: FilesName;
+const addFileButton: AddFileButtonParams = {
 	element: '.chat-send-box',
 	id: 'addFileToMessage',
 	name: '📎',
 	classes: 'add-file-button',
+	value: '',
 	onClick: (event) => {},
+	onChange: (event) => {
+		if (event.target.value){
+			let valueArray: [] = event.target.value.split("\\");
+			filesName.setProps({ name: valueArray[valueArray.length - 1] });
+		}
+	},
 }
 
 const chatProfileLinks: LinkParams[] = [
@@ -142,6 +164,7 @@ const textareaParams: TextareaParams = {
 	element: '.chat-send-box',
 	id: 'chatSendBox',
 	name: 'message',
+	value: '',
 	required: true,
 }
 
@@ -176,6 +199,9 @@ const deleteButtons: ButtonParams[] = [
 ]
 
 function onChatClick(event){
+	const chatBlock: HTMLElement = event.target.closest(".chat-block");
+	if (!chatBlock) return;
+
 	if (event.target.classList.contains("delete-chat-button")){
 		new Modal(deleteWarningMessage).insertBlock("#app");
 		deleteButtons.forEach(function(button) {
@@ -186,13 +212,20 @@ function onChatClick(event){
 		messageList.forEach(function(message){
 			new MessageBlock(message, '').insertBlock(message.element);
 		});
+		if (chatName){
+			chatName.setProps({ name: chatBlock.getAttribute("data-user-name") });
+		}
 	}
 }
 
 export default function(): void {
 
 	document.title = documentTitle;
+
 	new Chat(chatParams).insertBlock("#app", true);
+	
+	chatName = new ChatName(chatNameParams);
+	chatName.insertBlock('.chat-full-name');
 
 	chatProfileLinks.forEach(function(link) {
 		new Link(link, '').insertBlock(link.element);
@@ -201,11 +234,16 @@ export default function(): void {
 	chatList.forEach(function(chat){
 		new ChatBlock(chat, '').insertBlock(chat.element);
 	});
-
 	
 	new Form(sendForm, '<form class="chat-send-box"></form>').insertBlock(".chat-full-block");
 	new Button(sendButton).insertBlock(".chat-send-box");
-	new Button(addFileButton, '<label for="{{id}}" class="button-link {{classes}}">{{name}}<input class="load-image" hidden accept="image/*" type="file" id="{{id}}"></label>').insertBlock(".chat-send-box");
 
-	new Textarea(textareaParams).insertBlock(".chat-send-box");
+	addFile = new AddFileButton(addFileButton, '');
+	addFile.insertBlock(".chat-send-box");
+
+	textArea = new Textarea(textareaParams);
+	textArea.insertBlock(".chat-send-box");
+
+	filesName = new FilesName(filesNameParams);
+	filesName.insertBlock(".chat-send-box");
 }
