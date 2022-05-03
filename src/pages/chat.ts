@@ -46,13 +46,12 @@ const sendButton: ButtonParams = {
 	onClick: (event) => {
 		event.preventDefault();
 		onSubmitForm('.chat-send-box', function(){
-			textArea.setProps({ value: "" });
-			addFile.setProps({ value: "" });
+			reloadChatSender();
 		});
 	},
 }
 
-let addFile: FilesName;
+let addFile: AddFileButton;
 const addFileButton: AddFileButtonParams = {
 	element: '.chat-send-box',
 	id: 'addFileToMessage',
@@ -61,7 +60,7 @@ const addFileButton: AddFileButtonParams = {
 	value: '',
 	onClick: (event) => {},
 	onChange: (event) => {
-		if (event.target.value){
+		if (event.target && event.target.value){
 			let valueArray: [] = event.target.value.split("\\");
 			filesName.setProps({ name: valueArray[valueArray.length - 1] });
 		}
@@ -245,12 +244,18 @@ function onChatClick(event){
 		messageList.forEach(function(message){
 			new MessageBlock(message, '').insertBlock(message.element);
 		});
-		
+		reloadChatSender();
 		chatWrapper.scrollTop = chatWrapper.scrollHeight;
 		if (chatName){
 			chatName.setProps({ name: chatBlock.getAttribute("data-user-name") });
 		}
+
 	}
+}
+
+function reloadChatSender(){
+	textArea.setProps({ value: "" });
+	filesName.setProps({ name: "" });
 }
 
 export default function(): void {

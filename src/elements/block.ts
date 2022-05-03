@@ -153,9 +153,6 @@ export default class Block {
 
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
 		let inner = this.getContent(); //new DOMParser().parseFromString(new TemplateGen(this.template).generateTemplate(this.props), "text/html").getElementsByTagName("body")[0].childNodes[0];
-		if (inner.children[0]){
-			inner = inner.children[0];
-		}
 		const wrapper = document.querySelector(element);
 		if (!inner || !wrapper) return {};
 		for (let key in this.props){
