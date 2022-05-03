@@ -120,11 +120,11 @@ const chatProfileLinks: LinkParams[] = [
 		element: '.chat-full-name',
 		id: '',
 		classes: 'chat-back-button',
-		name: 'Назад',
+		name: 'Закрыть',
 		href: '#',
 		onClick: (event) => {
 			event.preventDefault();
-			document.getElementById("selectChat").classList.add("none-block");
+			document.getElementById("selectChat").classList.remove("none-block");
 			document.getElementById("chatList").classList.remove('chat-full-show');
 			document.getElementById("chatFullBlock").classList.remove('chat-full-show');
 		},

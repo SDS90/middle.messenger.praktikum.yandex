@@ -151,7 +151,6 @@
 	}
 
 	.chat-back-button{
-		display: none;
 		position: absolute;
 		z-index: 12;
 		font-size: 14px;
@@ -174,7 +173,7 @@
 		position: absolute;
 		left: 0px; right: 0px;
 		top: 0px; bottom: 0px;
-		z-index: 10;
+		z-index: 15;
 		background-color: $chatBackgroundColor;
 		display: table;
 		height: 100%;
@@ -299,9 +298,6 @@
 		margin-left: 0px;
 		z-index: 100;
 		background-color: $chatBackgroundColor;	
-		.chat-back-button{
-			display: block;
-		}
 		.chat-message-wrapper{
 			.chat-message-block{
 				max-width: 100%;
