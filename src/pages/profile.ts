@@ -1,14 +1,12 @@
 //Страница профиля
 
-import TemplateGen from '../utilities/TemplateGen';
-import Form, { FormParams, onSubmitForm }  from '../elements/form-block';
-import Input, { InputParams }  from '../elements/input-block';
-import Button, { ButtonParams }  from '../elements/button-block';
-import ImageInput, { InputImageParams }  from '../elements/image-input-block';
-import authorization from './authorization';
+import Form, { FormParams, onSubmitForm } from '../elements/form-block';
+import Input, { InputParams } from '../elements/input-block';
+import Button, { ButtonParams } from '../elements/button-block';
+import ImageInput, { InputImageParams } from '../elements/image-input-block';
 import chat from './chat';
 
-const documentTitle: string = "Мой профиль"
+const documentTitle = "Мой профиль";
 
 const profileForm: FormParams = {
 	title: ''
@@ -168,7 +166,7 @@ const profileButtons: ButtonParams[] = [
 			chat();
 		},
 	},
-]
+];
 
 export default function(): void {
 

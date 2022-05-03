@@ -1,6 +1,5 @@
 //Блок ссылки в меню
 
-import Block from '../elements/block';
 import Link from '../elements/link-block';
 
 const menuLinkBlockTemplate = `<li><a id="{{id}}" class="{{classes}}" href="{{href}}">{{name}}</a></li>`;

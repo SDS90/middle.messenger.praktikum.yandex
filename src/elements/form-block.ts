@@ -31,7 +31,7 @@ export default class Form extends Block {
 	}
 
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
-		let insertedBlock = super.insertBlock(element, clean);
+		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner && insertedBlock.wrapper){
 			insertedBlock.wrapper.appendChild(insertedBlock.inner);
 		}
@@ -40,8 +40,8 @@ export default class Form extends Block {
 }
 
 export function onSubmitForm(selector: string, callback): void {
-	const form: HTMLFormElement  = document.querySelector(selector);
-	if (!form) return
+	const form: HTMLFormElement = document.querySelector(selector);
+	if (!form) return;
 
 	if (validForm(form)){
 		const data: FormData = new FormData(form);

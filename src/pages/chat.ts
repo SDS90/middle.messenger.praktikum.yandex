@@ -1,25 +1,22 @@
 //Страница чата
 
-import TemplateGen from '../utilities/TemplateGen';
-import Form, { FormParams, onSubmitForm }  from '../elements/form-block';
-import Input, { InputParams }  from '../elements/input-block';
-import Textarea, { TextareaParams }  from '../elements/textarea-block';
-import Button, { ButtonParams }  from '../elements/button-block';
-import AddFileButton, { AddFileButtonParams }  from '../elements/add-file-block';
-import Link, { LinkParams }  from '../elements/link-block';
-import MenuLink, { MenuLinkParams }  from '../elements/menu-link-block';
-import Chat, { ChatParams }  from '../elements/chat-wrapper';
-import ChatBlock, { ChatBlockParams }  from '../elements/chat-block';
-import ChatName, { ChatNameData }  from '../elements/chat-name';
-import FilesName, { FilesNameData }  from '../elements/files-name';
-import MessageBlock, { MessageBlockParams }  from '../elements/message-block';
-import Modal, { ModalParams }  from '../elements/modal-block';
-import registration from './registration';
+import Form, { FormParams, onSubmitForm } from '../elements/form-block';
+import Textarea, { TextareaParams } from '../elements/textarea-block';
+import Button, { ButtonParams } from '../elements/button-block';
+import AddFileButton, { AddFileButtonParams } from '../elements/add-file-block';
+import Link, { LinkParams } from '../elements/link-block';
+import MenuLink, { MenuLinkParams } from '../elements/menu-link-block';
+import Chat, { ChatParams } from '../elements/chat-wrapper';
+import ChatBlock, { ChatBlockParams } from '../elements/chat-block';
+import ChatName, { ChatNameData } from '../elements/chat-name';
+import FilesName, { FilesNameData } from '../elements/files-name';
+import MessageBlock, { MessageBlockParams } from '../elements/message-block';
+import Modal, { ModalParams } from '../elements/modal-block';
 import authorization from './authorization';
-import error, {showError} from './error';
+import error from './error'; //может пригодиться передача параметров ошибки в {showError}
 import profile from './profile';
 
-const documentTitle: string = "Чат";
+const documentTitle = "Чат";
 
 const chatParams: ChatParams = {};
 let chatName: ChatName;
@@ -49,7 +46,7 @@ const sendButton: ButtonParams = {
 			reloadChatSender();
 		});
 	},
-}
+};
 
 let addFile: AddFileButton;
 const addFileButton: AddFileButtonParams = {
@@ -58,14 +55,16 @@ const addFileButton: AddFileButtonParams = {
 	name: '📎',
 	classes: 'add-file-button',
 	value: '',
-	onClick: (event) => {},
+	onClick: (event) => {
+		return event;
+	},
 	onChange: (event) => {
 		if (event.target && event.target.value){
-			let valueArray: [] = event.target.value.split("\\");
+			const valueArray: [] = event.target.value.split("\\");
 			filesName.setProps({ name: valueArray[valueArray.length - 1] });
 		}
 	},
-}
+};
 
 const menuLinks: MenuLinkParams[] = [
 	{
@@ -192,13 +191,13 @@ const textareaParams: TextareaParams = {
 	name: 'message',
 	value: '',
 	required: true,
-}
+};
 
 const deleteWarningMessage: ModalParams = {
 	element: '#app',
 	id: 'deleteWarningMessage',
 	MessageText: 'Вы действительно хотите удалить этот чат?',
-}
+};
 
 const deleteButtons: ButtonParams[] = [
 	{
@@ -222,7 +221,7 @@ const deleteButtons: ButtonParams[] = [
 			document.getElementById("deleteWarningMessage").remove();
 		},
 	},
-]
+];
 
 function onChatClick(event){
 	const chatBlock: HTMLElement = event.target.closest(".chat-block");

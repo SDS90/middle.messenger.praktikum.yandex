@@ -1,7 +1,7 @@
 //Блок модального окна
 
 import Block from '../elements/block';
-import Input, { InputParams }  from '../elements/input-block';
+//import Input, { InputParams } from '../elements/input-block'; - может пригодиться позже при использовании форм в окне
 
 const modalTemplate = `
 	<div class="warning-message-wrapper warning-on" id="{{id}}">
@@ -38,7 +38,7 @@ export default class Modal extends Block {
 	}
 
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
-		let insertedBlock = super.insertBlock(element, clean);
+		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner && insertedBlock.wrapper){
 			insertedBlock.wrapper.appendChild(insertedBlock.inner);
 		}

@@ -17,25 +17,25 @@ export default class Block {
 
 	template: string;
 	props: Record<string, unknown>;
-	eventBus: () => EventBus
+	eventBus: () => EventBus;
 
-	_element: HTMLElement  = null
-	_meta: BlockMetaData
+	_element: HTMLElement = null;
+	_meta: BlockMetaData;
 
 	constructor(params: Record<string, unknown>, template: string, tagName = 'div') {
 		this.template = template;
-	    const eventBus = new EventBus();
-	    this._meta  = {
-	    	tagName,
-	    	params
-	    };
+		const eventBus = new EventBus();
+		this._meta = {
+			tagName,
+			params
+		};
 
-	    this.props = this._makePropsProxy(params);
+		this.props = this._makePropsProxy(params);
 
-	    this.eventBus = () => eventBus;
+		this.eventBus = () => eventBus;
 
-	    this._registerEvents(eventBus);
-	    eventBus.emit(Block.EVENTS.INIT);
+		this._registerEvents(eventBus);
+		eventBus.emit(Block.EVENTS.INIT);
 	}
 
 	_registerEvents(eventBus) {
@@ -48,7 +48,7 @@ export default class Block {
 	_createResources(): void {
 		const { tagName } = this._meta;
 		this._element = this._createDocumentElement(tagName);
-		this._element
+		this._element;
 	}
 
 	init(): void {
@@ -56,29 +56,29 @@ export default class Block {
 		this.eventBus().emit(Block.EVENTS.FLOW_CDM);
 	}
 
-	_componentDidMount() {
+	_componentDidMount(): void {
 		this.componentDidMount();
 		this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
 	}
 
-	componentDidMount() {
-
+	componentDidMount(): void {
+		return;
 	}
 
-	dispatchComponentDidMoun() {}
+	dispatchComponentDidMoun() {return;}
 
 	_componentDidUpdate(oldProps: Record<string, unknown>, newProps: Record<string, unknown>): void {
 		const response = this.componentDidUpdate(oldProps, newProps);
 		if (!response) {
 			return;
-	    }
+		}
 		this._render();
 	}
 
 	componentDidUpdate(oldProps: Record<string, unknown>, newProps: Record<string, unknown>,): boolean {
-		let oldPropsString = JSON.stringify(oldProps);
-		let newPropsString = JSON.stringify(newProps);
-		if (oldPropsString == newProps){
+		const oldPropsString = JSON.stringify(oldProps);
+		const newPropsString = JSON.stringify(newProps);
+		if (oldPropsString == newPropsString){
 			return false;
 		}		
 		return true;
@@ -98,9 +98,9 @@ export default class Block {
 
 	_render() {
 		const block = this.render();
-	    if (this._element){
-	    	this._element.innerHTML = block;
-	    }
+		if (this._element){
+			this._element.innerHTML = block;
+		}
 	}
 
 	render(): string {
@@ -120,14 +120,14 @@ export default class Block {
 					return target[property].bind(target);
 				} else {
 					return target[property];
-				}  
+				}
 			},
 			set(target, property, value) {
 				target[property] = value;
 				self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
 				return true;
 			},
-			deleteProperty(target, property) {
+			deleteProperty() {
 				throw new Error("Нет доступа");
 			}
 		});
@@ -138,24 +138,24 @@ export default class Block {
 	}
 
 	show(): void {
-		let element = this.getContent();
+		const element = this.getContent();
 		if (element){
 			element.style.display = "block";
 		}		
 	}
 
 	hide(): void {
-		let element = this.getContent();
+		const element = this.getContent();
 		if (element){
 			element.style.display = "none";
 		}
 	}
 
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
-		let inner = this.getContent(); //new DOMParser().parseFromString(new TemplateGen(this.template).generateTemplate(this.props), "text/html").getElementsByTagName("body")[0].childNodes[0];
+		const inner = this.getContent(); //new DOMParser().parseFromString(new TemplateGen(this.template).generateTemplate(this.props), "text/html").getElementsByTagName("body")[0].childNodes[0];
 		const wrapper = document.querySelector(element);
 		if (!inner || !wrapper) return {};
-		for (let key in this.props){
+		for (const key in this.props){
 			if (!this.props[key]){
 				if(inner && inner.hasAttribute(key)){
 					inner.removeAttribute(key);
@@ -168,6 +168,6 @@ export default class Block {
 		return {
 			inner: inner,
 			wrapper: wrapper
-		}
+		};
 	}
 }

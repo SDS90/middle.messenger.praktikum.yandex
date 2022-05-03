@@ -1,7 +1,6 @@
 //Блок textarea
 
 import Block from '../elements/block';
-import {validValue} from "../utilities/validation";
 
 const textareaBlockTemplate = `
 	<div class="form-block">
@@ -29,12 +28,12 @@ export default class Textarea extends Block {
 
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
 
-		let insertedBlock = super.insertBlock(element, clean);
+		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner && insertedBlock.wrapper){
-			let inner = insertedBlock.inner;
-			let wrapper = insertedBlock.wrapper;
+			const inner = insertedBlock.inner;
+			const wrapper = insertedBlock.wrapper;
 
-			let textarea = inner.querySelector('textarea')
+			const textarea = inner.querySelector('textarea');
 			textarea.addEventListener('focus', function(){
 				textarea.classList.add('focus-input');
 			});

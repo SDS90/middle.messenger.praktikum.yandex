@@ -1,17 +1,16 @@
 //Страница авторизации
 
-import TemplateGen from '../utilities/TemplateGen';
-import Form, { FormParams, onSubmitForm }  from '../elements/form-block';
-import Input, { InputParams }  from '../elements/input-block';
-import Button, { ButtonParams }  from '../elements/button-block';
+import Form, { FormParams, onSubmitForm } from '../elements/form-block';
+import Input, { InputParams } from '../elements/input-block';
+import Button, { ButtonParams } from '../elements/button-block';
 import registration from './registration';
 import chat from './chat';
 
-const documentTitle: string = "Вход"
+const documentTitle = "Вход";
 
 const authorizationForm: FormParams = {
 	title: 'Вход',
-}
+};
 
 const authorizationInputs: InputParams[] = [
 	{
@@ -64,7 +63,7 @@ const authorizationButtons: ButtonParams[] = [
 			//profile();
 		},
 	},
-]
+];
 
 export default function(): void {
 

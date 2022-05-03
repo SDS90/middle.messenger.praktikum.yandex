@@ -1,11 +1,10 @@
 //Страница ошибки
 
-import TemplateGen from '../utilities/TemplateGen';
-import Button, { ButtonParams }  from '../elements/button-block';
-import Error, { ErrorParams }  from '../elements/error-block';
+import Button, { ButtonParams } from '../elements/button-block';
+import Error, { ErrorParams } from '../elements/error-block';
 import authorization from './authorization';
 
-const documentTitle: string = "Ошибка"
+const documentTitle = "Ошибка";
 
 const errorBlock: ErrorParams = {
 	title: 'Ошибка 404',

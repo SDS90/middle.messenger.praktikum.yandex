@@ -24,7 +24,7 @@ const chatWrapperTemplate = `
 	</div>
 	`;
 
-export type ChatParams = {};
+export type ChatParams = Record<string, unknown>;
 
 export default class Chat extends Block {
 
@@ -36,7 +36,7 @@ export default class Chat extends Block {
 	}
 
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
-		let insertedBlock = super.insertBlock(element, clean);
+		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner && insertedBlock.wrapper){
 			insertedBlock.wrapper.appendChild(insertedBlock.inner);
 		}

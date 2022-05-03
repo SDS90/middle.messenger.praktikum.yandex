@@ -13,7 +13,7 @@ export default class TemplateGen {
 	readonly templateBlock: string = "";
 
 	constructor(templateBlock: string) {
-		this.templateBlock = templateBlock
+		this.templateBlock = templateBlock;
 	}
 
 	generateTemplate(template: Record<string, unknown>): string {
@@ -24,13 +24,13 @@ export default class TemplateGen {
 	}
 
 	changeTemplateKeys(template, tmp, templateRegular): string {
-		let templateKeys = templateRegular.exec(tmp);
+		const templateKeys = templateRegular.exec(tmp);
 		if (templateKeys && templateKeys[1]){
 			const templateKey = templateKeys[1];
 			if (templateKey in template){
 				let templateValue = template[templateKey];
 				if ((typeof templateValue != "object") && (typeof templateValue != "function")){
-					templateValue = templateValue.toString()
+					templateValue = templateValue.toString();
 				} else {
 					templateValue = "";
 				}

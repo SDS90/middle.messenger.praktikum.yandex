@@ -38,7 +38,7 @@ export const validValue = function(input: HTMLInputElement): boolean {
 		errorBlock.textContent = "";
 	}
 	return true;
-}
+};
 
 export const validForm = function(form: HTMLFormElement): boolean {
 	const formBlocks = form.querySelectorAll('.form-block');
@@ -52,7 +52,7 @@ export const validForm = function(form: HTMLFormElement): boolean {
 	}
 
 	formBlocks.forEach(function(formBlock) {
-		let input = formBlock.querySelector("input") || formBlock.querySelector("textarea");
+		const input = formBlock.querySelector("input") || formBlock.querySelector("textarea");
 		if (input){
 			if (!formBlock.classList.contains("none-block") && !validValue(input)) {
 				isFormValid = false;
@@ -77,4 +77,4 @@ export const validForm = function(form: HTMLFormElement): boolean {
 		infoBlock.textContent = repeatPasswordErrorMessage;
 	}	
 	return isFormValid;
-}
+};

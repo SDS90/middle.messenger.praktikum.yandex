@@ -7,7 +7,8 @@ const inputBlockTemplate = `
 	<div class="form-block {{classList}}">
 		<label class="form-label" for="{{id}}">{{label}}</label>
 		<div class="input-wrapper">
-			<input class="form-control input-styles" data-required="{{required}}" data-error-text="{{errorText}}" data-validation-type="{{validationType}}" id="{{id}}" type="{{type}}" value="{{value}}" name="{{name}}">
+			<input class="form-control input-styles" data-required="{{required}}" data-error-text="{{errorText}}" 
+			data-validation-type="{{validationType}}" id="{{id}}" type="{{type}}" value="{{value}}" name="{{name}}">
 			<div class="error-text-block"></div>
 		</div>
 	</div>`;
@@ -37,12 +38,12 @@ export default class Input extends Block {
 
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
 
-		let insertedBlock = super.insertBlock(element, clean);
+		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner && insertedBlock.wrapper){
-			let inner = insertedBlock.inner;
-			let wrapper = insertedBlock.wrapper;
+			const inner = insertedBlock.inner;
+			const wrapper = insertedBlock.wrapper;
 
-			let input = inner.querySelector('input')
+			const input = inner.querySelector('input');
 			input.addEventListener('focus', function(){
 				input.classList.add('focus-input');
 			});

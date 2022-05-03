@@ -1,17 +1,16 @@
 //Страница регистрации
 
-import TemplateGen from '../utilities/TemplateGen';
-import Form, { FormParams, onSubmitForm }  from '../elements/form-block';
-import Input, { InputParams }  from '../elements/input-block';
-import Button, { ButtonParams }  from '../elements/button-block';
+import Form, { FormParams, onSubmitForm } from '../elements/form-block';
+import Input, { InputParams } from '../elements/input-block';
+import Button, { ButtonParams } from '../elements/button-block';
 import authorization from './authorization';
 import chat from './chat';
 
-const documentTitle: string = "Регистрация"
+const documentTitle = "Регистрация";
 
 const registrationForm: FormParams = {
 	title: 'Регистрация'
-}
+};
 
 const registrationInputs: InputParams[] = [
 	{
@@ -123,7 +122,7 @@ const registrationButtons: ButtonParams[] = [
 			authorization();
 		},
 	},
-]
+];
 
 export default function(): void {
 
