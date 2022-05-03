@@ -48,6 +48,7 @@ export default class Block {
 	_createResources(): void {
 		const { tagName } = this._meta;
 		this._element = this._createDocumentElement(tagName);
+		this._element
 	}
 
 	init(): void {
@@ -151,13 +152,16 @@ export default class Block {
 	}
 
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
-		const inner = this.getContent(); //new DOMParser().parseFromString(new TemplateGen(this.template).generateTemplate(this.props), "text/html").getElementsByTagName("body")[0].childNodes[0];
+		let inner = this.getContent(); //new DOMParser().parseFromString(new TemplateGen(this.template).generateTemplate(this.props), "text/html").getElementsByTagName("body")[0].childNodes[0];
+		if (inner.children[0]){
+			inner = inner.children[0];
+		}
 		const wrapper = document.querySelector(element);
 		if (!inner || !wrapper) return {};
 		for (let key in this.props){
 			if (!this.props[key]){
-				if(inner.children[0] && inner.children[0].hasAttribute(key)){
-					inner.children[0].removeAttribute(key);
+				if(inner && inner.hasAttribute(key)){
+					inner.removeAttribute(key);
 				}
 			}
 		}

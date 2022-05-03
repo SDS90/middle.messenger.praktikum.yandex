@@ -8,6 +8,7 @@
 	height: 100%;	
 }
 .chat-list-column{
+	position: relative;
 	float: left;
 	width: 350px;
 	padding: 5px;
@@ -15,7 +16,6 @@
 
 	.profile-block{
 		margin-bottom: 10px;
-		text-align: right;
 	}
 
 	a{
@@ -27,13 +27,18 @@
 		}
 	}
 
-	.create-chat-link{
-		float: left;
-	}
-
-	.profile-link{
-		float: right;
-		
+	.menu-list{
+		position: absolute;
+		top: 30px;
+		left: 5px;
+		right: 20px;
+		z-index: 11;
+		background-color: $chatBackgroundColor;
+		li{
+			display: block;
+			padding: 8px 5px 8px 0px;
+			border-bottom: 1px solid $chatFirstColor;
+		}
 	}
 
 	.search-wrapper{
@@ -146,7 +151,7 @@
 	}
 
 	.chat-back-button{
-		//display: none;
+		display: none;
 		position: absolute;
 		z-index: 12;
 		font-size: 14px;
@@ -285,9 +290,15 @@
 @media (max-width: 960px){
 	.chat-list-column{
 		width: 100%;
+		&.chat-full-show{
+			display: none;
+		}
 	}
 	.chat-full-block{
-		display: none;	
+		display: none;
+		margin-left: 0px;
+		z-index: 100;
+		background-color: $chatBackgroundColor;	
 		.chat-back-button{
 			display: block;
 		}
@@ -295,6 +306,10 @@
 			.chat-message-block{
 				max-width: 100%;
 			}
+		}
+
+		&.chat-full-show{
+			display: block;
 		}
 	}
 }

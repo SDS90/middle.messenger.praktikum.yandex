@@ -7,6 +7,7 @@ import Textarea, { TextareaParams }  from '../elements/textarea-block';
 import Button, { ButtonParams }  from '../elements/button-block';
 import AddFileButton, { AddFileButtonParams }  from '../elements/add-file-block';
 import Link, { LinkParams }  from '../elements/link-block';
+import MenuLink, { MenuLinkParams }  from '../elements/menu-link-block';
 import Chat, { ChatParams }  from '../elements/chat-wrapper';
 import ChatBlock, { ChatBlockParams }  from '../elements/chat-block';
 import ChatName, { ChatNameData }  from '../elements/chat-name';
@@ -47,7 +48,6 @@ const sendButton: ButtonParams = {
 		onSubmitForm('.chat-send-box', function(){
 			textArea.setProps({ value: "" });
 			addFile.setProps({ value: "" });
-			//document.getElementById("chatSendBox").value = "";
 		});
 	},
 }
@@ -68,9 +68,9 @@ const addFileButton: AddFileButtonParams = {
 	},
 }
 
-const chatProfileLinks: LinkParams[] = [
+const menuLinks: MenuLinkParams[] = [
 	{
-		element: '.profile-block',
+		element: '.menu-list',
 		id: '',
 		classes: 'create-chat-link',
 		name: 'Создать чат',
@@ -81,10 +81,10 @@ const chatProfileLinks: LinkParams[] = [
 		},
 	},
 	{
-		element: '.profile-block',
+		element: '.menu-list',
 		id: '',
-		classes: 'profile-link',
-		name: 'Мой профиль &gt;',
+		classes: 'create-chat-link',
+		name: 'Мой профиль',
 		href: '#',
 		onClick: (event) => {
 			event.preventDefault();
@@ -92,14 +92,41 @@ const chatProfileLinks: LinkParams[] = [
 		},
 	},
 	{
-		element: '.chat-full-name',
+		element: '.menu-list',
 		id: '',
-		classes: 'chat-back-button',
+		classes: 'create-chat-link',
 		name: 'Выход',
 		href: '#',
 		onClick: (event) => {
 			event.preventDefault();
 			authorization();		
+		},
+	},
+];
+
+const chatProfileLinks: LinkParams[] = [
+	{
+		element: '.profile-block',
+		id: '',
+		classes: 'create-chat-link',
+		name: 'Меню',
+		href: '#',
+		onClick: (event) => {
+			event.preventDefault();
+			document.getElementById('menuBlock').classList.toggle('none-block');
+		},
+	},
+	{
+		element: '.chat-full-name',
+		id: '',
+		classes: 'chat-back-button',
+		name: 'Назад',
+		href: '#',
+		onClick: (event) => {
+			event.preventDefault();
+			document.getElementById("selectChat").classList.add("none-block");
+			document.getElementById("chatList").classList.remove('chat-full-show');
+			document.getElementById("chatFullBlock").classList.remove('chat-full-show');
 		},
 	},
 ];
@@ -200,7 +227,8 @@ const deleteButtons: ButtonParams[] = [
 
 function onChatClick(event){
 	const chatBlock: HTMLElement = event.target.closest(".chat-block");
-	if (!chatBlock) return;
+	const chatWrapper : HTMLElement = document.getElementById("chatWrapper");
+	if (!chatBlock || !chatWrapper) return;
 
 	if (event.target.classList.contains("delete-chat-button")){
 		new Modal(deleteWarningMessage).insertBlock("#app");
@@ -208,10 +236,17 @@ function onChatClick(event){
 			new Button(button, '').insertBlock(button.element);
 		});
 	} else {
+		document.getElementById("chatList").classList.toggle('chat-full-show');
+		document.getElementById('menuBlock').classList.add('none-block');
 		document.getElementById("selectChat").classList.add("none-block");
+		document.getElementById("chatFullBlock").classList.toggle('chat-full-show');
+
+		chatWrapper.innerHTML = "";
 		messageList.forEach(function(message){
 			new MessageBlock(message, '').insertBlock(message.element);
 		});
+		
+		chatWrapper.scrollTop = chatWrapper.scrollHeight;
 		if (chatName){
 			chatName.setProps({ name: chatBlock.getAttribute("data-user-name") });
 		}
@@ -229,6 +264,10 @@ export default function(): void {
 
 	chatProfileLinks.forEach(function(link) {
 		new Link(link, '').insertBlock(link.element);
+	});
+
+	menuLinks.forEach(function(link) {
+		new MenuLink(link, '').insertBlock(link.element);
 	});
 
 	chatList.forEach(function(chat){

@@ -27,17 +27,17 @@ export default class TemplateGen {
 		let templateKeys = templateRegular.exec(tmp);
 		if (templateKeys && templateKeys[1]){
 			const templateKey = templateKeys[1];
-			for (let key in template) {
-				if (key == templateKeys[1]){
-					let templateValue = template[templateKey];
-					if ((typeof templateValue != "object") && (typeof templateValue != "function")){
-						templateValue = templateValue.toString()
-					} else {
-						templateValue = "";
-					}
-					tmp = tmp.replace(templateKeys[0], templateValue);
+			if (templateKey in template){
+				let templateValue = template[templateKey];
+				if ((typeof templateValue != "object") && (typeof templateValue != "function")){
+					templateValue = templateValue.toString()
+				} else {
+					templateValue = "";
 				}
-			}			
+				tmp = tmp.replace(templateKeys[0], templateValue);
+			} else {
+				tmp = tmp.replace(templateKeys[0], "");
+			}	
 		}
 		if (templateRegular.exec(tmp)){
 			return this.changeTemplateKeys(template, tmp, templateRegular);
