@@ -76,11 +76,6 @@ export default class Block {
 	}
 
 	componentDidUpdate(oldProps: Record<string, unknown>, newProps: Record<string, unknown>,): boolean {
-		const oldPropsString = JSON.stringify(oldProps);
-		const newPropsString = JSON.stringify(newProps);
-		if (oldPropsString == newPropsString){
-			return false;
-		}		
 		return true;
 	}
 
