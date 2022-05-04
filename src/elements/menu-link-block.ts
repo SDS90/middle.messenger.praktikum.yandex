@@ -15,10 +15,10 @@ export type MenuLinkParams = {
 
 export default class MenuLink extends Link {
 
-	constructor(params: MenuLinkParams, template: string) {
+	constructor(params: MenuLinkParams, template: string, noTagName: boolean = true) {
 		if (!template){
 			template = menuLinkBlockTemplate;
 		}
-		super(params, template);
+		super(params, template, noTagName);
 	}
 }

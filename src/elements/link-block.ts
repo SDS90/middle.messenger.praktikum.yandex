@@ -15,11 +15,11 @@ export type LinkParams = {
 
 export default class Link extends Block {
 
-	constructor(params: LinkParams, template: string) {
+	constructor(params: LinkParams, template: string, noTagName: boolean = false) {
 		if (!template){
 			template = linkBlockTemplate;
 		}
-		super(params, template);
+		super(params, template, noTagName);
 	}
 
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
