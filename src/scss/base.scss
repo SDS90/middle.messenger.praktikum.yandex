@@ -17,6 +17,7 @@ $chatButtonColorOpacity: rgba(157,153,153, 0.5);
 
 $formInputColor: #a0a0a0;
 $formErrorColor: #f80000;
+$formFocusColor: #0078d4;
 $formAddLinkColor: #aaa;
 $formRegLinkColor: #0078d4;
 
@@ -33,7 +34,7 @@ html, body {
     height: 100%;
 }
 body{
-	background-color: #efefef;
+	background-color: $chatBackgroundColor;
 	font-family: 'Open Sans', serif;
     position: relative;    
 	//padding-top: 155px;
@@ -86,6 +87,7 @@ sup{
         position: fixed;
         text-align: center;
         left: 0px;
+        z-index: 15;
         right: 0px;
         top: 0px; bottom: 0px;
         background-color: rgba(157,153,153,0.5);
@@ -126,7 +128,11 @@ sup{
 
     .warning-buttons-wrapper{
         margin-top: 10px;
-        text-align: right;
+        text-align: center;
+
+        >div{
+            display: inline-block;
+        }
 
         .warning-button{
             display: inline-block;
@@ -137,6 +143,7 @@ sup{
             outline: none;          
             border: 1px solid #aaa;
             border-radius: 15px;
+            margin: 0px 5px;
 
             &.warning-add{
                 background-color: #aaa;

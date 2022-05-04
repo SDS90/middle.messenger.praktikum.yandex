@@ -1,0 +1,25 @@
+{
+	"extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended"],
+	"parser": "@typescript-eslint/parser",
+	"plugins": ["@typescript-eslint"],
+	"rules": {
+		"indent": [2, "tab"],
+		"max-len": [2, 200],
+		"@typescript-eslint/no-unused-vars": 2,
+		"no-var": "error",
+	    "semi": "error",
+	    "@typescript-eslint/no-this-alias": [
+		    "error",
+		    {
+		      "allowDestructuring": false,
+		      "allowedNames": ["self"]
+		    }
+		  ],
+	    "no-multi-spaces": "error",
+	    "space-in-parens": "error",
+	    "no-multiple-empty-lines": "error",
+	    "prefer-const": "error",
+	    "no-useless-escape": "off",
+	    "no-use-before-define": ["error", { "functions": false, "classes": true, "variables": true }]
+	}
+} 

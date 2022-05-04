@@ -1,109 +1,8 @@
 .reg-form-page{
 	padding: 20px;	
-}
 
-.input-styles{
-	width: 100%;
-	background: $white;
-	border: 1px solid $formInputColor;
-	color: $chatFirstColor;
-	padding: 0 5px;
-	outline: none;
-}
-
-.reg-form-wrapper{
-	max-width: 400px;
-	margin: 20px auto;
-	padding: 30px 50px;
-	border-radius: 50px;
-	background-color: $white;
-	 h2 {
+	.reg-form-fieldset{
 		text-align: center;
-		font-size: 25px;
-		line-height: 32px;
-		font-weight: 700;
-		color: $chatFirstColor;
-		margin-bottom: 20px;
-	}
-
-	.form-block,
-	.form-block label{
-		display: block;
-		margin-bottom: 5px;
-	}
-}
-
-.image-form-block{
-	display: block;
-	margin: 0px auto 10px auto;
-	width: 100px;
-	height: 100px;
-	border-radius: 50%;
-	background-color: $chatBorderColor;
-	overflow: hidden;
-	cursor: pointer;
-	img{
-		width: 100%;
-		height: 100%;
-	}
-}
-
-.form-block{
-	width: 100%;
-	.form-label {	
-		color: #888;
-	}
-	.input-wrapper {
-		position: relative;
-	}
-
-	.form-control {
-		font-size: 17px;
-		height: 35px;
-		margin-bottom: 5px;
-		&.error-input{
-			color: $formErrorColor;
-		}
-	}
-
-	.info-block{
-		width: 100%;
-		font-size: 20px;
-		color: $chatFirstColor;
-		line-height: 24px;
-	}
-
-	.error-text-block{
-		position:absolute;
-		max-width:300px;
-		right:0;
-		top:41px;
-		font-size:14px;
-		line-height:16px;
-		z-index:2;
-		background-color: $formErrorColor;
-		color: $white;
-		border-radius:5px;
-		padding:5px;
-
-		&:after,
-		&:before{
-			content: "";
-			position: absolute;
-			left: 20px;
-			top: -14px;
-			border: 7px solid transparent;
-			border-bottom: 7px solid $formErrorColor;
-		}
-		&:after{
-			border-bottom:7px solid $formErrorColor;
-			top: -13px
-		}
-	}
-
-	&.buttons-wrapper{
-		text-align: center;
-		margin-top: 20px;
 	}
 
 	.button-link{
@@ -137,6 +36,128 @@
 			}
 		}
 	}
+}
+
+.input-styles{
+	width: 100%;
+	background: $white;
+	border: 1px solid $formInputColor;
+	color: $chatFirstColor;
+	padding: 0 5px;
+	outline: none;
+
+	&.focus-input{
+		border: 1px solid $formFocusColor;
+	}
+}
+
+.reg-form-wrapper{
+	max-width: 400px;
+	margin: 20px auto;
+	padding: 30px 50px;
+	border-radius: 50px;
+	background-color: $white;
+	 h2 {
+		text-align: center;
+		font-size: 25px;
+		line-height: 32px;
+		font-weight: 700;
+		color: $chatFirstColor;
+		margin-bottom: 20px;
+	}
+
+	.form-block,
+	.form-block label{		
+		text-align: left;
+		margin-bottom: 5px;
+	}
+
+	.form-block label{
+		display: block;
+	}
+}
+
+.image-form-block{
+	display: block;
+	margin: 0px auto 10px auto;
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	background-color: $chatBorderColor;
+	overflow: hidden;
+	cursor: pointer;
+	img{
+		width: 100%;
+		height: 100%;
+	}
+}
+
+.form-block{
+	width: 100%;
+	.form-label {	
+		color: #888;
+	}
+	.input-wrapper {
+		position: relative;
+
+		&.error-input{
+			.input-styles{
+				border: 1px solid $formErrorColor;
+				color: $formErrorColor;
+			}
+
+			.error-text-block{
+				display: block;
+			}
+		}
+	}
+
+	.form-control {
+		font-size: 17px;
+		height: 35px;
+		margin-bottom: 5px;
+	}
+
+	&.info-block{
+		width: 100%;
+		font-size: 20px;
+		color: $formErrorColor;
+		line-height: 24px;
+	}
+
+	.error-text-block{
+		display: none;
+		position:absolute;
+		max-width:300px;
+		right:0;
+		top:41px;
+		font-size:14px;
+		line-height:16px;
+		z-index:2;
+		background-color: $formErrorColor;
+		color: $white;
+		border-radius:5px;
+		padding:5px;
+
+		&:after,
+		&:before{
+			content: "";
+			position: absolute;
+			left: 20px;
+			top: -14px;
+			border: 7px solid transparent;
+			border-bottom: 7px solid $formErrorColor;
+		}
+		&:after{
+			border-bottom:7px solid $formErrorColor;
+			top: -13px
+		}
+	}
+
+	&.buttons-wrapper{
+		text-align: center;
+		margin-top: 20px;
+	}	
 }
 
 @media (max-width: 960px){

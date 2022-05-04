@@ -1,0 +1,9 @@
+{
+	"extends": "stylelint-config-standard",
+	"rules": {
+		"color-hex-case": "lower",
+		"indentation": ["tab"]
+	},
+	"ignoreFiles": ["dist/*", ".parcel-cache/*", "node_modules/*", ".cache/*", ".github/*", "package-lock.json", "package.json", "tsconfig.json", ".gitignore", ".eslintrc.json", ".eslintignore"],
+	"plugins": ["stylelint-scss"]
+} 
