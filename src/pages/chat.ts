@@ -166,19 +166,19 @@ const chatList: ChatBlockParams[] = [
 
 const messageList: MessageBlockParams[] = [
 	{
-		element: '.chat-wrapper',
+		element: '#chat',
 		toMeClass: 'message-to-me',
 		text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
 		time: '15.04.2022 12:37',
 	},
 	{
-		element: '.chat-wrapper',
+		element: '#chat',
 		toMeClass: 'message-to-me',
 		text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
 		time: '15.04.2022 12:37',
 	},
 	{
-		element: '.chat-wrapper',
+		element: '#chat',
 		toMeClass: '',
 		text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
 		time: '15.04.2022 12:37',
@@ -239,7 +239,7 @@ function onChatClick(event){
 		document.getElementById("selectChat").classList.add("none-block");
 		document.getElementById("chatFullBlock").classList.toggle('chat-full-show');
 
-		chatWrapper.innerHTML = "";
+		document.getElementById("chat").innerHTML = "";
 		messageList.forEach(function(message){
 			new MessageBlock(message, '').insertBlock(message.element);
 		});
