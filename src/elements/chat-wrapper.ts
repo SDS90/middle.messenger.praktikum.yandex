@@ -19,7 +19,7 @@ const chatWrapperTemplate = `
 					<span>Выберите чат</span>
 				</div>
 			</div>
-			<div class="chat-wrapper" id="chatWrapper"></div>
+			<div class="chat-wrapper" id="chatWrapper"><div class="chat" id="chat"></div></div>
 		</div>
 	</div>
 	`;
