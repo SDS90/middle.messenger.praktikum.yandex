@@ -4,7 +4,7 @@ import Form, { FormParams, onSubmitForm } from '../elements/form-block';
 import Input, { InputParams } from '../elements/input-block';
 import Button, { ButtonParams } from '../elements/button-block';
 import ImageInput, { InputImageParams } from '../elements/image-input-block';
-import chat from './chat';
+import { chat } from './chat';
 
 const documentTitle = "Мой профиль";
 
@@ -171,6 +171,7 @@ const profileButtons: ButtonParams[] = [
 export default function(): void {
 
 	document.title = documentTitle;
+	window.history.pushState('', '', 'profile');
 
 	new Form(profileForm).insertBlock("#app", true);
 

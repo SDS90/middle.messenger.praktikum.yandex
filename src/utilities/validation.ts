@@ -3,6 +3,7 @@
 const defaultValidationErrorMessage = "Возникла ошибка при заполнении формы. Пожалуйста, проверьте введённые данные.";
 const repeatPasswordErrorMessage = "Пароли не совпадают.";
 const requiredFieldsErrorMessage = "Не все обязательные поля заполнены.";
+const requiredFieldMessage = "Обязательное поле.";
 
 const validationRegex: Record<string, RegExp> = {
 	email: new RegExp(/^([A-Za-z0-9_\.-]+)@([A-Za-z0-9_\.-]+)\.([a-z\.]{2,6})$/),
@@ -54,11 +55,25 @@ export const validForm = function(form: HTMLFormElement): boolean {
 	formBlocks.forEach(function(formBlock) {
 		const input = formBlock.querySelector("input") || formBlock.querySelector("textarea");
 		if (input){
+			const errorText = input.getAttribute("data-error-text");
+
 			if (!formBlock.classList.contains("none-block") && !validValue(input)) {
 				isFormValid = false;
 			}
 			if (!input.value && input.getAttribute("data-required") && !formBlock.classList.contains("none-block")){
 				isFormValid = false;
+
+				const errorWrapper = input.parentElement;
+				if (errorWrapper) {
+					errorWrapper.classList.add("error-input");
+
+					if (errorText){
+						errorWrapper.querySelector(".error-text-block").textContent = errorText;
+					} else {
+						errorWrapper.querySelector(".error-text-block").textContent = requiredFieldMessage;
+					}
+				}
+
 				if (infoBlock){
 					infoBlock.textContent = requiredFieldsErrorMessage;
 				}

@@ -4,7 +4,7 @@ import Form, { FormParams, onSubmitForm } from '../elements/form-block';
 import Input, { InputParams } from '../elements/input-block';
 import Button, { ButtonParams } from '../elements/button-block';
 import authorization from './authorization';
-import chat from './chat';
+import { chat } from './chat';
 
 const documentTitle = "Регистрация";
 
@@ -127,6 +127,7 @@ const registrationButtons: ButtonParams[] = [
 export default function(): void {
 
 	document.title = documentTitle;
+	window.history.pushState('', '', 'registration');
 
 	new Form(registrationForm).insertBlock("#app", true);
 

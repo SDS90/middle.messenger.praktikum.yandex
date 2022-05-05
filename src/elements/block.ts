@@ -152,15 +152,11 @@ export default class Block {
 		let inner = this.getContent(); //new DOMParser().parseFromString(new TemplateGen(this.template).generateTemplate(this.props), "text/html").getElementsByTagName("body")[0].childNodes[0];
 		const wrapper = document.querySelector(element);
 		if (!inner || !wrapper) return {};
-		if (this.noTagName){
+		if (!this.noTagName){
 			inner = inner.children[0];
 		}
-		for (const key in this.props){
-			if (!this.props[key]){
-				if(inner && inner.hasAttribute(key)){
-					inner.removeAttribute(key);
-				}
-			}
+		for (let el of wrapper.querySelectorAll('[id=""]')) {
+			el.removeAttribute('id');
 		}
 		if (clean){
 			wrapper.innerHTML = "";

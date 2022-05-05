@@ -64,7 +64,7 @@ class HTTPTransport {
 			xhr.timeout = timeout;
 			xhr.ontimeout = reject;
 
-			if ((options.method == METHODS.GET) || (typeof options.data != 'object')) {
+			if (typeof options.data != 'object') {
 				xhr.send();
 			} else {
 				xhr.send(options.data);

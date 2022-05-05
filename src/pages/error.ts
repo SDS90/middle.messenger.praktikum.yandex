@@ -19,15 +19,31 @@ const errorButtons: ButtonParams[] = [
 		classes: 'warning-add warning-button',
 		onClick: (event) => {
 			event.preventDefault();
-			authorization(); //Пока на страницу авторизации
+			errorBackFunction();
 		},
 	},
 ];
 
-export function showError(ErrorParams: ErrorParams, errorButtons: errorButtons): void {
-	document.title = documentTitle;
+let errorBackFunction = function(): void{
+	window.history.back();
+}
 
-	new Error(errorBlock).insertBlock("#app", true);
+export function showError(InnerErrorParams: ErrorParams, innerBackFunction, innerErrorButtons: ButtonParams): void {
+	if (!InnerErrorParams){
+		InnerErrorParams = errorBlock;
+	}
+
+	if (!innerErrorButtons){
+		innerErrorButtons = errorButtons;
+	}
+	
+	if (innerBackFunction){
+		errorBackFunction = innerBackFunction;
+	}
+
+	document.title = documentTitle + ': ' + InnerErrorParams.title;
+
+	new Error(InnerErrorParams).insertBlock("#app", true);
 
 	errorButtons.forEach(function(button) {
 		new Button(button).insertBlock(button.element);
@@ -35,5 +51,5 @@ export function showError(ErrorParams: ErrorParams, errorButtons: errorButtons):
 }
 
 export default function(): void {
-	showError(errorBlock, errorButtons);	
+	showError(errorBlock, errorBackFunction, errorButtons);	
 }
