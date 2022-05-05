@@ -4,7 +4,7 @@ import Form, { FormParams, onSubmitForm } from '../elements/form-block';
 import Input, { InputParams } from '../elements/input-block';
 import Button, { ButtonParams } from '../elements/button-block';
 import registration from './registration';
-import chat from './chat';
+import { chat } from './chat';
 
 const documentTitle = "Вход";
 
@@ -21,7 +21,7 @@ const authorizationInputs: InputParams[] = [
 		value: '',
 		type: 'text',
 		required: true,
-		errorText: '',
+		errorText: 'Обязательное поле',
 		validationType: '',
 		classList: '',
 	},
@@ -33,7 +33,7 @@ const authorizationInputs: InputParams[] = [
 		value: '',
 		type: 'password',
 		required: true,
-		errorText: '',
+		errorText: 'Обязательное поле',
 		validationType: '',
 		classList: '',
 	},
@@ -60,7 +60,6 @@ const authorizationButtons: ButtonParams[] = [
 		onClick: (event) => {
 			event.preventDefault();
 			registration();
-			//profile();
 		},
 	},
 ];
@@ -68,6 +67,7 @@ const authorizationButtons: ButtonParams[] = [
 export default function(): void {
 
 	document.title = documentTitle;
+	window.history.pushState('', '', '/');
 
 	new Form(authorizationForm).insertBlock("#app", true);
 

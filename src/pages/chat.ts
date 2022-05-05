@@ -13,7 +13,7 @@ import FilesName, { FilesNameData } from '../elements/files-name';
 import MessageBlock, { MessageBlockParams } from '../elements/message-block';
 import Modal, { ModalParams } from '../elements/modal-block';
 import authorization from './authorization';
-import error from './error'; //может пригодиться передача параметров ошибки в {showError}
+import error, {showError} from './error'; //может пригодиться передача параметров ошибки в {showError}
 import profile from './profile';
 
 const documentTitle = "Чат";
@@ -75,7 +75,7 @@ const menuLinks: MenuLinkParams[] = [
 		href: '#',
 		onClick: (event) => {
 			event.preventDefault();
-			error(); //в дальнейшем использовать showError с передачей параметров ошибки
+			showError({	title: 'Ошибка 400', errorText: 'Неверный запрос'}, chat); //передача параметров ошибки
 		},
 	},
 	{
@@ -83,7 +83,7 @@ const menuLinks: MenuLinkParams[] = [
 		id: '',
 		classes: 'create-chat-link',
 		name: 'Мой профиль',
-		href: '#',
+		href: 'profile',
 		onClick: (event) => {
 			event.preventDefault();
 			profile();		
@@ -94,7 +94,7 @@ const menuLinks: MenuLinkParams[] = [
 		id: '',
 		classes: 'create-chat-link',
 		name: 'Выход',
-		href: '#',
+		href: 'authorization',
 		onClick: (event) => {
 			event.preventDefault();
 			authorization();		
@@ -257,9 +257,10 @@ function reloadChatSender(){
 	filesName.setProps({ name: "" });
 }
 
-export default function(): void {
+export function chat(): void {
 
 	document.title = documentTitle;
+	window.history.pushState('', '', 'chat');
 
 	new Chat(chatParams).insertBlock("#app", true);
 	
