@@ -273,7 +273,8 @@
 			text-align: left;
 			border: 1px solid $chatFirstColor;
 			border-radius: 10px;
-			background-color: $white;			
+			background-color: $chatBackgroundColor;
+				
 		}
 
 		img{
@@ -289,6 +290,9 @@
 		&.message-to-me,
 		&.message-to-me * {
 			text-align: left;
+			.chat-message-block{
+				background-color: $white;
+			}
 		}
 	}
 }
@@ -308,7 +312,7 @@
 		background-color: $chatBackgroundColor;	
 		.chat-message-wrapper{
 			.chat-message-block{
-				max-width: 100%;
+				max-width: 75%;
 			}
 		}
 
