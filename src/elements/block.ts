@@ -147,7 +147,7 @@ export default class Block {
 		}
 	}
 
-	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+	insertBlock(element: string, clean: boolean, prepend: boolean): Record<string, HTMLElement> {
 		let inner = this.getContent(); //new DOMParser().parseFromString(new TemplateGen(this.template).generateTemplate(this.props), "text/html").getElementsByTagName("body")[0].childNodes[0];
 		const wrapper = document.querySelector(element);
 		if (!inner || !wrapper) return {};
@@ -159,6 +159,11 @@ export default class Block {
 		}
 		if (clean){
 			wrapper.innerHTML = "";
+		}
+		if (prepend){
+			wrapper.prepend(inner);
+		} else {
+			wrapper.appendChild(inner);
 		}
 		return {
 			inner: inner,

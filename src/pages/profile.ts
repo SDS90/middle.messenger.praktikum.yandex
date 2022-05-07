@@ -94,10 +94,9 @@ const changePasswordButtons: ButtonParams[] = [
 		onClick: (event) => {
 			event.preventDefault();
 			const changePasswordButton = document.getElementById(event.target.getAttribute('id'));
-			let showElement = changePasswordButton.nextElementSibling;
-
+			let showElement = changePasswordButton.parentElement.nextElementSibling;
 			while (showElement){
-				showElement.classList.remove("none-block");
+				showElement.children[0].classList.remove("none-block");
 				showElement = showElement.nextElementSibling;
 			}
 		},

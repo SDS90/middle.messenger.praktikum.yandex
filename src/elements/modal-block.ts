@@ -36,12 +36,4 @@ export default class Modal extends Block {
 		}
 		super(params, template);
 	}
-
-	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
-		const insertedBlock = super.insertBlock(element, clean);
-		if (insertedBlock.inner && insertedBlock.wrapper){
-			insertedBlock.wrapper.appendChild(insertedBlock.inner);
-		}
-		return insertedBlock;
-	}
 }

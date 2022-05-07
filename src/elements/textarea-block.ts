@@ -29,19 +29,16 @@ export default class Textarea extends Block {
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
 
 		const insertedBlock = super.insertBlock(element, clean);
-		if (insertedBlock.inner && insertedBlock.wrapper){
-			const inner = insertedBlock.inner;
-			const wrapper = insertedBlock.wrapper;
-
-			const textarea = inner.querySelector('textarea');
-			textarea.addEventListener('focus', function(){
-				textarea.classList.add('focus-input');
-			});
-			textarea.addEventListener('blur', function(){
-				textarea.classList.remove('focus-input');
-				//validValue(input);
-			});
-			wrapper.appendChild(inner);
+		if (insertedBlock.inner){
+			const textarea = insertedBlock.inner.querySelector('textarea');
+			if (textarea){
+				textarea.addEventListener('focus', function(){
+					this.classList.add('focus-input');
+				});
+				textarea.addEventListener('blur', function(){
+					this.classList.remove('focus-input');
+				});
+			}
 		}
 		return insertedBlock;
 	}

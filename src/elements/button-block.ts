@@ -23,11 +23,8 @@ export default class Button extends Block {
 
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
 		const insertedBlock = super.insertBlock(element, clean);
-		if (insertedBlock.inner && insertedBlock.wrapper){
-			const inner = insertedBlock.inner;
-			const wrapper = insertedBlock.wrapper;
-			inner.addEventListener('click', this.props.onClick);
-			wrapper.appendChild(inner);
+		if (insertedBlock.inner){
+			insertedBlock.inner.addEventListener('click', this.props.onClick);
 		}
 		return insertedBlock;
 	}
