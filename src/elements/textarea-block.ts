@@ -34,13 +34,14 @@ export default class Textarea extends Block {
 			const wrapper = insertedBlock.wrapper;
 
 			const textarea = inner.querySelector('textarea');
-			textarea.addEventListener('focus', function(){
-				textarea.classList.add('focus-input');
-			});
-			textarea.addEventListener('blur', function(){
-				textarea.classList.remove('focus-input');
-				//validValue(input);
-			});
+			if (textarea){
+				textarea.addEventListener('focus', function(){
+					this.classList.add('focus-input');
+				});
+				textarea.addEventListener('blur', function(){
+					this.classList.remove('focus-input');
+				});
+			}
 			wrapper.appendChild(inner);
 		}
 		return insertedBlock;

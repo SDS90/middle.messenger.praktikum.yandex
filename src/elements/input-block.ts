@@ -44,13 +44,15 @@ export default class Input extends Block {
 			const wrapper = insertedBlock.wrapper;
 
 			const input = inner.querySelector('input');
-			input.addEventListener('focus', function(){
-				input.classList.add('focus-input');
-			});
-			input.addEventListener('blur', function(){
-				input.classList.remove('focus-input');
-				validValue(input);
-			});
+			if (input){
+				input.addEventListener('focus', function(){
+					this.classList.add('focus-input');
+				});
+				input.addEventListener('blur', function(){
+					this.classList.remove('focus-input');
+					validValue(this);
+				});
+			}
 			wrapper.appendChild(inner);
 		}
 		return insertedBlock;

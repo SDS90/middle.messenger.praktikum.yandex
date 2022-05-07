@@ -30,7 +30,10 @@ export default class AddFileButton extends Button {
 		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner){
 			const inner = insertedBlock.inner;
-			inner.querySelector('input').addEventListener('change', this.props.onChange);
+			const innerInput = inner.querySelector('input');
+			if (innerInput){
+				innerInput.addEventListener('change', this.props.onChange);
+			}
 		}
 		return insertedBlock;
 	}
