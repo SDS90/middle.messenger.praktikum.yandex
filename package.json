@@ -14,7 +14,7 @@
     "dev": "parcel src/index.pug",
     "build": "parcel build src/index.pug --dist-dir dist --public-url ./",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "eslint": "eslint"
+    "eslint": "eslint ./src"
   },
   "repository": {
     "type": "git",
