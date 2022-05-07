@@ -5,7 +5,7 @@ import Button from '../elements/button-block';
 const addFileBlockTemplate = `
 <label for="{{id}}" title="Прикрепить файл" class="button-link {{classes}}">
 	{{name}}
-	<input class="load-image" hidden accept="image/*" type="file" id="{{id}}" value="{{value}}">
+	<input class="load-image" hidden accept="image/*" type="file" id="{{id}}" value="{{value}}" name="file">
 </label>`;
 
 export type AddFileButtonParams = {
@@ -29,8 +29,7 @@ export default class AddFileButton extends Button {
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
 		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner){
-			const inner = insertedBlock.inner;
-			const innerInput = inner.querySelector('input');
+			const innerInput = insertedBlock.inner.querySelector('input');
 			if (innerInput){
 				innerInput.addEventListener('change', this.props.onChange);
 			}

@@ -29,11 +29,8 @@ export default class Textarea extends Block {
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
 
 		const insertedBlock = super.insertBlock(element, clean);
-		if (insertedBlock.inner && insertedBlock.wrapper){
-			const inner = insertedBlock.inner;
-			const wrapper = insertedBlock.wrapper;
-
-			const textarea = inner.querySelector('textarea');
+		if (insertedBlock.inner){
+			const textarea = insertedBlock.inner.querySelector('textarea');
 			if (textarea){
 				textarea.addEventListener('focus', function(){
 					this.classList.add('focus-input');
@@ -42,7 +39,6 @@ export default class Textarea extends Block {
 					this.classList.remove('focus-input');
 				});
 			}
-			wrapper.appendChild(inner);
 		}
 		return insertedBlock;
 	}

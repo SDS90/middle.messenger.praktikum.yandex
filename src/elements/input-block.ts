@@ -39,11 +39,8 @@ export default class Input extends Block {
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
 
 		const insertedBlock = super.insertBlock(element, clean);
-		if (insertedBlock.inner && insertedBlock.wrapper){
-			const inner = insertedBlock.inner;
-			const wrapper = insertedBlock.wrapper;
-
-			const input = inner.querySelector('input');
+		if (insertedBlock.inner){
+			const input = insertedBlock.inner.querySelector('input');
 			if (input){
 				input.addEventListener('focus', function(){
 					this.classList.add('focus-input');
@@ -52,8 +49,7 @@ export default class Input extends Block {
 					this.classList.remove('focus-input');
 					validValue(this);
 				});
-			}
-			wrapper.appendChild(inner);
+			}			
 		}
 		return insertedBlock;
 	}

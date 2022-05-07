@@ -241,7 +241,7 @@ function onChatClick(event){
 
 		document.getElementById("chat").innerHTML = "";
 		messageList.forEach(function(message){
-			new MessageBlock(message, '').insertBlock(message.element);
+			new MessageBlock(message, '').insertBlock(message.element, false, true);
 		});
 		reloadChatSender();
 		chatWrapper.scrollTop = chatWrapper.scrollHeight;
