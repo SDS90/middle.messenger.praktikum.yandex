@@ -2,12 +2,13 @@
 
 import Link from '../elements/link-block';
 
-const menuLinkBlockTemplate = `<li><a id="{{id}}" class="{{classes}}" href="{{href}}">{{name}}</a></li>`;
+const menuLinkBlockTemplate = `<li id="{{id}}" class="{{wrapClasses}}"><a class="{{classes}}" href="{{href}}">{{name}}</a></li>`;
 
 export type MenuLinkParams = {
 	element: string,
 	id: string,
 	classes: string,
+	wrapClasses: string,
 	name: string,
 	href: string,
 	onClick: (event: Event) => void

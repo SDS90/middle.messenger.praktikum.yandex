@@ -12,6 +12,7 @@ $chatFirstColor: #282828;
 $chatSecondColor: #0078d4;
 $chatBorderColor: #9d9999;
 $chatBackgroundColor: #efefef;
+$chatBackgroundColorOpacity: rgba(239,239,239, 0.5);
 $chatButtonColor: rgba(157,153,153, 1);
 $chatButtonColorOpacity: rgba(157,153,153, 0.5);
 
@@ -75,7 +76,25 @@ sup{
 }
 
 .messenger-wrapper{
-    height: 100%;
+    position: relative;
+    min-height: 100%;
+
+	&:after {
+		display: none;
+		position: absolute;
+		z-index: 1000;
+		top: 0px; bottom: 0px;
+		left: 0px; right: 0px;
+		content: "";
+		background-image: url(../img/loader.gif);
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-color: $chatBackgroundColorOpacity; 
+	}
+
+    &.loading:after{
+    	display: block;
+    }
 }
 
 

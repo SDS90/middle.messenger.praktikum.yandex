@@ -1,3 +1,5 @@
+//Основное
+
 import './scss/init.scss';
 import authorization from './pages/authorization';
 import { chat } from './pages/chat';
@@ -5,28 +7,22 @@ import registration from './pages/registration';
 import profile from './pages/profile';
 import error from './pages/error';
 
-function ready() {
-	switch(window.location.pathname) {
-		case '/': {
-			authorization();
-			break;
-		}
-		case '/chat': {
-			chat();
-			break;
-		}
-		case '/registration': {
-			registration();
-			break;
-		}
-		case '/profile': {
-			profile();
-			break;
-		}
-		default:{
-			error();
-		}
-	}
-}
+import AuthentificationController2 from './controllers/AuthentificationController2';
 
-document.addEventListener('DOMContentLoaded', ready);
+import { router } from './utilities/createRouter';
+
+router
+	.use('/', authorization)
+	.use('/authorization', authorization)
+	.use('/messenger', chat)
+	.use('/settings', profile)
+	.use('/sign-up', registration)
+	.use('*', error)
+	.start();
+
+AuthentificationController2.checkAuth(function(answer){
+	const pathArray = window.location.pathname.split("/");
+	if (answer.id && (pathArray[1] == "")){
+		router.go('/messenger');
+	}
+})

@@ -3,8 +3,8 @@
 import Form, { FormParams, onSubmitForm } from '../elements/form-block';
 import Input, { InputParams } from '../elements/input-block';
 import Button, { ButtonParams } from '../elements/button-block';
-import authorization from './authorization';
-import { chat } from './chat';
+
+import AuthentificationController2 from '../controllers/AuthentificationController2';
 
 const documentTitle = "Регистрация";
 
@@ -24,6 +24,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Неверный формат email',
 		validationType: 'email',
 		classList: '',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -36,6 +37,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Логин должен содержать от 3 до 20 латинских символов, может содержать цифры, но не состоять из них, без пробелов, без спецсимволов',
 		validationType: 'login',
 		classList: '',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -48,6 +50,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Первая буква должна быть заглавной, без пробелов, цифр и спецсимволов, кроме дефиса',
 		validationType: 'name',
 		classList: '',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -60,6 +63,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Первая буква должна быть заглавной, без пробелов, цифр и спецсимволов, кроме дефиса',
 		validationType: 'name',
 		classList: '',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -72,6 +76,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Телефон должен содержать от 10 до 15 символов, состоит из цифр, может начинаться с плюса',
 		validationType: 'phone',
 		classList: '',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -84,6 +89,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: '',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -96,6 +102,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: '',
+		onBlur: (event) => {}
 	},
 ];
 
@@ -107,8 +114,10 @@ const registrationButtons: ButtonParams[] = [
 		classes: 'add-link',
 		onClick: (event) => {
 			event.preventDefault();
-			onSubmitForm('.reg-form', function(){
-				chat();
+			onSubmitForm('.reg-form', function(formData){
+				AuthentificationController2.signUp(formData, function(error){
+					document.getElementById("formInfoBlock").textContent = error;
+				});
 			});
 		},
 	},
@@ -119,7 +128,7 @@ const registrationButtons: ButtonParams[] = [
 		classes: 'reg-link',
 		onClick: (event) => {
 			event.preventDefault();
-			authorization();
+			window.history.back();
 		},
 	},
 ];
@@ -127,7 +136,6 @@ const registrationButtons: ButtonParams[] = [
 export default function(): void {
 
 	document.title = documentTitle;
-	window.history.pushState('', '', 'registration');
 
 	new Form(registrationForm).insertBlock("#app", true);
 

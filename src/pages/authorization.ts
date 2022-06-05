@@ -3,8 +3,10 @@
 import Form, { FormParams, onSubmitForm } from '../elements/form-block';
 import Input, { InputParams } from '../elements/input-block';
 import Button, { ButtonParams } from '../elements/button-block';
-import registration from './registration';
-import { chat } from './chat';
+
+import { router } from '../utilities/createRouter';
+
+import AuthentificationController2 from '../controllers/AuthentificationController2';
 
 const documentTitle = "Вход";
 
@@ -24,6 +26,7 @@ const authorizationInputs: InputParams[] = [
 		errorText: 'Обязательное поле',
 		validationType: '',
 		classList: '',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -36,6 +39,7 @@ const authorizationInputs: InputParams[] = [
 		errorText: 'Обязательное поле',
 		validationType: '',
 		classList: '',
+		onBlur: (event) => {}
 	},
 ];
 
@@ -47,8 +51,10 @@ const authorizationButtons: ButtonParams[] = [
 		classes: 'add-link',
 		onClick: (event) => {
 			event.preventDefault();
-			onSubmitForm('.reg-form', function(){
-				chat();
+			onSubmitForm('.reg-form', function(formData){
+				AuthentificationController2.signIn(formData, function(error){
+					document.getElementById("formInfoBlock").textContent = error;
+				});
 			});			
 		},
 	},
@@ -59,7 +65,7 @@ const authorizationButtons: ButtonParams[] = [
 		classes: 'reg-link',
 		onClick: (event) => {
 			event.preventDefault();
-			registration();
+			router.go('/sign-up');
 		},
 	},
 ];
@@ -67,7 +73,6 @@ const authorizationButtons: ButtonParams[] = [
 export default function(): void {
 
 	document.title = documentTitle;
-	window.history.pushState('', '', '/');
 
 	new Form(authorizationForm).insertBlock("#app", true);
 
@@ -77,7 +82,5 @@ export default function(): void {
 
 	authorizationButtons.forEach(function(button) {
 		new Button(button).insertBlock(button.element);
-	});
-
-	
+	});	
 }

@@ -7,7 +7,7 @@ const modalTemplate = `
 	<div class="warning-message-wrapper warning-on" id="{{id}}">
 		<div class="warning-message-table">
 			<div class="warning-message-block">
-				<div class="warning-message">
+				<div class="warning-message" data-chatId="{{chatId}}">
 						<span>{{MessageText}}</span>
 						<!--<div class="form-block">
 							<label>Логин</label>
@@ -25,6 +25,7 @@ const modalTemplate = `
 export type ModalParams = {
 	element: string,
 	id: string,
+	chatId: number,
 	MessageText: string,
 };
 

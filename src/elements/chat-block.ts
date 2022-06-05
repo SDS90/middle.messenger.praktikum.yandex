@@ -3,11 +3,11 @@
 import Block from '../elements/block';
 
 const chatBlockTemplate = `
-	<div class="chat-block" id="{{id}}" data-user-name="{{name}}">
+	<div class="chat-block" id="{{id}}" data-user-name="{{title}}">
 		<div class="chat-photo-wrapper">
-			<img class="chat-photo" src="{{photoLink}}" alt="{{photoAlt}}">
+			<img class="chat-photo" src="{{avatar}}" alt="">
 		</div>
-		<div class="chat-name">{{name}}</div>
+		<div class="chat-name">{{title}}</div>
 		<div class="chat-preview-text">
 			<strong class="{{fromMeHideClass}}">Вы: </strong>
 			<span>{{text}}</span>
@@ -20,9 +20,9 @@ const chatBlockTemplate = `
 export type ChatBlockParams = {
 	element: string,
 	id: string,
-	photoLink: string,
+	avatar: string,
 	photoAlt: string,
-	name: string,
+	title: string,
 	fromMeHideClass: string,
 	text: string,
 	time: string,

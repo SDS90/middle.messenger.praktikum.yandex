@@ -6,7 +6,7 @@ import {validValue} from "../utilities/validation";
 const inputBlockTemplate = `
 	<div class="form-block {{classList}}">
 		<label class="form-label" for="{{id}}">{{label}}</label>
-		<div class="input-wrapper">
+		<div class="input-wrapper wrapper-element">
 			<input class="form-control input-styles" data-required="{{required}}" data-error-text="{{errorText}}" 
 			data-validation-type="{{validationType}}" id="{{id}}" type="{{type}}" value="{{value}}" name="{{name}}">
 			<div class="error-text-block"></div>
@@ -24,6 +24,7 @@ export type InputParams = {
 	errorText: string,
 	validationType: string,
 	classList: string,
+	onBlur: (event: Event) => void
 }
 
 export default class Input extends Block {
@@ -39,14 +40,16 @@ export default class Input extends Block {
 	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
 
 		const insertedBlock = super.insertBlock(element, clean);
+		const $this = this;
 		if (insertedBlock.inner){
 			const input = insertedBlock.inner.querySelector('input');
 			if (input){
 				input.addEventListener('focus', function(){
 					this.classList.add('focus-input');
 				});
-				input.addEventListener('blur', function(){
+				input.addEventListener('blur', function(event){
 					this.classList.remove('focus-input');
+					$this.props.onBlur(event);
 					validValue(this);
 				});
 			}			
