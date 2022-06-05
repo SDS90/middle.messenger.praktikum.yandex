@@ -49,4 +49,4 @@
 - `npm run eslint` - линтинг проекта
 
 
-Ссылка на pull request: https://github.com/SDS90/middle.messenger.praktikum.yandex/pull/3
+Ссылка на pull request: https://github.com/SDS90/middle.messenger.praktikum.yandex/pull/4
