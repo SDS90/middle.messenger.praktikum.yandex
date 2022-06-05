@@ -2,6 +2,8 @@
 import TemplateGen from '../utilities/TemplateGen';
 import {EventBus} from '../utilities/eventbus';
 
+export type PropsType = Record<string, any>;
+
 type BlockMetaData = {
 	tagName: string,
 	props: Record<string, unknown>
@@ -17,7 +19,7 @@ export default class Block {
 
 	noTagName: false;
 	template: string;
-	props: Record<string, unknown>;
+	props: PropsType;
 	eventBus: () => EventBus;
 
 	_element: HTMLElement = null;
@@ -146,6 +148,13 @@ export default class Block {
 			element.style.display = "none";
 		}
 	}
+
+	destroy() {
+		this._element.remove();
+		this.onDestroy();
+	}
+
+	onDestroy() {}
 
 	insertBlock(element: string, clean: boolean, prepend: boolean): Record<string, HTMLElement> {
 		let inner = this.getContent(); //new DOMParser().parseFromString(new TemplateGen(this.template).generateTemplate(this.props), "text/html").getElementsByTagName("body")[0].childNodes[0];

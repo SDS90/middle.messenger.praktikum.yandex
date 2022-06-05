@@ -26,6 +26,7 @@ export default class Link extends Block {
 		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner){
 			insertedBlock.inner.addEventListener('click', this.props.onClick);
+			insertedBlock.inner.addEventListener('touchstart', this.props.onClick);
 		}
 		return insertedBlock;
 	}

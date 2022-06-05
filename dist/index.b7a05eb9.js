@@ -530,12 +530,34 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _initScss = require("./scss/init.scss");
 var _authorization = require("./pages/authorization");
 var _authorizationDefault = parcelHelpers.interopDefault(_authorization);
+var _chat = require("./pages/chat");
+var _registration = require("./pages/registration");
+var _registrationDefault = parcelHelpers.interopDefault(_registration);
+var _profile = require("./pages/profile");
+var _profileDefault = parcelHelpers.interopDefault(_profile);
+var _error = require("./pages/error");
+var _errorDefault = parcelHelpers.interopDefault(_error);
 function ready() {
-    _authorizationDefault.default();
+    switch(window.location.pathname){
+        case '/':
+            _authorizationDefault.default();
+            break;
+        case '/chat':
+            _chat.chat();
+            break;
+        case '/registration':
+            _registrationDefault.default();
+            break;
+        case '/profile':
+            _profileDefault.default();
+            break;
+        default:
+            _errorDefault.default();
+    }
 }
 document.addEventListener('DOMContentLoaded', ready);
 
-},{"./scss/init.scss":"2Eqp0","./pages/authorization":"lw0Ql","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2Eqp0":[function() {},{}],"lw0Ql":[function(require,module,exports) {
+},{"./scss/init.scss":"2Eqp0","./pages/authorization":"lw0Ql","./pages/chat":"eKBYg","./pages/registration":"24NEt","./pages/profile":"1uafS","./pages/error":"kP9mv","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"2Eqp0":[function() {},{}],"lw0Ql":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 //Страница авторизации
@@ -548,7 +570,6 @@ var _buttonBlockDefault = parcelHelpers.interopDefault(_buttonBlock);
 var _registration = require("./registration");
 var _registrationDefault = parcelHelpers.interopDefault(_registration);
 var _chat = require("./chat");
-var _chatDefault = parcelHelpers.interopDefault(_chat);
 const documentTitle = "Вход";
 const authorizationForm = {
     title: 'Вход'
@@ -562,7 +583,7 @@ const authorizationInputs = [
         value: '',
         type: 'text',
         required: true,
-        errorText: '',
+        errorText: 'Обязательное поле',
         validationType: '',
         classList: ''
     },
@@ -574,7 +595,7 @@ const authorizationInputs = [
         value: '',
         type: 'password',
         required: true,
-        errorText: '',
+        errorText: 'Обязательное поле',
         validationType: '',
         classList: ''
     }, 
@@ -588,7 +609,7 @@ const authorizationButtons = [
         onClick: (event)=>{
             event.preventDefault();
             _formBlock.onSubmitForm('.reg-form', function() {
-                _chatDefault.default();
+                _chat.chat();
             });
         }
     },
@@ -600,12 +621,12 @@ const authorizationButtons = [
         onClick: (event)=>{
             event.preventDefault();
             _registrationDefault.default();
-        //profile();
         }
     }, 
 ];
 exports.default = function() {
     document.title = documentTitle;
+    window.history.pushState('', '', '/');
     new _formBlockDefault.default(authorizationForm).insertBlock("#app", true);
     authorizationInputs.forEach(function(input) {
         new _inputBlockDefault.default(input, '').insertBlock(input.element);
@@ -641,11 +662,6 @@ class Form extends _blockDefault.default {
     constructor(params, template){
         if (!template) template = formBlockTemplate;
         super(params, template);
-    }
-    insertBlock(element, clean) {
-        const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) insertedBlock.wrapper.appendChild(insertedBlock.inner);
-        return insertedBlock;
     }
 }
 exports.default = Form;
@@ -769,20 +785,15 @@ class Block {
         const element = this.getContent();
         if (element) element.style.display = "none";
     }
-    insertBlock(element, clean) {
+    insertBlock(element, clean, prepend) {
         let inner = this.getContent(); //new DOMParser().parseFromString(new TemplateGen(this.template).generateTemplate(this.props), "text/html").getElementsByTagName("body")[0].childNodes[0];
         const wrapper = document.querySelector(element);
         if (!inner || !wrapper) return {};
-        if (this.noTagName) {
-            console.log(inner);
-            inner = inner.children[0];
-        }
-        for(const key in this.props){
-            if (!this.props[key]) {
-                if (inner && inner.hasAttribute(key)) inner.removeAttribute(key);
-            }
-        }
+        if (this.noTagName) inner = inner.children[0];
+        for (let el of wrapper.querySelectorAll('[id=""]'))el.removeAttribute('id');
         if (clean) wrapper.innerHTML = "";
+        if (prepend) wrapper.prepend(inner);
+        else wrapper.appendChild(inner);
         return {
             inner: inner,
             wrapper: wrapper
@@ -889,6 +900,7 @@ parcelHelpers.export(exports, "validForm", ()=>validForm
 const defaultValidationErrorMessage = "Возникла ошибка при заполнении формы. Пожалуйста, проверьте введённые данные.";
 const repeatPasswordErrorMessage = "Пароли не совпадают.";
 const requiredFieldsErrorMessage = "Не все обязательные поля заполнены.";
+const requiredFieldMessage = "Обязательное поле.";
 const validationRegex = {
     email: new RegExp(/^([A-Za-z0-9_\.-]+)@([A-Za-z0-9_\.-]+)\.([a-z\.]{2,6})$/),
     login: new RegExp(/^[A-Za-z0-9_\.-]{3,20}$/),
@@ -924,9 +936,16 @@ const validForm = function(form) {
     formBlocks.forEach(function(formBlock) {
         const input = formBlock.querySelector("input") || formBlock.querySelector("textarea");
         if (input) {
+            const errorText = input.getAttribute("data-error-text");
             if (!formBlock.classList.contains("none-block") && !validValue(input)) isFormValid = false;
             if (!input.value && input.getAttribute("data-required") && !formBlock.classList.contains("none-block")) {
                 isFormValid = false;
+                const errorWrapper = input.parentElement;
+                if (errorWrapper) {
+                    errorWrapper.classList.add("error-input");
+                    if (errorText) errorWrapper.querySelector(".error-text-block").textContent = errorText;
+                    else errorWrapper.querySelector(".error-text-block").textContent = requiredFieldMessage;
+                }
                 if (infoBlock) infoBlock.textContent = requiredFieldsErrorMessage;
             }
             if (input.name == "password") password = input.value;
@@ -964,18 +983,17 @@ class Input extends _blockDefault.default {
     }
     insertBlock(element, clean) {
         const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) {
-            const inner = insertedBlock.inner;
-            const wrapper = insertedBlock.wrapper;
-            const input = inner.querySelector('input');
-            input.addEventListener('focus', function() {
-                input.classList.add('focus-input');
-            });
-            input.addEventListener('blur', function() {
-                input.classList.remove('focus-input');
-                _validation.validValue(input);
-            });
-            wrapper.appendChild(inner);
+        if (insertedBlock.inner) {
+            const input = insertedBlock.inner.querySelector('input');
+            if (input) {
+                input.addEventListener('focus', function() {
+                    this.classList.add('focus-input');
+                });
+                input.addEventListener('blur', function() {
+                    this.classList.remove('focus-input');
+                    _validation.validValue(this);
+                });
+            }
         }
         return insertedBlock;
     }
@@ -996,11 +1014,9 @@ class Button extends _blockDefault.default {
     }
     insertBlock(element, clean) {
         const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) {
-            const inner = insertedBlock.inner;
-            const wrapper = insertedBlock.wrapper;
-            inner.addEventListener('click', this.props.onClick);
-            wrapper.appendChild(inner);
+        if (insertedBlock.inner) {
+            insertedBlock.inner.addEventListener('click', this.props.onClick);
+            insertedBlock.inner.addEventListener('touchstart', this.props.onClick);
         }
         return insertedBlock;
     }
@@ -1020,7 +1036,6 @@ var _buttonBlockDefault = parcelHelpers.interopDefault(_buttonBlock);
 var _authorization = require("./authorization");
 var _authorizationDefault = parcelHelpers.interopDefault(_authorization);
 var _chat = require("./chat");
-var _chatDefault = parcelHelpers.interopDefault(_chat);
 const documentTitle = "Регистрация";
 const registrationForm = {
     title: 'Регистрация'
@@ -1120,7 +1135,7 @@ const registrationButtons = [
         onClick: (event)=>{
             event.preventDefault();
             _formBlock.onSubmitForm('.reg-form', function() {
-                _chatDefault.default();
+                _chat.chat();
             });
         }
     },
@@ -1137,6 +1152,7 @@ const registrationButtons = [
 ];
 exports.default = function() {
     document.title = documentTitle;
+    window.history.pushState('', '', 'registration');
     new _formBlockDefault.default(registrationForm).insertBlock("#app", true);
     registrationInputs.forEach(function(input) {
         new _inputBlockDefault.default(input).insertBlock(input.element);
@@ -1149,6 +1165,8 @@ exports.default = function() {
 },{"../elements/form-block":"53Dkh","../elements/input-block":"iQASN","../elements/button-block":"kgv9I","./authorization":"lw0Ql","./chat":"eKBYg","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"eKBYg":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "chat", ()=>chat
+);
 //Страница чата
 var _formBlock = require("../elements/form-block");
 var _formBlockDefault = parcelHelpers.interopDefault(_formBlock);
@@ -1177,7 +1195,6 @@ var _modalBlockDefault = parcelHelpers.interopDefault(_modalBlock);
 var _authorization = require("./authorization");
 var _authorizationDefault = parcelHelpers.interopDefault(_authorization);
 var _error = require("./error"); //может пригодиться передача параметров ошибки в {showError}
-var _errorDefault = parcelHelpers.interopDefault(_error);
 var _profile = require("./profile");
 var _profileDefault = parcelHelpers.interopDefault(_profile);
 const documentTitle = "Чат";
@@ -1236,7 +1253,10 @@ const menuLinks = [
         href: '#',
         onClick: (event)=>{
             event.preventDefault();
-            _errorDefault.default(); //в дальнейшем использовать showError с передачей параметров ошибки
+            _error.showError({
+                title: 'Ошибка 400',
+                errorText: 'Неверный запрос'
+            }, chat); //передача параметров ошибки
         }
     },
     {
@@ -1244,7 +1264,7 @@ const menuLinks = [
         id: '',
         classes: 'create-chat-link',
         name: 'Мой профиль',
-        href: '#',
+        href: 'profile',
         onClick: (event)=>{
             event.preventDefault();
             _profileDefault.default();
@@ -1255,7 +1275,7 @@ const menuLinks = [
         id: '',
         classes: 'create-chat-link',
         name: 'Выход',
-        href: '#',
+        href: 'authorization',
         onClick: (event)=>{
             event.preventDefault();
             _authorizationDefault.default();
@@ -1324,19 +1344,19 @@ const chatList = [
 ];
 const messageList = [
     {
-        element: '.chat-wrapper',
+        element: '#chat',
         toMeClass: 'message-to-me',
         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
         time: '15.04.2022 12:37'
     },
     {
-        element: '.chat-wrapper',
+        element: '#chat',
         toMeClass: 'message-to-me',
         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
         time: '15.04.2022 12:37'
     },
     {
-        element: '.chat-wrapper',
+        element: '#chat',
         toMeClass: '',
         text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur  Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit anim id est laborum.',
         time: '15.04.2022 12:37'
@@ -1391,9 +1411,9 @@ function onChatClick(event) {
         document.getElementById('menuBlock').classList.add('none-block');
         document.getElementById("selectChat").classList.add("none-block");
         document.getElementById("chatFullBlock").classList.toggle('chat-full-show');
-        chatWrapper.innerHTML = "";
+        document.getElementById("chat").innerHTML = "";
         messageList.forEach(function(message) {
-            new _messageBlockDefault.default(message, '').insertBlock(message.element);
+            new _messageBlockDefault.default(message, '').insertBlock(message.element, false, true);
         });
         reloadChatSender();
         chatWrapper.scrollTop = chatWrapper.scrollHeight;
@@ -1410,8 +1430,9 @@ function reloadChatSender() {
         name: ""
     });
 }
-exports.default = function() {
+function chat() {
     document.title = documentTitle;
+    window.history.pushState('', '', 'chat');
     new _chatWrapperDefault.default(chatParams).insertBlock("#app", true);
     chatName = new _chatNameDefault.default(chatNameParams);
     chatName.insertBlock('.chat-full-name');
@@ -1421,8 +1442,8 @@ exports.default = function() {
     menuLinks.forEach(function(link) {
         new _menuLinkBlockDefault.default(link, '').insertBlock(link.element);
     });
-    chatList.forEach(function(chat) {
-        new _chatBlockDefault.default(chat, '').insertBlock(chat.element);
+    chatList.forEach(function(chat1) {
+        new _chatBlockDefault.default(chat1, '').insertBlock(chat1.element);
     });
     new _formBlockDefault.default(sendForm, '<form class="chat-send-box"></form>').insertBlock(".chat-full-block");
     new _buttonBlockDefault.default(sendButton).insertBlock(".chat-send-box");
@@ -1432,7 +1453,7 @@ exports.default = function() {
     textArea.insertBlock(".chat-send-box");
     filesName = new _filesNameDefault.default(filesNameParams);
     filesName.insertBlock(".chat-send-box");
-};
+}
 
 },{"../elements/form-block":"53Dkh","../elements/textarea-block":"iquh5","../elements/button-block":"kgv9I","../elements/add-file-block":"aiXiZ","../elements/link-block":"knjia","../elements/menu-link-block":"2qAyd","../elements/chat-wrapper":"ksvwI","../elements/chat-block":"irlHs","../elements/chat-name":"7ZTd2","../elements/files-name":"kP0u0","../elements/message-block":"awzvX","../elements/modal-block":"2wd2M","./authorization":"lw0Ql","./error":"kP9mv","./profile":"1uafS","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iquh5":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -1453,18 +1474,16 @@ class Textarea extends _blockDefault.default {
     }
     insertBlock(element, clean) {
         const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) {
-            const inner = insertedBlock.inner;
-            const wrapper = insertedBlock.wrapper;
-            const textarea = inner.querySelector('textarea');
-            textarea.addEventListener('focus', function() {
-                textarea.classList.add('focus-input');
-            });
-            textarea.addEventListener('blur', function() {
-                textarea.classList.remove('focus-input');
-            //validValue(input);
-            });
-            wrapper.appendChild(inner);
+        if (insertedBlock.inner) {
+            const textarea = insertedBlock.inner.querySelector('textarea');
+            if (textarea) {
+                textarea.addEventListener('focus', function() {
+                    this.classList.add('focus-input');
+                });
+                textarea.addEventListener('blur', function() {
+                    this.classList.remove('focus-input');
+                });
+            }
         }
         return insertedBlock;
     }
@@ -1480,7 +1499,7 @@ var _buttonBlockDefault = parcelHelpers.interopDefault(_buttonBlock);
 const addFileBlockTemplate = `
 <label for="{{id}}" title="Прикрепить файл" class="button-link {{classes}}">
 	{{name}}
-	<input class="load-image" hidden accept="image/*" type="file" id="{{id}}" value="{{value}}">
+	<input class="load-image" hidden accept="image/*" type="file" id="{{id}}" value="{{value}}" name="file">
 </label>`;
 class AddFileButton extends _buttonBlockDefault.default {
     constructor(params, template){
@@ -1490,8 +1509,8 @@ class AddFileButton extends _buttonBlockDefault.default {
     insertBlock(element, clean) {
         const insertedBlock = super.insertBlock(element, clean);
         if (insertedBlock.inner) {
-            const inner = insertedBlock.inner;
-            inner.querySelector('input').addEventListener('change', this.props.onChange);
+            const innerInput = insertedBlock.inner.querySelector('input');
+            if (innerInput) innerInput.addEventListener('change', this.props.onChange);
         }
         return insertedBlock;
     }
@@ -1512,11 +1531,9 @@ class Link extends _blockDefault.default {
     }
     insertBlock(element, clean) {
         const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) {
-            const inner = insertedBlock.inner;
-            const wrapper = insertedBlock.wrapper;
-            inner.addEventListener('click', this.props.onClick);
-            wrapper.appendChild(inner);
+        if (insertedBlock.inner) {
+            insertedBlock.inner.addEventListener('click', this.props.onClick);
+            insertedBlock.inner.addEventListener('touchstart', this.props.onClick);
         }
         return insertedBlock;
     }
@@ -1561,7 +1578,7 @@ const chatWrapperTemplate = `
 					<span>Выберите чат</span>
 				</div>
 			</div>
-			<div class="chat-wrapper" id="chatWrapper"></div>
+			<div class="chat-wrapper" id="chatWrapper"><div class="chat" id="chat"></div></div>
 		</div>
 	</div>
 	`;
@@ -1569,11 +1586,6 @@ class Chat extends _blockDefault.default {
     constructor(params, template){
         if (!template) template = chatWrapperTemplate;
         super(params, template);
-    }
-    insertBlock(element, clean) {
-        const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) insertedBlock.wrapper.appendChild(insertedBlock.inner);
-        return insertedBlock;
     }
 }
 exports.default = Chat;
@@ -1605,12 +1617,7 @@ class ChatBlock extends _blockDefault.default {
     }
     insertBlock(element, clean) {
         const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) {
-            const inner = insertedBlock.inner;
-            const wrapper = insertedBlock.wrapper;
-            inner.addEventListener('click', this.props.onClick);
-            wrapper.appendChild(inner);
-        }
+        if (insertedBlock.inner) insertedBlock.inner.addEventListener('click', this.props.onClick);
         return insertedBlock;
     }
 }
@@ -1628,15 +1635,6 @@ class ChatName extends _blockDefault.default {
         if (!template) template = chatNameTemplate;
         super(params, template);
     }
-    insertBlock(element, clean) {
-        const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) {
-            const inner = insertedBlock.inner;
-            const wrapper = insertedBlock.wrapper;
-            wrapper.appendChild(inner);
-        }
-        return insertedBlock;
-    }
 }
 exports.default = ChatName;
 
@@ -1651,15 +1649,6 @@ class FilesName extends _blockDefault.default {
     constructor(params, template){
         if (!template) template = filesNameTemplate;
         super(params, template);
-    }
-    insertBlock(element, clean) {
-        const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) {
-            const inner = insertedBlock.inner;
-            const wrapper = insertedBlock.wrapper;
-            wrapper.appendChild(inner);
-        }
-        return insertedBlock;
     }
 }
 exports.default = FilesName;
@@ -1683,15 +1672,6 @@ class MessageBlock extends _blockDefault.default {
     constructor(params, template){
         if (!template) template = messageBlockTemplate;
         super(params, template);
-    }
-    insertBlock(element, clean) {
-        const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) {
-            const inner = insertedBlock.inner;
-            const wrapper = insertedBlock.wrapper;
-            wrapper.prepend(inner);
-        }
-        return insertedBlock;
     }
 }
 exports.default = MessageBlock;
@@ -1726,11 +1706,6 @@ class Modal extends _blockDefault.default {
         if (!template) template = modalTemplate;
         super(params, template);
     }
-    insertBlock(element, clean) {
-        const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) insertedBlock.wrapper.appendChild(insertedBlock.inner);
-        return insertedBlock;
-    }
 }
 exports.default = Modal;
 
@@ -1744,8 +1719,6 @@ var _buttonBlock = require("../elements/button-block");
 var _buttonBlockDefault = parcelHelpers.interopDefault(_buttonBlock);
 var _errorBlock = require("../elements/error-block");
 var _errorBlockDefault = parcelHelpers.interopDefault(_errorBlock);
-var _authorization = require("./authorization");
-var _authorizationDefault = parcelHelpers.interopDefault(_authorization);
 const documentTitle = "Ошибка";
 const errorBlock = {
     title: 'Ошибка 404',
@@ -1759,22 +1732,28 @@ const errorButtons = [
         classes: 'warning-add warning-button',
         onClick: (event)=>{
             event.preventDefault();
-            _authorizationDefault.default(); //Пока на страницу авторизации
+            errorBackFunction();
         }
     }, 
 ];
-function showError(ErrorParams, errorButtons1) {
-    document.title = documentTitle;
-    new _errorBlockDefault.default(errorBlock).insertBlock("#app", true);
-    errorButtons1.forEach(function(button) {
+let errorBackFunction = function() {
+    window.history.back();
+};
+function showError(InnerErrorParams, innerBackFunction, innerErrorButtons) {
+    if (!InnerErrorParams) InnerErrorParams = errorBlock;
+    if (!innerErrorButtons) innerErrorButtons = errorButtons;
+    if (innerBackFunction) errorBackFunction = innerBackFunction;
+    document.title = documentTitle + ': ' + InnerErrorParams.title;
+    new _errorBlockDefault.default(InnerErrorParams).insertBlock("#app", true);
+    errorButtons.forEach(function(button) {
         new _buttonBlockDefault.default(button).insertBlock(button.element);
     });
 }
 exports.default = function() {
-    showError(errorBlock, errorButtons);
+    showError(errorBlock, errorBackFunction, errorButtons);
 };
 
-},{"../elements/button-block":"kgv9I","../elements/error-block":"gzG1G","./authorization":"lw0Ql","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gzG1G":[function(require,module,exports) {
+},{"../elements/button-block":"kgv9I","../elements/error-block":"gzG1G","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"gzG1G":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 //Блок ошибки
@@ -1800,15 +1779,6 @@ class Error extends _blockDefault.default {
         if (!template) template = errorBlockTemplate;
         super(params, template);
     }
-    insertBlock(element, clean) {
-        const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) {
-            const inner = insertedBlock.inner;
-            const wrapper = insertedBlock.wrapper;
-            wrapper.appendChild(inner);
-        }
-        return insertedBlock;
-    }
 }
 exports.default = Error;
 
@@ -1825,7 +1795,6 @@ var _buttonBlockDefault = parcelHelpers.interopDefault(_buttonBlock);
 var _imageInputBlock = require("../elements/image-input-block");
 var _imageInputBlockDefault = parcelHelpers.interopDefault(_imageInputBlock);
 var _chat = require("./chat");
-var _chatDefault = parcelHelpers.interopDefault(_chat);
 const documentTitle = "Мой профиль";
 const profileForm = {
     title: ''
@@ -1910,9 +1879,9 @@ const changePasswordButtons = [
         onClick: (event)=>{
             event.preventDefault();
             const changePasswordButton = document.getElementById(event.target.getAttribute('id'));
-            let showElement = changePasswordButton.nextElementSibling;
+            let showElement = changePasswordButton.parentElement.nextElementSibling;
             while(showElement){
-                showElement.classList.remove("none-block");
+                showElement.children[0].classList.remove("none-block");
                 showElement = showElement.nextElementSibling;
             }
         }
@@ -1965,7 +1934,7 @@ const profileButtons = [
         onClick: (event)=>{
             event.preventDefault();
             _formBlock.onSubmitForm('.reg-form', function() {
-                _chatDefault.default();
+                _chat.chat();
             });
         }
     },
@@ -1976,12 +1945,13 @@ const profileButtons = [
         classes: 'reg-link',
         onClick: (event)=>{
             event.preventDefault();
-            _chatDefault.default();
+            _chat.chat();
         }
     }, 
 ];
 exports.default = function() {
     document.title = documentTitle;
+    window.history.pushState('', '', 'profile');
     new _formBlockDefault.default(profileForm).insertBlock("#app", true);
     profileImageInputs.forEach(function(imageInput) {
         new _imageInputBlockDefault.default(imageInput).insertBlock(imageInput.element);
@@ -2015,11 +1985,6 @@ class ImageInput extends _blockDefault.default {
     constructor(params, template){
         if (!template) template = inputImageTemplate;
         super(params, template);
-    }
-    insertBlock(element, clean) {
-        const insertedBlock = super.insertBlock(element, clean);
-        if (insertedBlock.inner && insertedBlock.wrapper) insertedBlock.wrapper.appendChild(insertedBlock.inner);
-        return insertedBlock;
     }
 }
 exports.default = ImageInput;

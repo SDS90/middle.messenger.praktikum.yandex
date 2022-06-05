@@ -35,7 +35,6 @@
 		z-index: 11;
 		background-color: $chatBackgroundColor;
 		li{
-			display: block;
 			padding: 8px 5px 8px 0px;
 			border-bottom: 1px solid $chatFirstColor;
 		}
@@ -251,8 +250,11 @@
 		}
 	}
 
-	.chat-message-date,
 	.chat-message-wrapper{
+		padding-bottom: 10px;
+	}
+
+	.chat-message-date{
 		margin-bottom: 10px;
 	}
 

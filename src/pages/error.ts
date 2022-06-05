@@ -33,6 +33,11 @@ export function showError(InnerErrorParams: ErrorParams, innerBackFunction, inne
 		InnerErrorParams = errorBlock;
 	}
 
+	if (window.location.pathname == "/500"){
+		InnerErrorParams.title = "Ошибка 500";
+		InnerErrorParams.errorText = 'Внутренняя ошибка сервера';
+	}
+
 	if (!innerErrorButtons){
 		innerErrorButtons = errorButtons;
 	}

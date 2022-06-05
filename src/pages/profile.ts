@@ -4,7 +4,14 @@ import Form, { FormParams, onSubmitForm } from '../elements/form-block';
 import Input, { InputParams } from '../elements/input-block';
 import Button, { ButtonParams } from '../elements/button-block';
 import ImageInput, { InputImageParams } from '../elements/image-input-block';
-import { chat } from './chat';
+
+import { router } from '../utilities/createRouter';
+
+import AuthentificationController2 from '../controllers/AuthentificationController2';
+import UsersController from '../controllers/UsersController';
+
+
+const resourcesLink = "https://ya-praktikum.tech/api/v2/resources/";
 
 const documentTitle = "Мой профиль";
 
@@ -16,9 +23,22 @@ const profileImageInputs: InputImageParams[] = [
 	{
 		element: '.reg-form-fieldset',
 		id: 'photoImageUpload',
+		imageId: 'userAvatar',
+		name: 'avatar',
 		imageLink: '#',
 		imageAlt: '',
 		imageTitle: '',
+		onChanged: (event) => {
+			event.preventDefault();
+			const form: HTMLFormElement = document.querySelector(".reg-form");
+			if (!form) return;
+
+			const data: FormData = new FormData(form);
+			console.log(data)
+			changeAvatar(data, function(){
+
+			});
+		}
 	}
 ];
 
@@ -34,6 +54,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Неверный формат email',
 		validationType: 'email',
 		classList: '',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -46,6 +67,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Логин должен содержать от 3 до 20 латинских символов, может содержать цифры, но не состоять из них, без пробелов, без спецсимволов',
 		validationType: 'login',
 		classList: '',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -58,6 +80,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Первая буква должна быть заглавной, без пробелов, цифр и спецсимволов, кроме дефиса',
 		validationType: 'name',
 		classList: '',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -70,6 +93,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Первая буква должна быть заглавной, без пробелов, цифр и спецсимволов, кроме дефиса',
 		validationType: 'name',
 		classList: '',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -82,6 +106,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Телефон должен содержать от 10 до 15 символов, состоит из цифр, может начинаться с плюса',
 		validationType: 'phone',
 		classList: '',
+		onBlur: (event) => {}
 	},
 ];
 
@@ -115,6 +140,7 @@ const changePasswordInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: 'none-block',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -127,6 +153,7 @@ const changePasswordInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: 'none-block',
+		onBlur: (event) => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -139,6 +166,7 @@ const changePasswordInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: 'none-block',
+		onBlur: (event) => {}
 	},
 ];
 
@@ -150,8 +178,21 @@ const profileButtons: ButtonParams[] = [
 		classes: 'add-link',
 		onClick: (event) => {
 			event.preventDefault();
-			onSubmitForm('.reg-form', function(){
-				chat();
+			onSubmitForm('.reg-form', function(formData){
+				formData.display_name = formData.first_name;
+				//Изменение данных
+				UsersController.updateUserProfile(formData, function(answer){
+					if (answer){
+						setChangeUserDataError(answer);
+					} else {
+						//Если менялся пароль - также отправляем изменение пароля
+						if (formData.password && formData.old_password){
+							changePassword(formData, redirectToChat);
+						} else {
+							redirectToChat();
+						}
+					}
+				});
 			});
 		},
 	},
@@ -162,15 +203,68 @@ const profileButtons: ButtonParams[] = [
 		classes: 'reg-link',
 		onClick: (event) => {
 			event.preventDefault();
-			chat();
+			window.history.back();
 		},
 	},
 ];
 
+//Перенаправление в чаты
+function redirectToChat(){
+	router.go('/messenger');
+}
+
+//Изменение аватара
+function changeAvatar(formData, callback){
+	UsersController.updateUserPhoto(formData, function(answer){
+		if (answer && answer.avatar){
+			setUserAvatar(answer.avatar)
+		}							
+	});
+}
+
+//Изменение пароля
+function changePassword(formData, callback){
+	UsersController.updateUserPassword({
+		oldPassword: formData.old_password,
+		newPassword: formData.password
+	}, function(answer){
+		if (answer){
+			setChangeUserDataError(answer);
+		} else {
+			callback(answer);
+		}								
+	});
+}
+
+//Сообщение об ошибке
+function setChangeUserDataError(error){
+	document.getElementById("formInfoBlock").textContent = error;
+	getUserData();
+}
+
+//Установить аватар
+function setUserAvatar(url){
+	document.getElementById("userAvatar").setAttribute("src", resourcesLink + url);
+}
+
+//Получение данных пользователя
+function getUserData(){
+	AuthentificationController2.checkAuth(function(answer){
+		for (let key in answer){
+			let element = document.querySelector(".reg-form [name=" + key + "]");
+			if (element){
+				element.setAttribute("value", answer[key]);
+			}
+			if ((key === "avatar") && (answer[key]) ){
+				setUserAvatar(answer[key]);
+			}
+		}
+	})
+}
+
 export default function(): void {
 
 	document.title = documentTitle;
-	window.history.pushState('', '', 'profile');
 
 	new Form(profileForm).insertBlock("#app", true);
 
@@ -193,4 +287,6 @@ export default function(): void {
 	profileButtons.forEach(function(button) {
 		new Button(button).insertBlock(button.element);
 	});
+
+	getUserData();
 }

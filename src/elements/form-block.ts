@@ -10,7 +10,7 @@ const formBlockTemplate = `
 			<form class="reg-form">
 				<fieldset>
 					<div class="reg-form-fieldset"></div>
-					<div class="form-block info-block"></div>
+					<div class="form-block info-block" id="formInfoBlock"></div>
 					<div class="form-block buttons-wrapper"></div>
 				</fieldset>
 			</form>
@@ -37,9 +37,12 @@ export function onSubmitForm(selector: string, callback): void {
 
 	if (validForm(form)){
 		const data: FormData = new FormData(form);
-		console.log(...data);
 		if (callback){
-			callback();
+			let obj : Record<any, any> = {};
+			for (let key of data.keys()) {
+				obj[key] = data.get(key);
+			}
+			callback(obj);
 		}
 	}
 	return;

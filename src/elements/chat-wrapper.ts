@@ -10,7 +10,7 @@ const chatWrapperTemplate = `
 			<!--<form class="search-wrapper">
 				<input class="input-styles search-input" type="text" placeholder="Поиск" name="search">
 			</form> -->
-			<div class="chat-list"></div>
+			<div class="chat-list" id="chatListBlock"></div>
 		</div>
 		<div class="chat-full-block" id="chatFullBlock">
 			<div class="chat-full-name"></div>

@@ -53,7 +53,7 @@ export const validForm = function(form: HTMLFormElement): boolean {
 	}
 
 	formBlocks.forEach(function(formBlock) {
-		const input = formBlock.querySelector("input") || formBlock.querySelector("textarea");
+		const input = formBlock.querySelector("input") || formBlock.querySelector("textarea") || formBlock.querySelector("select");
 		if (input){
 			const errorText = input.getAttribute("data-error-text");
 
@@ -63,7 +63,7 @@ export const validForm = function(form: HTMLFormElement): boolean {
 			if (!input.value && input.getAttribute("data-required") && !formBlock.classList.contains("none-block")){
 				isFormValid = false;
 
-				const errorWrapper = input.parentElement;
+				const errorWrapper = input.closest(".wrapper-element");
 				if (errorWrapper) {
 					errorWrapper.classList.add("error-input");
 

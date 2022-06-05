@@ -40,10 +40,9 @@ class HTTPTransport {
 	};
 
 	request = (url: string, options = {}, timeout = 5000) => {
-
 		return new Promise(function(resolve, reject) {
-			const xhr = new XMLHttpRequest();
-			
+			const xhr = new window.XMLHttpRequest();
+
 			if ((options.method == METHODS.GET) && options.data && (typeof options.data == 'object')){
 				xhr.open(options.method, queryStringify(options.data));
 			} else {
@@ -52,6 +51,10 @@ class HTTPTransport {
 
 			for (let key in options.headers){
 				xhr.setRequestHeader(key, options.headers[key]);
+			}
+
+			if (options.withCredentials) {
+				xhr.withCredentials = true;
 			}
 
 			xhr.onload = function() {
@@ -64,7 +67,7 @@ class HTTPTransport {
 			xhr.timeout = timeout;
 			xhr.ontimeout = reject;
 
-			if (typeof options.data != 'object') {
+			if (options.method === METHODS.GET || !options.data) {
 				xhr.send();
 			} else {
 				xhr.send(options.data);
@@ -72,3 +75,5 @@ class HTTPTransport {
 		});
 	};
 }
+
+export default new HTTPTransport();

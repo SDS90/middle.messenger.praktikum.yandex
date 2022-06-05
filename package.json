@@ -13,7 +13,7 @@
     "start": "node server/server.js",
     "dev": "parcel src/index.pug",
     "build": "parcel build src/index.pug --dist-dir dist --public-url ./",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "./node_modules/.bin/mocha",
     "eslint": "eslint ./src"
   },
   "repository": {
@@ -28,16 +28,30 @@
   },
   "homepage": "https://github.com/SDS90/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
-    "express": "4.17.3"
+    "express": "4.17.3",
+    "jsdom": "^19.0.0"
+  },
+  "directories": {
+    "src": "./src",
+    "test": "./test"
   },
   "devDependencies": {
+    "@babel/core": "^7.18.2",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-typescript": "^7.17.12",
+    "@babel/register": "^7.17.7",
     "@parcel/transformer-pug": "2.5.0",
     "@parcel/transformer-sass": "2.5.0",
+    "@types/chai": "^4.3.1",
+    "@types/mocha": "^9.1.1",
     "@typescript-eslint/eslint-plugin": "5.22.0",
     "@typescript-eslint/parser": "5.22.0",
+    "babel-cli": "^6.26.0",
+    "chai": "^4.3.6",
     "cssnano": "4.1.11",
     "eslint": "8.14.0",
     "eslint-config-airbnb": "19.0.4",
+    "mocha": "^10.0.0",
     "parcel": "2.5.0",
     "postcss": "8.4.12",
     "pug": "3.0.2",

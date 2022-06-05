@@ -7,6 +7,7 @@ const chatNameTemplate = `{{name}}`;
 export type ChatNameData = {
 	element: string,
 	name: string,
+	id: number,
 };
 
 export default class ChatName extends Block {
