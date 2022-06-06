@@ -7,8 +7,8 @@ import ImageInput, { InputImageParams } from '../elements/image-input-block';
 
 import { router } from '../utilities/createRouter';
 
-import AuthentificationController2 from '../controllers/AuthentificationController2';
-import UsersController from '../controllers/UsersController';
+import AuthentificationController2 from '../controllers/authentificationController2';
+import UsersController from '../controllers/usersController';
 
 
 const resourcesLink = "https://ya-praktikum.tech/api/v2/resources/";

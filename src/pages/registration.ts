@@ -4,7 +4,7 @@ import Form, { FormParams, onSubmitForm } from '../elements/form-block';
 import Input, { InputParams } from '../elements/input-block';
 import Button, { ButtonParams } from '../elements/button-block';
 
-import AuthentificationController2 from '../controllers/AuthentificationController2';
+import AuthentificationController2 from '../controllers/authentificationController2';
 
 import { router } from '../utilities/createRouter';
 

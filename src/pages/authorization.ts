@@ -6,7 +6,7 @@ import Button, { ButtonParams } from '../elements/button-block';
 
 import { router } from '../utilities/createRouter';
 
-import AuthentificationController2 from '../controllers/AuthentificationController2';
+import AuthentificationController2 from '../controllers/authentificationController2';
 
 const documentTitle = "Вход";
 
