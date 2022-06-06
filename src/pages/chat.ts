@@ -16,10 +16,10 @@ import MessageBlock, { MessageBlockParams } from '../elements/message-block';
 import Modal, { ModalParams } from '../elements/modal-block';
 import Input, { InputParams } from '../elements/input-block';
 
-import AuthentificationController2 from '../controllers/AuthentificationController2';
-import ChatController from '../controllers/ChatController';
-import UsersController from '../controllers/UsersController';
-import MessengerController from '../controllers/MessengerController';
+import AuthentificationController2 from '../controllers/authentificationController2';
+import ChatController from '../controllers/chatController';
+import UsersController from '../controllers/usersController';
+import MessengerController from '../controllers/messengerController';
 
 import { router } from '../utilities/createRouter';
 

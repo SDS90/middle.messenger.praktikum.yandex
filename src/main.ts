@@ -7,7 +7,7 @@ import registration from './pages/registration';
 import profile from './pages/profile';
 import error from './pages/error';
 
-import AuthentificationController2 from './controllers/AuthentificationController2';
+import AuthentificationController2 from './controllers/authentificationController2';
 
 import { router } from './utilities/createRouter';
 
