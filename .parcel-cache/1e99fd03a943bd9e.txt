@@ -180,7 +180,7 @@
 134C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\@typescript-eslint\typescript-estree\dist\semantic-or-syntactic-errors.js132960720444740577 0
 120C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\@typescript-eslint\scope-manager\dist\scope\BlockScope.d.ts132960720447753301 0
 72C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\is-callable132952847815026865 1
-60C:\praktikum3\middle.messenger.praktikum.yandex\netlify.toml132964066162071225 0
+60C:\praktikum3\middle.messenger.praktikum.yandex\netlify.toml132990170741747517 0
 76C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\flatted\LICENSE132960706202521211 0
 69C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\escalade132952847814546915 1
 112C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\eslint-plugin-import\lib\rules\no-unused-modules.js132960706899365393 0
@@ -254,7 +254,7 @@
 94C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\cssnano-utils\src\getArguments.js132952861156798278 0
 91C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\yaml\browser\dist\parse-cst.js132952861158750278 0
 112C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\eslint-plugin-import\docs\rules\max-dependencies.md132960706900183035 0
-60C:\praktikum3\middle.messenger.praktikum.yandex\package.json132990157498767056 0
+60C:\praktikum3\middle.messenger.praktikum.yandex\package.json132990163285701258 0
 79C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\@typescript-eslint132960720554453801 1
 82C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\negotiator\HISTORY.md132952841744105294 0
 97C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\@parcel\watcher\prebuilds\darwin-x64132952859359028657 1
@@ -534,7 +534,7 @@
 74C:\praktikum3\middle.messenger.praktikum.yandex\dist\index.24048a95.js.map132990157494135957 0
 71C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\is-promise132952843871218027 1
 110C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\lmdb\dependencies\lmdb\libraries\liblmdb\mtest4.c132952859359474982 0
-77C:\praktikum3\middle.messenger.praktikum.yandex\src\utilities\createRouter.ts132984996980278376 0
+77C:\praktikum3\middle.messenger.praktikum.yandex\src\utilities\createRouter.ts132990171977516710 0
 99C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\svgo\plugins\convertEllipseToCircle.js132952847815950739 0
 120C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\postcss-minify-font-values\node_modules\postcss\lib\rule.js132952847816206690 0
 133C:\praktikum3\middle.messenger.praktikum.yandex\node_modules\regenerate-unicode-properties\Binary_Property\Logical_Order_Exception.js132989028165545109 0
