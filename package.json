@@ -31,10 +31,6 @@
     "express": "4.17.3",
     "jsdom": "^19.0.0"
   },
-  "directories": {
-    "src": "./src",
-    "test": "./test"
-  },
   "devDependencies": {
     "@babel/core": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
