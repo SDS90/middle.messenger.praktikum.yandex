@@ -53,9 +53,7 @@ class HTTPTransport {
 				xhr.setRequestHeader(key, options.headers[key]);
 			}
 
-			if (options.withCredentials) {
-				xhr.withCredentials = true;
-			}
+			xhr.withCredentials = true;
 
 			xhr.onload = function() {
 				resolve(xhr);

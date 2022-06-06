@@ -683,9 +683,6 @@ export function chat(): void {
 	new Form(sendForm, '<form class="chat-send-box"></form>').insertBlock(".chat-full-block");
 	new Button(sendButton).insertBlock(".chat-send-box");
 
-	//addFile = new AddFileButton(addFileButton, '');
-	//addFile.insertBlock(".chat-send-box");
-
 	textArea = new Textarea(textareaParams);
 	textArea.insertBlock(".chat-send-box");
 

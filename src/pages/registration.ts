@@ -6,6 +6,8 @@ import Button, { ButtonParams } from '../elements/button-block';
 
 import AuthentificationController2 from '../controllers/AuthentificationController2';
 
+import { router } from '../utilities/createRouter';
+
 const documentTitle = "Регистрация";
 
 const registrationForm: FormParams = {
@@ -128,7 +130,7 @@ const registrationButtons: ButtonParams[] = [
 		classes: 'reg-link',
 		onClick: (event) => {
 			event.preventDefault();
-			window.history.back();
+			router.back();
 		},
 	},
 ];

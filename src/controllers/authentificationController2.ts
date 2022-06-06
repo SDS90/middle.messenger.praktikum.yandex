@@ -64,8 +64,7 @@ class AuthentificationController2 {
 	checkAuth(callback) {
 		return apiAuthorization.checkAuth()
 		.then((answer) => {
-			callback(answer);
-			//afterAuthorizationAnswer(answer, callback, '/messenger');		
+			callback(answer);	
 		})
 		.catch((error) => {
 			console.error(error);

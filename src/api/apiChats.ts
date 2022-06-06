@@ -10,48 +10,38 @@ class APIChats extends APIBase {
 
 	createChat(data: ChatCreateInterface) {
 		return this.post('/', {
-			withCredentials: true,
 			data: JSON.stringify(data),
 		});
 	}
 
 	getChats() {
-		return this.get('/', {
-			withCredentials: true,
-		});
+		return this.get('/', {});
 	}
 
 	deleteChat(chatId: number) {
 		return this.delete('/', {
-			withCredentials: true,
 			data: JSON.stringify({ chatId }),
 		});
 	}
 
 	addUsersToChat(data: ChatAddUserInterface) {
 		return this.put('/users', {
-			withCredentials: true,
 			data: JSON.stringify(data),
 		});
 	}
 
 	deleteUsersFromChat(data: ChatAddUserInterface) {
 		return this.delete('/users', {
-			withCredentials: true,
 			data: JSON.stringify(data),
 		});
 	}
 
 	getChatToken(chatId: number) {
-		return this.post(`/token/${chatId}`, {
-			withCredentials: true,
-		});
+		return this.post(`/token/${chatId}`, {});
 	}
 
 	getChatUsers(chatId: number) {
-		return this.get(`/${chatId}/users`, {
-			withCredentials: true,
-		});
+		return this.get(`/${chatId}/users`, {});
 	}
 }
 
