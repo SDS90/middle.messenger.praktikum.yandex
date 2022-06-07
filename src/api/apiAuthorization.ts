@@ -10,7 +10,6 @@ class APIAuthorization extends APIBase {
 
 	signIn(data: AuthorizationSignInInterface) {
 		return this.post('/signin', {
-			withCredentials: true,
 			data: JSON.stringify(data),
 		});
 	}
@@ -22,15 +21,11 @@ class APIAuthorization extends APIBase {
 	}
 
 	checkAuth() {
-		return this.get('/user', {
-			withCredentials: true,
-		});
+		return this.get('/user', {});
 	}
 
 	signOut() {
-		return this.post('/logout', {
-			withCredentials: true,
-		});
+		return this.post('/logout', {});
 	}
 }
 

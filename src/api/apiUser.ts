@@ -9,37 +9,30 @@ class APIUser extends APIBase {
 	}
 
 	getUserData(userId: number) {
-		return this.get(`/${userId}/`, {
-			withCredentials: true,
-		});
+		return this.get(`/${userId}/`, {});
 	}
 
 	searchUsers (data: UserSearchInterface) {
 		return this.post('/search', {
-			withCredentials: true,
 			data: JSON.stringify(data),
 		});
 	}
 
 	updateUserProfile(data: UserUpdateInterface) {
 		return this.put('/profile', {
-			withCredentials: true,
 			data: JSON.stringify(data),
 		});
 	}
 
 	updateUserPassword(data: UserUpdatePasswordInterface) {
 		return this.put('/password', {
-			withCredentials: true,
 			data: JSON.stringify(data),
 		});
 	}
 
 	updateUserPhoto(data: FormData) {
 		return this.put('/profile/avatar', {
-			headers: {},
-			withCredentials: true,
-			data,
+			data
 		});
 	}
 

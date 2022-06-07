@@ -203,7 +203,7 @@ const profileButtons: ButtonParams[] = [
 		classes: 'reg-link',
 		onClick: (event) => {
 			event.preventDefault();
-			window.history.back();
+			router.back();
 		},
 	},
 ];
