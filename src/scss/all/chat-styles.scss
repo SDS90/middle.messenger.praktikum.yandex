@@ -1,6 +1,7 @@
 .chat-form-page{
 	padding: 5px;
 	height: 100%;	
+	position: relative;
 }
 
 .chat-list-column,
@@ -15,7 +16,9 @@
 	border-right: 1px solid $chatFirstColor;
 
 	.profile-block{
-		margin-bottom: 10px;
+		padding-bottom: 10px;
+		position: relative;
+    	z-index: 200;
 	}
 
 	a{
@@ -32,7 +35,7 @@
 		top: 30px;
 		left: 5px;
 		right: 20px;
-		z-index: 11;
+		z-index: 200;
 		background-color: $chatBackgroundColor;
 		li{
 			padding: 8px 5px 8px 0px;
@@ -151,10 +154,10 @@
 
 	.chat-back-button{
 		position: absolute;
-		z-index: 12;
+		z-index: 212;
 		font-size: 14px;
 		top: 8px;
-		right: 5px;
+		right: 18px;
 		color: $chatSecondColor;
 		text-decoration: none;
 		&:hover{
@@ -180,7 +183,7 @@
 		position: absolute;
 		left: 0px; right: 0px;
 		top: 0px; bottom: 0px;
-		z-index: 15;
+		z-index: 310;
 		background-color: $chatBackgroundColor;
 		display: table;
 		height: 100%;
@@ -304,7 +307,16 @@
 	.chat-list-column{
 		width: 100%;
 		&.chat-full-show{
-			display: none;
+			position: absolute;	
+			height: 100%;
+    		top: 0px;
+			.chat-list{
+				display: none;
+			}
+
+			.profile-block{
+				border-bottom: 1px solid $chatFirstColor;
+			}
 		}
 	}
 	.chat-full-block{
@@ -320,6 +332,12 @@
 
 		&.chat-full-show{
 			display: block;
+			padding-top: 65px;
+
+			.chat-full-name{
+				top: 25px;
+				padding: 5px 95px 10px 0px;
+			}
 		}
 	}
 }
