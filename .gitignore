@@ -4,4 +4,4 @@
 /node_modules
 /.parcel-cache
 
-babel.config.js
+/babel.config.js
