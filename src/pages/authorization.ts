@@ -26,7 +26,7 @@ const authorizationInputs: InputParams[] = [
 		errorText: 'Обязательное поле',
 		validationType: '',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -39,28 +39,31 @@ const authorizationInputs: InputParams[] = [
 		errorText: 'Обязательное поле',
 		validationType: '',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {}
 	},
 ];
 
 const authorizationButtons: ButtonParams[] = [
 	{
 		element: '.buttons-wrapper',
-		id: '',
+		id: 'authorizationButton',
 		name: 'Авторизоваться',
 		classes: 'add-link',
 		onClick: (event) => {
 			event.preventDefault();
-			onSubmitForm('.reg-form', function(formData){
-				AuthentificationController2.signIn(formData, function(error){
-					document.getElementById("formInfoBlock").textContent = error;
+			onSubmitForm('.reg-form', function(formData: any){
+				AuthentificationController2.signIn(formData, function(error: string){
+					let formInfoBlock = document.getElementById("formInfoBlock");
+					if (formInfoBlock){
+						formInfoBlock.textContent = error;
+					}
 				});
 			});			
 		},
 	},
 	{
 		element: '.buttons-wrapper',
-		id: '',
+		id: 'registerPageButton',
 		name: 'Зарегистрироваться',
 		classes: 'reg-link',
 		onClick: (event) => {
@@ -74,13 +77,13 @@ export default function(): void {
 
 	document.title = documentTitle;
 
-	new Form(authorizationForm).insertBlock("#app", true);
+	new Form(authorizationForm, '').insertBlock("#app", true, false);
 
 	authorizationInputs.forEach(function(input) {
-		new Input(input, '').insertBlock(input.element);
+		new Input(input, '').insertBlock(input.element, false);
 	});
 
 	authorizationButtons.forEach(function(button) {
-		new Button(button).insertBlock(button.element);
+		new Button(button, '').insertBlock(button.element, false);
 	});	
 }

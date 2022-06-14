@@ -32,6 +32,6 @@ export default class Chat extends Block {
 		if (!template){
 			template = chatWrapperTemplate;
 		}
-		super(params, template);
+		super(params, template, true);
 	}
 }

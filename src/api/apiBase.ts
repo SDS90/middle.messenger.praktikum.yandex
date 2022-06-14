@@ -1,5 +1,3 @@
-//Базовый API запросов
-
 import HTTPTransport from '../utilities/HTTPTransport';
 
 const defaultHeaders = {
@@ -12,7 +10,7 @@ class APIBase {
 	path: string;
 	headers: Record<string, string>;
 
-	constructor(baseHref: string, path: string, headers: Record<string, string>) {
+	constructor(baseHref: string, path: string) {
 		this.http = HTTPTransport;
 		this.baseHref = baseHref || "https://ya-praktikum.tech/api/v2";
 		this.path = path || '';
@@ -45,22 +43,34 @@ class APIBase {
 		return this.headers;
 	}
 
-	get(endpoint: `/${string}`, options?: {}) {
+	get(endpoint: `/${string}`, options: Record<any, any>) {
+		if (!options){
+			options = {};
+		}
 		return this.http.get(this.getPath() + endpoint, this.handleOptions(options))
 		.then(this.handleResponse);
 	}
 
-	post(endpoint: `/${string}`, options?: {}) {
+	post(endpoint: `/${string}`, options: Record<any, any>) {
+		if (!options){
+			options = {};
+		}
 		return this.http.post(this.getPath() + endpoint, this.handleOptions(options))
 		.then(this.handleResponse);
 	}
 
-	put(endpoint: `/${string}`, options?: {}) {
+	put(endpoint: `/${string}`, options: Record<any, any>) {
+		if (!options){
+			options = {};
+		}
 		return this.http.put(this.getPath() + endpoint, this.handleOptions(options))
 		.then(this.handleResponse);
 	}
 
-	delete(endpoint: `/${string}`, options?: {}) {
+	delete(endpoint: `/${string}`, options: Record<any, any>) {
+		if (!options){
+			options = {};
+		}
 		return this.http.delete(this.getPath() + endpoint, this.handleOptions(options))
 		.then(this.handleResponse);
 	}

@@ -26,7 +26,7 @@ export default class AddFileButton extends Button {
 		super(params, template);
 	}
 
-	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement | Element | null> {
 		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner){
 			const innerInput = insertedBlock.inner.querySelector('input');

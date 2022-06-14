@@ -1,7 +1,6 @@
 //Роутинг
 
 import Route from './route';
-import Block from '../elements/block';
 
 class Router {
 	routes: Route[];
@@ -14,9 +13,6 @@ class Router {
 	instance: Router;
 
 	constructor(rootQuery: string) {
-		if (Router.instance) {
-			return Router.instance;
-		}
 		this.routes = [];
 		this.pathnames = [];
 		this.unprotectedPaths = [];
@@ -30,8 +26,8 @@ class Router {
 		return this.currentRoute;
 	}
 
-	use(pathname: string, block: typeof Block) {
-		const route = new Route(pathname, block, { rootQuery: this._rootQuery });
+	use(pathname: string, block: any) {
+		const route = new Route(pathname, block, { rootQuery: this.rootQuery });
 		this.routes.push(route);
 		this.pathnames.push(pathname);
 		return this;

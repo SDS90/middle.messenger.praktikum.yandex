@@ -5,14 +5,13 @@ import Textarea, { TextareaParams } from '../elements/textarea-block';
 import Button, { ButtonParams } from '../elements/button-block';
 import Select, { SelectParams } from '../elements/select-block';
 import Option from '../elements/option-block';
-import AddFileButton, { AddFileButtonParams } from '../elements/add-file-block';
 import Link, { LinkParams } from '../elements/link-block';
 import MenuLink, { MenuLinkParams } from '../elements/menu-link-block';
 import Chat, { ChatParams } from '../elements/chat-wrapper';
-import ChatBlock, { ChatBlockParams } from '../elements/chat-block';
+import ChatBlock from '../elements/chat-block';
 import ChatName, { ChatNameData } from '../elements/chat-name';
 import FilesName, { FilesNameData } from '../elements/files-name';
-import MessageBlock, { MessageBlockParams } from '../elements/message-block';
+import MessageBlock from '../elements/message-block';
 import Modal, { ModalParams } from '../elements/modal-block';
 import Input, { InputParams } from '../elements/input-block';
 
@@ -54,29 +53,10 @@ const sendButton: ButtonParams = {
 	classes: 'chat-send-button',
 	onClick: (event) => {
 		event.preventDefault();
-		onSubmitForm('.chat-send-box', function(answer){
-			console.log(answer)
+		onSubmitForm('.chat-send-box', function(answer: any){
 			MessengerController.sendMessage(answer.message);
 			reloadChatSender();
 		});
-	},
-};
-
-let addFile: AddFileButton;
-const addFileButton: AddFileButtonParams = {
-	element: '.chat-send-box',
-	id: 'addFileToMessage',
-	name: '📎',
-	classes: 'add-file-button',
-	value: '',
-	onClick: (event) => {
-		return event;
-	},
-	onChange: (event) => {
-		if (event.target && event.target.value){
-			const valueArray: [] = event.target.value.split("\\");
-			filesName.setProps({ name: valueArray[valueArray.length - 1] });
-		}
 	},
 };
 
@@ -91,7 +71,7 @@ const menuLinks: MenuLinkParams[] = [
 		href: '#',
 		onClick: (event) => {
 			event.preventDefault();
-			createChatClick(event);
+			createChatClick();
 		},
 	},
 	{
@@ -115,7 +95,7 @@ const menuLinks: MenuLinkParams[] = [
 		href: '#',
 		onClick: (event) => {
 			event.preventDefault();
-			addUserToChatClick(event);
+			addUserToChatClick();
 		},
 	},
 	{
@@ -127,7 +107,7 @@ const menuLinks: MenuLinkParams[] = [
 		href: '#',
 		onClick: (event) => {
 			event.preventDefault();
-			deleteUserFromChatClick(event);
+			deleteUserFromChatClick();
 		},
 	},
 	{
@@ -153,7 +133,10 @@ const chatProfileLinks: LinkParams[] = [
 		href: '#',
 		onClick: (event) => {
 			event.preventDefault();
-			document.getElementById('menuBlock').classList.toggle('none-block');
+			let menuBlock = document.getElementById('menuBlock');
+			if (menuBlock){
+				menuBlock.classList.toggle('none-block');
+			}
 		},
 	},
 	{
@@ -165,41 +148,6 @@ const chatProfileLinks: LinkParams[] = [
 		onClick: (event) => {
 			event.preventDefault();
 			closeChat();
-		},
-	},
-];
-
-const chatList: ChatBlockParams[] = [
-	{
-		element: '.chat-list',
-		id: '1',
-		photoLink: '',
-		name: 'Андрей Андрейченков',
-		photoAlt: '',
-		fromMeHideClass: 'none-block',
-		text: 'Круто!',
-		time: '15.04.2022 15:31',
-		newMessageHideClass: '',
-		newMessageCount: 10,
-		onClick: (event) => {
-			event.preventDefault();
-			onChatClick(event);
-		},
-	},
-	{
-		element: '.chat-list',
-		id: '2',
-		photoLink: '',
-		name: 'Михалыч',
-		photoAlt: '',
-		fromMeHideClass: '',
-		text: 'Отлично!',
-		time: '15.04.2022 15:31',
-		newMessageHideClass: 'none-block',
-		newMessageCount: 0,
-		onClick: (event) => {
-			event.preventDefault();
-			onChatClick(event);
 		},
 	},
 ];
@@ -230,7 +178,7 @@ const deleteButtons: ButtonParams[] = [
 		onClick: (event) => {
 			event.preventDefault();
 			//Вызывать удаление		
-			ChatController.deleteChat(deleteWarningMessage.chatId, function(answer){
+			ChatController.deleteChat(deleteWarningMessage.chatId, function(){
 				reloadChatList();
 				closeModal("deleteWarningMessage");
 			});
@@ -274,7 +222,7 @@ const createChatInputs: InputParams[] = [
 		errorText: 'Обязательное поле',
 		validationType: '',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {}
 	},
 ];
 
@@ -286,8 +234,8 @@ const createChatButtons: ButtonParams[] = [
 		classes: 'add-link',
 		onClick: (event) => {
 			event.preventDefault();
-			onSubmitForm('#createChatModal .reg-form', function(formData){
-				ChatController.createChat(formData, function(answer){
+			onSubmitForm('#createChatModal .reg-form', function(formData: any){
+				ChatController.createChat(formData, function(){
 					reloadChatList();
 					closeModal("createChatModal");
 				});
@@ -333,14 +281,17 @@ const addUserToChatInputs: InputParams[] = [
 		validationType: '',
 		classList: '',
 		onBlur: (event) => {
-			if (event.target && event.target.value){
-				UsersController.searchUsers({login: event.target.value}, function(answer){
-					document.getElementById("selectUser").textContent = "";
-					answer.forEach(function(user, i) {
+			if (event.target && (event.target as HTMLInputElement).value){
+				UsersController.searchUsers({login: (event.target as HTMLInputElement).value}, function(answer: any){
+					let selectUser = document.getElementById("selectUser");
+					if (selectUser){
+						selectUser.textContent = "";
+					}
+					for (let i = 0; i < answer.length; i++){
 						answer[i].name = answer[i].first_name + " " + answer[i].second_name;
 						answer[i].value = answer[i].id;
-						new Option(answer[i], '').insertBlock("#selectUser");
-					});						
+						new Option(answer[i], '').insertBlock("#selectUser", false, false);
+					}						
 				});
 			}
 		}
@@ -367,12 +318,12 @@ const addUserToChatButtons: ButtonParams[] = [
 		classes: 'add-link',
 		onClick: (event) => {
 			event.preventDefault();
-			onSubmitForm('#addUserToChatModal .reg-form', function(formData){
+			onSubmitForm('#addUserToChatModal .reg-form', function(formData: any){
 				const deleteUserData = {
 					users: [formData.user],
 					chatId: parseInt(chatName.props.id)
 				}
-				ChatController.addUsersToChat(deleteUserData, function(answer){
+				ChatController.addUsersToChat(deleteUserData, function(){
 					reloadChatList();
 					closeModal("addUserToChatModal");
 				});
@@ -425,12 +376,12 @@ const deleteUserFromChatButtons: ButtonParams[] = [
 		classes: 'add-link',
 		onClick: (event) => {
 			event.preventDefault();
-			onSubmitForm('#deleteUserFromChatModal .reg-form', function(formData){
+			onSubmitForm('#deleteUserFromChatModal .reg-form', function(formData: any){
 				const deleteUserData = {
 					users: [formData.user],
 					chatId: parseInt(chatName.props.id)
 				}
-				ChatController.deleteUserChat(deleteUserData, function(answer){
+				ChatController.deleteUserChat(deleteUserData, function(){
 					reloadChatList();
 					closeModal("deleteUserFromChatModal");
 				});
@@ -451,46 +402,46 @@ const deleteUserFromChatButtons: ButtonParams[] = [
 
 
 //Открываем форму создания чата
-function createChatClick(event){
-	new Modal(createChatModal).insertBlock("#app");
-	new Form(createChatForm).insertBlock("#createChatModal", true);
+function createChatClick(){
+	new Modal(createChatModal, '').insertBlock("#app", false, false);
+	new Form(createChatForm, '').insertBlock("#createChatModal", true, false);
 
 	createChatInputs.forEach(function(input) {
-		new Input(input, '').insertBlock(input.element);
+		new Input(input, '').insertBlock(input.element, false);
 	});
 
 	createChatButtons.forEach(function(button) {
-		new Button(button).insertBlock(button.element);
+		new Button(button, '').insertBlock(button.element, false);
 	});
 }
 
 //Открываем форму добавления пользователя в чат
 function addUserToChatClick(){
-	new Modal(addUserToChatModal).insertBlock("#app");
-	new Form(addUserToChatForm).insertBlock("#addUserToChatModal", true);
+	new Modal(addUserToChatModal, '').insertBlock("#app", false, false);
+	new Form(addUserToChatForm, '').insertBlock("#addUserToChatModal", true, false);
 
 	if (chatName && chatName.props){
-		let chatNameId: number = parseInt(chatName.props.id);
 
 		addUserToChatInputs.forEach(function(input) {
-			new Input(input, '').insertBlock(input.element);
+			new Input(input, '').insertBlock(input.element, false);
 		});
 
 		addUserToChatSelect.forEach(function(select) {
-			new Select(select, '').insertBlock(select.element);
+			new Select(select, '').insertBlock(select.element, false);
 		});
 	}
 	
 
 	addUserToChatButtons.forEach(function(button) {
-		new Button(button).insertBlock(button.element);
+		new Button(button, '').insertBlock(button.element, false);
 	});
 }
 
 //Открываем форму удаления пользователя из чата
-function deleteUserFromChatClick(event){
-	new Modal(deleteUserFromChatModal).insertBlock("#app");
-	new Form(deleteUserFromChatForm).insertBlock("#deleteUserFromChatModal", true);
+function deleteUserFromChatClick(){
+	
+	new Modal(deleteUserFromChatModal, '').insertBlock("#app");
+	new Form(deleteUserFromChatForm, '').insertBlock("#deleteUserFromChatModal", true);
 
 	if (chatName && chatName.props){
 		let chatNameId: number = parseInt(chatName.props.id);
@@ -500,45 +451,69 @@ function deleteUserFromChatClick(event){
 		});
 
 		//Получаем список пользователей чата
-		ChatController.getChatUsers(chatNameId, function(answer){
-			answer.forEach(function(user, i) {
+		ChatController.getChatUsers(chatNameId, function(answer: any){
+			for (let i = 0; i < answer.length; i++){
 				answer[i].name = answer[i].first_name + " " + answer[i].second_name;
 				answer[i].value = answer[i].id;
 				new Option(answer[i], '').insertBlock("#selectUser");
-			});
+			}
 		});
 	}	
 
 	deleteUserFromChatButtons.forEach(function(button) {
-		new Button(button).insertBlock(button.element);
+		new Button(button, '').insertBlock(button.element, false);
 	});
 }
 
 //Кликаем по чату - открытие чата, либо удаление
-function onChatClick(event){
+function onChatClick(event: any){
 	const chatBlock: HTMLElement = event.target.closest(".chat-block");
-	const chatWrapper : HTMLElement = document.getElementById("chatWrapper");
+	const chatWrapper = document.getElementById("chatWrapper");
+
 	if (!chatBlock || !chatWrapper) return;
 
 	if (event.target.classList.contains("delete-chat-button") && chatBlock.id){
-		deleteWarningMessage.chatId = chatBlock.id;
-		new Modal(deleteWarningMessage).insertBlock("#app");
+		deleteWarningMessage.chatId = parseInt(chatBlock.id);
+
+		new Modal(deleteWarningMessage, '').insertBlock("#app");
 		deleteButtons.forEach(function(button) {
-			new Button(button, '').insertBlock(button.element);
+			new Button(button, '').insertBlock(button.element, false);
 		});
 	} else {
-		document.getElementById("chatList").classList.toggle('chat-full-show');
-		document.getElementById('menuBlock').classList.add('none-block');
-		document.getElementById("selectChat").classList.add("none-block");
-		document.getElementById("chatFullBlock").classList.toggle('chat-full-show');
-		document.getElementById("deleteUserFromChat").classList.remove("none-block");
-		document.getElementById("addUserToChat").classList.remove("none-block");
+		let menuBlock = document.getElementById("menuBlock");
+		if (menuBlock){
+			menuBlock.classList.add("none-block");
+		}
 
-		document.getElementById("chat").textContent = "";
+		let selectChat = document.getElementById("selectChat");
+		if (selectChat){
+			selectChat.classList.add("none-block");
+		}
+		let chatList = document.getElementById("chatList");
+		if (chatList){
+			chatList.classList.toggle("chat-full-show");
+		}
+		let chatFullBlock = document.getElementById("chatFullBlock");
+		if (chatFullBlock){
+			chatFullBlock.classList.toggle("chat-full-show");
+		}
+		let deleteUserFromChat = document.getElementById("deleteUserFromChat");
+		if (deleteUserFromChat){
+			deleteUserFromChat.classList.remove("none-block");
+		}
+		let addUserToChat = document.getElementById("addUserToChat");
+		if (addUserToChat){
+			addUserToChat.classList.remove("none-block");
+		}
+
+		let chat = document.getElementById("chat");
+		if (chat){
+			chat.textContent = "";
+		}
+
 		chatMessageLastId = 0;
-
 		//Получим токен чата
-		ChatController.getChatToken(chatBlock.id, function(answer){
+		ChatController.getChatToken(parseInt(chatBlock.id), function(answer: any){
 			if (answer && answer.token && chatUserId){
 				MessengerController.connect({
 					userId: chatUserId,
@@ -562,28 +537,34 @@ function reloadChatSender(){
 }
 
 //Закрытие модального окна
-function closeModal(modalId){
-	document.getElementById(modalId).remove();
+function closeModal(modalId: any){
+	let modalDoc = document.getElementById(modalId);
+	if (modalDoc){
+		modalDoc.remove();
+	}
 }
 
 //Обновляем список чатов
 function reloadChatList(){
-	document.getElementById("chatListBlock").textContent = "";
+	let chatListBlock = document.getElementById("chatListBlock");
+	if (chatListBlock){
+		chatListBlock.textContent = "";
+	}
 
-	ChatController.getChats(function(answer){
-		answer.forEach(function(chat, i){
+	ChatController.getChats(function(answer: any){
+		for (let i = 0; i < answer.length; i++){
 			answer[i].element = '.chat-list';
 			answer[i].photoAlt = '';
 			answer[i].newMessageCount = 0;
 			answer[i].fromMeHideClass = 'none-block';
 			answer[i].newMessageHideClass = 'none-block';
-			answer[i].onClick = function(event){
+			answer[i].onClick = function(event: any){
 				event.preventDefault();
 				onChatClick(event);
 			}
 
-			new ChatBlock(answer[i], '').insertBlock(answer[i].element);
-		});
+			new ChatBlock(answer[i], '').insertBlock(answer[i].element, false);
+		}
 	});
 }
 
@@ -592,16 +573,31 @@ function closeChat(){
 	if (chatName){
 		chatName.setProps({ name: '', id: 0 });
 	}
-	document.getElementById("selectChat").classList.remove("none-block");
-	document.getElementById("chatList").classList.remove('chat-full-show');
-	document.getElementById("chatFullBlock").classList.remove('chat-full-show');
-	document.getElementById("deleteUserFromChat").classList.add("none-block");
-	document.getElementById("addUserToChat").classList.add("none-block");
+	let selectChat = document.getElementById("selectChat");
+	if (selectChat){
+		selectChat.classList.remove("none-block");
+	}
+	let chatList = document.getElementById("chatList");
+	if (chatList){
+		chatList.classList.remove("chat-full-show");
+	}
+	let chatFullBlock = document.getElementById("chatFullBlock");
+	if (chatFullBlock){
+		chatFullBlock.classList.remove("chat-full-show");
+	}
+	let deleteUserFromChat = document.getElementById("deleteUserFromChat");
+	if (deleteUserFromChat){
+		deleteUserFromChat.classList.add("none-block");
+	}
+	let addUserToChat = document.getElementById("addUserToChat");
+	if (addUserToChat){
+		addUserToChat.classList.add("none-block");
+	}
 	MessengerController.closeChat();
 }
 
 //Добавление сообщения в чат
-function updateMessageToChat(message, prepend){
+function updateMessageToChat(message: any, prepend: boolean){
 	if (message.id > chatMessageLastId){
 		let toMeClass = '';
 		if (message.user_id == chatUserId){
@@ -620,14 +616,14 @@ function updateMessageToChat(message, prepend){
 
 //Прокрутка в конец чата
 function scrollChatToBottom(){
-	const chatWrapper : HTMLElement = document.getElementById("chatWrapper");
+	const chatWrapper = document.getElementById("chatWrapper");
 	if (chatWrapper){
 		chatWrapper.scrollTop = chatWrapper.scrollHeight;
 	}
 }
 
 //Форматирование даты
-function formatDate(date) {
+function formatDate(date: any) {
 	let dd = date.getDate();
 	if (dd < 10) {
 		dd = '0' + dd;
@@ -642,7 +638,7 @@ function formatDate(date) {
 }
 
 //Добавляем сообщения в чат
-export function updateChatMessage(messages){
+export function updateChatMessage(messages: any){
 	if (Array.isArray(messages)) {
 		if (messages.length) {
 			messages.forEach(function(message){
@@ -659,20 +655,20 @@ export function chat(): void {
 
 	document.title = documentTitle;
 
-	new Chat(chatParams).insertBlock("#app", true);
+	new Chat(chatParams, '').insertBlock("#app", true);
 	
-	chatName = new ChatName(chatNameParams);
+	chatName = new ChatName(chatNameParams, '');
 	chatName.insertBlock('.chat-full-name');
 
 	chatProfileLinks.forEach(function(link) {
-		new Link(link, '').insertBlock(link.element);
+		new Link(link, '').insertBlock(link.element, false);
 	});
 
 	menuLinks.forEach(function(link) {
-		new MenuLink(link, '').insertBlock(link.element);
+		new MenuLink(link, '').insertBlock(link.element, false);
 	});
 
-	AuthentificationController2.checkAuth(function(answer){
+	AuthentificationController2.checkAuth(function(answer: any){
 		if (answer.id){
 			chatUserId = answer.id;
 		}
@@ -681,11 +677,11 @@ export function chat(): void {
 	reloadChatList()
 	
 	new Form(sendForm, '<form class="chat-send-box"></form>').insertBlock(".chat-full-block");
-	new Button(sendButton).insertBlock(".chat-send-box");
+	new Button(sendButton, '').insertBlock(".chat-send-box", false);
 
-	textArea = new Textarea(textareaParams);
-	textArea.insertBlock(".chat-send-box");
+	textArea = new Textarea(textareaParams, '');
+	textArea.insertBlock(".chat-send-box", false);
 
-	filesName = new FilesName(filesNameParams);
-	filesName.insertBlock(".chat-send-box");
+	filesName = new FilesName(filesNameParams, '');
+	filesName.insertBlock(".chat-send-box", false);
 }

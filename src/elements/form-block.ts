@@ -27,12 +27,12 @@ export default class Form extends Block {
 		if (!template){
 			template = formBlockTemplate;
 		}
-		super(params, template);
+		super(params, template, false);
 	}
 }
 
-export function onSubmitForm(selector: string, callback): void {
-	const form: HTMLFormElement = document.querySelector(selector);
+export function onSubmitForm(selector: string, callback: any): void {
+	const form: HTMLFormElement | null = document.querySelector(selector);
 	if (!form) return;
 
 	if (validForm(form)){

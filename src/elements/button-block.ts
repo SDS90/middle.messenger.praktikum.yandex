@@ -18,10 +18,10 @@ export default class Button extends Block {
 		if (!template){
 			template = buttonBlockTemplate;
 		}
-		super(params, template);
+		super(params, template, false);
 	}
 
-	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement | Element | null> {
 		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner){
 			insertedBlock.inner.addEventListener('click', this.props.onClick);

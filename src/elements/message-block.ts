@@ -25,7 +25,7 @@ export default class MessageBlock extends Block {
 		if (!template){
 			template = messageBlockTemplate;
 		}
-		super(params, template);
+		super(params, template, false);
 	}
 
 }

@@ -23,7 +23,7 @@ export default class TemplateGen {
 		return "";
 	}
 
-	changeTemplateKeys(template, tmp, templateRegular): string {
+	changeTemplateKeys(template: any, tmp: any, templateRegular: any): string {
 		const templateKeys = templateRegular.exec(tmp);
 		if (templateKeys && templateKeys[1]){
 			const templateKey = templateKeys[1];

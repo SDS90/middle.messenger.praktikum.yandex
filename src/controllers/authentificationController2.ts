@@ -3,7 +3,7 @@ import { router } from '../utilities/createRouter';
 import { AuthorizationSignInInterface, AuthorizationSignUpInterface } from '../interfaces/interfaces';
 import { showBodyMask, hideBodyMask } from '../utilities/effects';
 
-function afterAuthorizationAnswer(answer, callback, redirect: string){
+function afterAuthorizationAnswer(answer: any, callback: any, redirect: string){
 	if (answer.error && callback){
 		if (answer.reason){
 			callback(answer.reason);
@@ -18,7 +18,7 @@ function afterAuthorizationAnswer(answer, callback, redirect: string){
 	hideBodyMask();
 }
 
-function afterAuthorizationError(error, callback, redirect: string){
+function afterAuthorizationError(error: any, callback: any, redirect: string){
 	if (error.response && callback){
 		callback(error.response);
 	} else {
@@ -28,7 +28,7 @@ function afterAuthorizationError(error, callback, redirect: string){
 }
 
 class AuthentificationController2 {
-	signIn(user: AuthorizationSignInInterface, callback) {
+	signIn(user: AuthorizationSignInInterface, callback: any) {
 		showBodyMask();
 		return apiAuthorization.signIn(user)
 		.then((answer) => {
@@ -40,7 +40,7 @@ class AuthentificationController2 {
 		});
 	}
 
-	signUp(user: AuthorizationSignUpInterface, callback) {
+	signUp(user: AuthorizationSignUpInterface, callback: any) {
 		showBodyMask();
 		return apiAuthorization.signUp(user)
 		.then((answer) => {
@@ -55,15 +55,15 @@ class AuthentificationController2 {
 	signOut() {
 		showBodyMask();
 		return apiAuthorization.signOut()
-		.then((answer) => {
+		.then(() => {
 			hideBodyMask();
 			router.go('/');
 		});
 	}
 
-	checkAuth(callback) {
+	checkAuth(callback: any) {
 		return apiAuthorization.checkAuth()
-		.then((answer) => {
+		.then((answer: any) => {
 			callback(answer);	
 		})
 		.catch((error) => {

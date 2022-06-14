@@ -28,7 +28,7 @@ export type ChatBlockParams = {
 	time: string,
 	newMessageHideClass: string,
 	newMessageCount: number,
-	onClick: (this, event: Event) => void
+	onClick: (this: any, event: Event) => void
 };
 
 export default class ChatBlock extends Block {
@@ -37,10 +37,10 @@ export default class ChatBlock extends Block {
 		if (!template){
 			template = chatBlockTemplate;
 		}
-		super(params, template);
+		super(params, template, false);
 	}
 
-	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement | Element | null> {
 		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner){
 			insertedBlock.inner.addEventListener('click', this.props.onClick);

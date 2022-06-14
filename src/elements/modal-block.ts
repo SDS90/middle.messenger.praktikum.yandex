@@ -35,6 +35,6 @@ export default class Modal extends Block {
 		if (!template){
 			template = modalTemplate;
 		}
-		super(params, template);
+		super(params, template, false);
 	}
 }

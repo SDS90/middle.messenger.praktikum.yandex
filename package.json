@@ -10,9 +10,9 @@
     "npm": "8.5.0"
   },
   "scripts": {
-    "start": "node server/server.js",
-    "dev": "parcel src/index.pug",
-    "build": "parcel build src/index.pug --dist-dir dist --public-url ./",
+    "start": "npx webpack && node server/server.js",
+    "dev": "npx webpack serve",
+    "build": "npx webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
     "eslint": "eslint ./src"
   },
@@ -48,16 +48,24 @@
     "@typescript-eslint/parser": "5.22.0",
     "babel-cli": "^6.26.0",
     "chai": "^4.3.6",
+    "css-loader": "^6.7.1",
     "cssnano": "4.1.11",
     "eslint": "8.14.0",
     "eslint-config-airbnb": "19.0.4",
+    "html-webpack-plugin": "^5.5.0",
+    "mini-css-extract-plugin": "^2.6.0",
     "mocha": "^10.0.0",
     "parcel": "2.5.0",
     "postcss": "8.4.12",
     "pug": "3.0.2",
-    "sass": "1.50.1",
+    "sass": "^1.50.1",
+    "sass-loader": "^13.0.0",
     "stylelint": "14.8.1",
     "stylelint-scss": "4.2.0",
-    "typescript": "4.6.4"
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.6.4",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.2"
   }
 }

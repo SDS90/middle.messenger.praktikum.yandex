@@ -1,4 +1,3 @@
-import { expect } from 'chai';
 import http from './HTTPTransport';
 
 describe('Тестируем HTTPTransport', () => {

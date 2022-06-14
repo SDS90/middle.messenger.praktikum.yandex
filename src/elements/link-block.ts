@@ -22,7 +22,7 @@ export default class Link extends Block {
 		super(params, template, noTagName);
 	}
 
-	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement | Element | null> {
 		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner){
 			insertedBlock.inner.addEventListener('click', this.props.onClick);
