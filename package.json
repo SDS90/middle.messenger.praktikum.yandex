@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/SDS90/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
-    "express": "4.17.3",
+    "express": "^4.17.3",
     "jsdom": "^19.0.0"
   },
   "directories": {
