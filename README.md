@@ -52,6 +52,8 @@
 
 Настроен pre-commit с использованием husky
 
+Проведён аудит пакетов
+
 ## TODO
 
 Отправка файлов в сообщениях
@@ -68,4 +70,4 @@
 - `npm run eslint` - линтинг проекта
 
 
-Ссылка на pull request: https://github.com/SDS90/middle.messenger.praktikum.yandex/pull/4
+Ссылка на pull request: https://github.com/SDS90/middle.messenger.praktikum.yandex/pull/5
