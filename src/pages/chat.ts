@@ -440,14 +440,14 @@ function addUserToChatClick(){
 //Открываем форму удаления пользователя из чата
 function deleteUserFromChatClick(){
 	
-	new Modal(deleteUserFromChatModal, '').insertBlock("#app");
+	new Modal(deleteUserFromChatModal, '').insertBlock("#app", false);
 	new Form(deleteUserFromChatForm, '').insertBlock("#deleteUserFromChatModal", true);
 
 	if (chatName && chatName.props){
 		const chatNameId: number = parseInt(chatName.props.id);
 
 		deleteUserFromChatSelect.forEach(function(select) {
-			new Select(select, '').insertBlock(select.element);
+			new Select(select, '').insertBlock(select.element, false);
 		});
 
 		//Получаем список пользователей чата
@@ -455,7 +455,7 @@ function deleteUserFromChatClick(){
 			for (let i = 0; i < answer.length; i++){
 				answer[i].name = answer[i].first_name + " " + answer[i].second_name;
 				answer[i].value = answer[i].id;
-				new Option(answer[i], '').insertBlock("#selectUser");
+				new Option(answer[i], '').insertBlock("#selectUser", false);
 			}
 		});
 	}	
@@ -475,7 +475,7 @@ function onChatClick(event: any){
 	if (event.target.classList.contains("delete-chat-button") && chatBlock.id){
 		deleteWarningMessage.chatId = parseInt(chatBlock.id);
 
-		new Modal(deleteWarningMessage, '').insertBlock("#app");
+		new Modal(deleteWarningMessage, '').insertBlock("#app", false);
 		deleteButtons.forEach(function(button) {
 			new Button(button, '').insertBlock(button.element, false);
 		});
@@ -658,7 +658,7 @@ export function chat(): void {
 	new Chat(chatParams, '').insertBlock("#app", true);
 	
 	chatName = new ChatName(chatNameParams, '');
-	chatName.insertBlock('.chat-full-name');
+	chatName.insertBlock('.chat-full-name', false);
 
 	chatProfileLinks.forEach(function(link) {
 		new Link(link, '').insertBlock(link.element, false);
@@ -676,7 +676,7 @@ export function chat(): void {
 
 	reloadChatList();
 	
-	new Form(sendForm, '<form class="chat-send-box"></form>').insertBlock(".chat-full-block");
+	new Form(sendForm, '<form class="chat-send-box"></form>').insertBlock(".chat-full-block", false);
 	new Button(sendButton, '').insertBlock(".chat-send-box", false);
 
 	textArea = new Textarea(textareaParams, '');

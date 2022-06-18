@@ -33,7 +33,10 @@
   },
   "homepage": "https://github.com/SDS90/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
+    "@babel/cli": "^7.17.10",
+    "braces": "^2.3.1",
     "express": "^4.17.3",
+    "glob-parent": "^6.0.2",
     "jsdom": "^19.0.0"
   },
   "directories": {
@@ -51,10 +54,9 @@
     "@types/mocha": "^9.1.1",
     "@typescript-eslint/eslint-plugin": "5.22.0",
     "@typescript-eslint/parser": "5.22.0",
-    "babel-cli": "^6.26.0",
     "chai": "^4.3.6",
     "css-loader": "^6.7.1",
-    "cssnano": "4.1.11",
+    "cssnano": "^5.1.12",
     "eslint": "8.14.0",
     "eslint-config-airbnb": "19.0.4",
     "html-webpack-plugin": "^5.5.0",

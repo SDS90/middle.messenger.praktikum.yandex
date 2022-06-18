@@ -164,7 +164,7 @@ export default class Block {
 		return;
 	}
 
-	insertBlock(element: string, clean: boolean, prepend: boolean): Record<string, HTMLElement | Element | null> {
+	insertBlock(element: string, clean: boolean, prepend: boolean = false): Record<string, HTMLElement | Element | null> {
 		let inner = this.getContent() as Element;
 		const wrapper = document.querySelector(element);
 		if (!inner || !wrapper) return {};

@@ -50,6 +50,17 @@
 
 Создан деплой на Heroku: https://yandexchat.herokuapp.com
 
+Настроен pre-commit с использованием husky
+
+## TODO
+
+Отправка файлов в сообщениях
+
+Аватары у сообщений чата
+
+Поиск чатов
+
+
 ## Команды:
 - `npm run start` - проект запускается на http://localhost:3000
 - `npm run build` - сборка проекта
