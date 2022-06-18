@@ -6,16 +6,14 @@ describe('Тестируем HTTPTransport', () => {
 			data: { 
 				postId: 1
 			}
-		})
-		.then(({ response }) => {
+		}).then(({ response }) => {
 			const [{ postId }] = JSON.parse(response) || [];
 			if (postId === 1) {
 				done();
 			} else {
 				done(new Error('Ошибка'));
 			}
-		})
-		.catch(function(){ done() });
+		}).catch(function(){ done(); });
 	});
 
 	it('Post запрос', (done) => {
@@ -28,15 +26,13 @@ describe('Тестируем HTTPTransport', () => {
 				body: 'bar',
 				userId: 1,
 			}),
-		})
-		.then(({ response }) => {
+		}).then(({ response }) => {
 			const { title } = JSON.parse(response) || {};
 			if (title === 'foo') {
 				done();
 			} else {
 				done(new Error('Ошибка'));
 			}
-		})
-		.catch(function(){ done() });
+		}).catch(function(){ done(); });
 	});
 });

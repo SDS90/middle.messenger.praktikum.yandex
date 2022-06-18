@@ -26,6 +26,11 @@
   "bugs": {
     "url": "https://github.com/SDS90/middle.messenger.praktikum.yandex/issues"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run eslint"
+    }
+  },
   "homepage": "https://github.com/SDS90/middle.messenger.praktikum.yandex#readme",
   "dependencies": {
     "express": "^4.17.3",
@@ -53,6 +58,7 @@
     "eslint": "8.14.0",
     "eslint-config-airbnb": "19.0.4",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.1",
     "mini-css-extract-plugin": "^2.6.0",
     "mocha": "^10.0.0",
     "parcel": "2.5.0",

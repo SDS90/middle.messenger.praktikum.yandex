@@ -25,4 +25,4 @@ AuthentificationController2.checkAuth(function(answer: any){
 	if (answer.id && (pathArray[1] == "")){
 		router.go('/messenger');
 	}
-})
+});

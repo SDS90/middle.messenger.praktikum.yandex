@@ -27,10 +27,10 @@ export type SelectParams = {
 
 export default class Select extends Block {
 
-	constructor(params: SelectParams, template: string, noTagName: boolean = true) {
+	constructor(params: SelectParams, template: string, noTagName: boolean) {
 		if (!template){
 			template = selectBlockTemplate;
 		}
-		super(params, template, noTagName);
+		super(params, template, true);
 	}
 }

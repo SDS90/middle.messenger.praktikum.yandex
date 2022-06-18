@@ -38,8 +38,8 @@ export function onSubmitForm(selector: string, callback: any): void {
 	if (validForm(form)){
 		const data: FormData = new FormData(form);
 		if (callback){
-			let obj : Record<any, any> = {};
-			for (let key of data.keys()) {
+			const obj : Record<any, any> = {};
+			for (const key of data.keys()) {
 				obj[key] = data.get(key);
 			}
 			callback(obj);

@@ -51,7 +51,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Неверный формат email',
 		validationType: 'email',
 		classList: '',
-		onBlur: () => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -64,7 +64,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Логин должен содержать от 3 до 20 латинских символов, может содержать цифры, но не состоять из них, без пробелов, без спецсимволов',
 		validationType: 'login',
 		classList: '',
-		onBlur: () => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -77,7 +77,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Первая буква должна быть заглавной, без пробелов, цифр и спецсимволов, кроме дефиса',
 		validationType: 'name',
 		classList: '',
-		onBlur: () => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -90,7 +90,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Первая буква должна быть заглавной, без пробелов, цифр и спецсимволов, кроме дефиса',
 		validationType: 'name',
 		classList: '',
-		onBlur: () => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -103,7 +103,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Телефон должен содержать от 10 до 15 символов, состоит из цифр, может начинаться с плюса',
 		validationType: 'phone',
 		classList: '',
-		onBlur: () => {}
+		onBlur: () => {return;}
 	},
 ];
 
@@ -141,7 +141,7 @@ const changePasswordInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: 'none-block',
-		onBlur: () => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -154,7 +154,7 @@ const changePasswordInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: 'none-block',
-		onBlur: () => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -167,7 +167,7 @@ const changePasswordInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: 'none-block',
-		onBlur: () => {}
+		onBlur: () => {return;}
 	},
 ];
 
@@ -218,7 +218,7 @@ function redirectToChat(){
 function changeAvatar(formData: any){
 	UsersController.updateUserPhoto(formData, function(answer: any){
 		if (answer && answer.avatar){
-			setUserAvatar(answer.avatar)
+			setUserAvatar(answer.avatar);
 		}							
 	});
 }
@@ -239,7 +239,7 @@ function changePassword(formData: any, callback: any){
 
 //Сообщение об ошибке
 function setChangeUserDataError(error: any){
-	let formInfoBlock = document.getElementById("formInfoBlock");
+	const formInfoBlock = document.getElementById("formInfoBlock");
 	if (formInfoBlock){
 		formInfoBlock.textContent = error;
 	}
@@ -248,7 +248,7 @@ function setChangeUserDataError(error: any){
 
 //Установить аватар
 function setUserAvatar(url: any){
-	let userAvatar = document.getElementById("userAvatar");
+	const userAvatar = document.getElementById("userAvatar");
 	if (userAvatar){
 		userAvatar.setAttribute("src", resourcesLink + url);
 	}
@@ -257,16 +257,16 @@ function setUserAvatar(url: any){
 //Получение данных пользователя
 function getUserData(){
 	AuthentificationController2.checkAuth(function(answer: any){
-		for (let key in answer){
-			let element = document.querySelector(".reg-form [name=" + key + "]");
+		for (const key in answer){
+			const element = document.querySelector(".reg-form [name=" + key + "]");
 			if (element){
 				element.setAttribute("value", answer[key]);
 			}
-			if ((key === "avatar") && (answer[key]) ){
+			if ((key === "avatar") && (answer[key])){
 				setUserAvatar(answer[key]);
 			}
 		}
-	})
+	});
 }
 
 export default function(): void {

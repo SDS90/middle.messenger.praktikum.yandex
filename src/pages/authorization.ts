@@ -26,7 +26,7 @@ const authorizationInputs: InputParams[] = [
 		errorText: 'Обязательное поле',
 		validationType: '',
 		classList: '',
-		onBlur: () => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -39,7 +39,7 @@ const authorizationInputs: InputParams[] = [
 		errorText: 'Обязательное поле',
 		validationType: '',
 		classList: '',
-		onBlur: () => {}
+		onBlur: () => {return;}
 	},
 ];
 
@@ -53,7 +53,7 @@ const authorizationButtons: ButtonParams[] = [
 			event.preventDefault();
 			onSubmitForm('.reg-form', function(formData: any){
 				AuthentificationController2.signIn(formData, function(error: string){
-					let formInfoBlock = document.getElementById("formInfoBlock");
+					const formInfoBlock = document.getElementById("formInfoBlock");
 					if (formInfoBlock){
 						formInfoBlock.textContent = error;
 					}

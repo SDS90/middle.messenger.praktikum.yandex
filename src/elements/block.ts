@@ -17,7 +17,7 @@ export default class Block {
 		FLOW_RENDER: "flow:render"
 	};
 
-	noTagName: boolean = false;
+	noTagName: boolean;
 	template: string;
 	props: PropsType;
 	eventBus: () => EventBus;
@@ -115,7 +115,7 @@ export default class Block {
 		return new Proxy(props, {
 			get(target, property: any) {
 				if (typeof target[property] == 'function'){
-					let targetProperty: any = target[property]
+					const targetProperty: any = target[property];
 					if (targetProperty){
 						return targetProperty.bind(target);
 					}
@@ -153,23 +153,25 @@ export default class Block {
 	}
 
 	destroy() {
-		let element = this._element;
+		const element = this._element;
 		if (element){
 			element.remove();
 		}
 		this.onDestroy();
 	}
 
-	onDestroy() {}
+	onDestroy() {
+		return;
+	}
 
-	insertBlock(element: string, clean: boolean = false, prepend: boolean = false): Record<string, HTMLElement | Element | null> {
-		let inner = this.getContent() as Element; //new DOMParser().parseFromString(new TemplateGen(this.template).generateTemplate(this.props), "text/html").getElementsByTagName("body")[0].childNodes[0];
+	insertBlock(element: string, clean: boolean, prepend: boolean): Record<string, HTMLElement | Element | null> {
+		let inner = this.getContent() as Element;
 		const wrapper = document.querySelector(element);
 		if (!inner || !wrapper) return {};
 		if (this.noTagName){
 			inner = inner.children[0];
 		}
-		for (let el of wrapper.querySelectorAll('[id=""]')) {
+		for (const el of wrapper.querySelectorAll('[id=""]')) {
 			el.removeAttribute('id');
 		}
 		if (clean){

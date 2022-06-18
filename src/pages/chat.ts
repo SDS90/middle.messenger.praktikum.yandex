@@ -30,7 +30,7 @@ let chatMessageLastId: number = 0;
 
 const chatParams: ChatParams = {};
 let chatName: ChatName;
-let chatNameParams: ChatNameData = {
+const chatNameParams: ChatNameData = {
 	element: '.chat-full-name',
 	name: '',
 	id: 0
@@ -133,7 +133,7 @@ const chatProfileLinks: LinkParams[] = [
 		href: '#',
 		onClick: (event) => {
 			event.preventDefault();
-			let menuBlock = document.getElementById('menuBlock');
+			const menuBlock = document.getElementById('menuBlock');
 			if (menuBlock){
 				menuBlock.classList.toggle('none-block');
 			}
@@ -162,7 +162,7 @@ const textareaParams: TextareaParams = {
 
 //Форма удаления чата
 
-let deleteWarningMessage: ModalParams = {
+const deleteWarningMessage: ModalParams = {
 	element: '#app',
 	id: 'deleteWarningMessage',
 	chatId: 0,
@@ -222,7 +222,7 @@ const createChatInputs: InputParams[] = [
 		errorText: 'Обязательное поле',
 		validationType: '',
 		classList: '',
-		onBlur: () => {}
+		onBlur: () => {return;}
 	},
 ];
 
@@ -283,7 +283,7 @@ const addUserToChatInputs: InputParams[] = [
 		onBlur: (event) => {
 			if (event.target && (event.target as HTMLInputElement).value){
 				UsersController.searchUsers({login: (event.target as HTMLInputElement).value}, function(answer: any){
-					let selectUser = document.getElementById("selectUser");
+					const selectUser = document.getElementById("selectUser");
 					if (selectUser){
 						selectUser.textContent = "";
 					}
@@ -322,7 +322,7 @@ const addUserToChatButtons: ButtonParams[] = [
 				const deleteUserData = {
 					users: [formData.user],
 					chatId: parseInt(chatName.props.id)
-				}
+				};
 				ChatController.addUsersToChat(deleteUserData, function(){
 					reloadChatList();
 					closeModal("addUserToChatModal");
@@ -380,7 +380,7 @@ const deleteUserFromChatButtons: ButtonParams[] = [
 				const deleteUserData = {
 					users: [formData.user],
 					chatId: parseInt(chatName.props.id)
-				}
+				};
 				ChatController.deleteUserChat(deleteUserData, function(){
 					reloadChatList();
 					closeModal("deleteUserFromChatModal");
@@ -444,7 +444,7 @@ function deleteUserFromChatClick(){
 	new Form(deleteUserFromChatForm, '').insertBlock("#deleteUserFromChatModal", true);
 
 	if (chatName && chatName.props){
-		let chatNameId: number = parseInt(chatName.props.id);
+		const chatNameId: number = parseInt(chatName.props.id);
 
 		deleteUserFromChatSelect.forEach(function(select) {
 			new Select(select, '').insertBlock(select.element);
@@ -480,33 +480,33 @@ function onChatClick(event: any){
 			new Button(button, '').insertBlock(button.element, false);
 		});
 	} else {
-		let menuBlock = document.getElementById("menuBlock");
+		const menuBlock = document.getElementById("menuBlock");
 		if (menuBlock){
 			menuBlock.classList.add("none-block");
 		}
 
-		let selectChat = document.getElementById("selectChat");
+		const selectChat = document.getElementById("selectChat");
 		if (selectChat){
 			selectChat.classList.add("none-block");
 		}
-		let chatList = document.getElementById("chatList");
+		const chatList = document.getElementById("chatList");
 		if (chatList){
 			chatList.classList.toggle("chat-full-show");
 		}
-		let chatFullBlock = document.getElementById("chatFullBlock");
+		const chatFullBlock = document.getElementById("chatFullBlock");
 		if (chatFullBlock){
 			chatFullBlock.classList.toggle("chat-full-show");
 		}
-		let deleteUserFromChat = document.getElementById("deleteUserFromChat");
+		const deleteUserFromChat = document.getElementById("deleteUserFromChat");
 		if (deleteUserFromChat){
 			deleteUserFromChat.classList.remove("none-block");
 		}
-		let addUserToChat = document.getElementById("addUserToChat");
+		const addUserToChat = document.getElementById("addUserToChat");
 		if (addUserToChat){
 			addUserToChat.classList.remove("none-block");
 		}
 
-		let chat = document.getElementById("chat");
+		const chat = document.getElementById("chat");
 		if (chat){
 			chat.textContent = "";
 		}
@@ -538,7 +538,7 @@ function reloadChatSender(){
 
 //Закрытие модального окна
 function closeModal(modalId: any){
-	let modalDoc = document.getElementById(modalId);
+	const modalDoc = document.getElementById(modalId);
 	if (modalDoc){
 		modalDoc.remove();
 	}
@@ -546,7 +546,7 @@ function closeModal(modalId: any){
 
 //Обновляем список чатов
 function reloadChatList(){
-	let chatListBlock = document.getElementById("chatListBlock");
+	const chatListBlock = document.getElementById("chatListBlock");
 	if (chatListBlock){
 		chatListBlock.textContent = "";
 	}
@@ -561,7 +561,7 @@ function reloadChatList(){
 			answer[i].onClick = function(event: any){
 				event.preventDefault();
 				onChatClick(event);
-			}
+			};
 
 			new ChatBlock(answer[i], '').insertBlock(answer[i].element, false);
 		}
@@ -573,23 +573,23 @@ function closeChat(){
 	if (chatName){
 		chatName.setProps({ name: '', id: 0 });
 	}
-	let selectChat = document.getElementById("selectChat");
+	const selectChat = document.getElementById("selectChat");
 	if (selectChat){
 		selectChat.classList.remove("none-block");
 	}
-	let chatList = document.getElementById("chatList");
+	const chatList = document.getElementById("chatList");
 	if (chatList){
 		chatList.classList.remove("chat-full-show");
 	}
-	let chatFullBlock = document.getElementById("chatFullBlock");
+	const chatFullBlock = document.getElementById("chatFullBlock");
 	if (chatFullBlock){
 		chatFullBlock.classList.remove("chat-full-show");
 	}
-	let deleteUserFromChat = document.getElementById("deleteUserFromChat");
+	const deleteUserFromChat = document.getElementById("deleteUserFromChat");
 	if (deleteUserFromChat){
 		deleteUserFromChat.classList.add("none-block");
 	}
-	let addUserToChat = document.getElementById("addUserToChat");
+	const addUserToChat = document.getElementById("addUserToChat");
 	if (addUserToChat){
 		addUserToChat.classList.add("none-block");
 	}
@@ -647,7 +647,7 @@ export function updateChatMessage(messages: any){
 		}
 	}
 	if ((typeof messages === 'object') && (messages.type === 'message')) {
-		updateMessageToChat(messages, false)
+		updateMessageToChat(messages, false);
 	}
 }
 
@@ -672,9 +672,9 @@ export function chat(): void {
 		if (answer.id){
 			chatUserId = answer.id;
 		}
-	})
+	});
 
-	reloadChatList()
+	reloadChatList();
 	
 	new Form(sendForm, '<form class="chat-send-box"></form>').insertBlock(".chat-full-block");
 	new Button(sendButton, '').insertBlock(".chat-send-box", false);

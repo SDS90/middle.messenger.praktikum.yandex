@@ -15,7 +15,7 @@ export type LinkParams = {
 
 export default class Link extends Block {
 
-	constructor(params: LinkParams, template: string, noTagName: boolean = false) {
+	constructor(params: LinkParams, template: string, noTagName: boolean) {
 		if (!template){
 			template = linkBlockTemplate;
 		}

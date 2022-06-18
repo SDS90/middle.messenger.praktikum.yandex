@@ -19,7 +19,7 @@ class Router {
 		this.history = window.history;
 		this.currentRoute = null;
 		this.rootQuery = rootQuery;
-		this.onRouteCallback = () => {};
+		this.onRouteCallback = () => {return;};
 	}
 
 	getCurrentRoute() {

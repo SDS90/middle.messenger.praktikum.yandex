@@ -1,9 +1,8 @@
-FROM ubuntu
-#WORKDIR /usr/src/app
-COPY package*.json ./
-
-RUN apt update && apt install -y nodejs && apt install -y npm && npm install
-COPY dist ./dist/
-COPY server ./
+FROM node:16
+ENV TZ=Europe/Moscow
+RUN apt update && apt install -y nodejs && apt install -y npm
+WORKDIR /usr/app
+COPY ./ /usr/app
+RUN npm i
 EXPOSE 3000
-CMD node ./server.js
+CMD [ "node", "server/server.js" ]

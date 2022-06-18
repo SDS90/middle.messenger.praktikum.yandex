@@ -40,7 +40,7 @@ class Route {
 	}
 
 	render() {
-		this.block = new this.blockClass({}, '', false );
+		this.block = new this.blockClass({}, '', false);
 		renderBlock(this.props.rootQuery, this.block);
 		return;
 	}

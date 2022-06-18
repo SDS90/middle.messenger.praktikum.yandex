@@ -10,6 +10,10 @@ const errorBlock: ErrorParams = {
 	errorText: 'Страница не найдена'
 };
 
+let errorBackFunction = function(): void{
+	window.history.back();
+};
+
 const errorButtons: ButtonParams[] = [
 	{
 		element: '.warning-buttons-wrapper',
@@ -22,10 +26,6 @@ const errorButtons: ButtonParams[] = [
 		},
 	},
 ];
-
-let errorBackFunction = function(): void{
-	window.history.back();
-}
 
 export function showError(InnerErrorParams: ErrorParams, innerBackFunction: any, innerErrorButtons: ButtonParams[]): void {
 	if (!InnerErrorParams){

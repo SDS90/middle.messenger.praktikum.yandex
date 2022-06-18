@@ -31,46 +31,46 @@ class AuthentificationController2 {
 	signIn(user: AuthorizationSignInInterface, callback: any) {
 		showBodyMask();
 		return apiAuthorization.signIn(user)
-		.then((answer) => {
-			afterAuthorizationAnswer(answer, callback, '/messenger');
-		})
-		.catch((error) => {
-			console.error(error);
-			afterAuthorizationError(error, callback, '/500');
-		});
+			.then((answer) => {
+				afterAuthorizationAnswer(answer, callback, '/messenger');
+			})
+			.catch((error) => {
+				console.error(error);
+				afterAuthorizationError(error, callback, '/500');
+			});
 	}
 
 	signUp(user: AuthorizationSignUpInterface, callback: any) {
 		showBodyMask();
 		return apiAuthorization.signUp(user)
-		.then((answer) => {
-			afterAuthorizationAnswer(answer, callback, '/messenger');
-		})
-		.catch((error) => {
-			console.error(error);
-			afterAuthorizationError(error, callback, '/500');
-		});
+			.then((answer) => {
+				afterAuthorizationAnswer(answer, callback, '/messenger');
+			})
+			.catch((error) => {
+				console.error(error);
+				afterAuthorizationError(error, callback, '/500');
+			});
 	}
 
 	signOut() {
 		showBodyMask();
 		return apiAuthorization.signOut()
-		.then(() => {
-			hideBodyMask();
-			router.go('/');
-		});
+			.then(() => {
+				hideBodyMask();
+				router.go('/');
+			});
 	}
 
 	checkAuth(callback: any) {
 		return apiAuthorization.checkAuth()
-		.then((answer: any) => {
-			callback(answer);	
-		})
-		.catch((error) => {
-			console.error(error);
-			hideBodyMask();
-			router.go('/');
-		});
+			.then((answer: any) => {
+				callback(answer);	
+			})
+			.catch((error) => {
+				console.error(error);
+				hideBodyMask();
+				router.go('/');
+			});
 	}
 }
 

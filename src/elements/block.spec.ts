@@ -71,7 +71,7 @@ describe('Тестирование кнопки', () => {
 	});
 
 	it('Текст кнопки', () => {
-		let buttonContent = button.getContent()
+		const buttonContent = button.getContent();
 		if (buttonContent){
 			expect(buttonContent.textContent).to.eq('buttonName');
 		}

@@ -9,12 +9,12 @@ const METHODS = {
 function queryStringify(data: any) {
 	let result: string = "";
 	if (typeof data == 'object') {
-		result = ""
-		for (let key in data){
+		result = "";
+		for (const key in data){
 			if (result == ""){
-				result = result + "?"
+				result = result + "?";
 			} else {
-				result = result + "&"
+				result = result + "&";
 			}
 			result = result + key + "=" + data[key];
 		}
@@ -53,7 +53,7 @@ class HTTPTransport {
 				xhr.open(options.method, url);
 			}
 
-			for (let key in options.headers){
+			for (const key in options.headers){
 				xhr.setRequestHeader(key, options.headers[key]);
 			}
 

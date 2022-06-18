@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import Router from './router';
 
-function MainPage(){}
-function ContactPage(){}
-function NewsPage(){}
+function MainPage(){return;}
+function ContactPage(){return;}
+function NewsPage(){return;}
 
 describe('Тестируем роутер', () => {
 	const router = new Router('#app');
