@@ -17,24 +17,24 @@ export default class Block {
 		FLOW_RENDER: "flow:render"
 	};
 
-	noTagName: false;
+	noTagName: boolean;
 	template: string;
 	props: PropsType;
 	eventBus: () => EventBus;
 
-	_element: HTMLElement = null;
+	_element: HTMLElement | null = null;
 	_meta: BlockMetaData;
 
-	constructor(params: Record<string, unknown>, template: string, noTagName: boolean, tagName = 'div') {
+	constructor(props: Record<string, unknown>, template: string, noTagName: boolean, tagName = 'div') {
 		this.template = template;
 		this.noTagName = noTagName;
 		const eventBus = new EventBus();
 		this._meta = {
 			tagName,
-			params
+			props
 		};
 
-		this.props = this._makePropsProxy(params);
+		this.props = this._makePropsProxy(props);
 
 		this.eventBus = () => eventBus;
 
@@ -42,7 +42,7 @@ export default class Block {
 		eventBus.emit(Block.EVENTS.INIT);
 	}
 
-	_registerEvents(eventBus) {
+	_registerEvents(eventBus: any) {
 		eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
 		eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
 		eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
@@ -79,18 +79,18 @@ export default class Block {
 		this._render();
 	}
 
-	componentDidUpdate(oldProps: Record<string, unknown>, newProps: Record<string, unknown>,): boolean {
-		return true;
+	componentDidUpdate(oldProps: Record<string, unknown>, newProps: Record<string, unknown>): boolean {
+		return oldProps !== newProps;
 	}
 
-	setProps = nextProps => {
+	setProps = (nextProps: any) => {
 		if (!nextProps) {
 			return;
 		}
 		Object.assign(this.props, nextProps);
 	};
 
-	get element(): HTMLElement {
+	get element(): HTMLElement | null {
 		return this._element;
 	}
 
@@ -105,7 +105,7 @@ export default class Block {
 		return new TemplateGen(this.template).generateTemplate(this.props);
 	}
 
-	getContent(): HTMLElement {
+	getContent(): HTMLElement | null {
 		return this.element;
 	}
 
@@ -113,14 +113,17 @@ export default class Block {
 		const self = this;
 
 		return new Proxy(props, {
-			get(target, property) {
+			get(target, property: any) {
 				if (typeof target[property] == 'function'){
-					return target[property].bind(target);
+					const targetProperty: any = target[property];
+					if (targetProperty){
+						return targetProperty.bind(target);
+					}
 				} else {
 					return target[property];
 				}
 			},
-			set(target, property, value) {
+			set(target, property: any, value) {
 				target[property] = value;
 				self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
 				return true;
@@ -131,7 +134,7 @@ export default class Block {
 		});
 	}
 
-	_createDocumentElement(tagName): HTMLElement {
+	_createDocumentElement(tagName: any): HTMLElement {
 		return document.createElement(tagName);
 	}
 
@@ -150,20 +153,25 @@ export default class Block {
 	}
 
 	destroy() {
-		this._element.remove();
+		const element = this._element;
+		if (element){
+			element.remove();
+		}
 		this.onDestroy();
 	}
 
-	onDestroy() {}
+	onDestroy() {
+		return;
+	}
 
-	insertBlock(element: string, clean: boolean, prepend: boolean): Record<string, HTMLElement> {
-		let inner = this.getContent(); //new DOMParser().parseFromString(new TemplateGen(this.template).generateTemplate(this.props), "text/html").getElementsByTagName("body")[0].childNodes[0];
+	insertBlock(element: string, clean: boolean, prepend: boolean = false): Record<string, HTMLElement | Element | null> {
+		let inner = this.getContent() as Element;
 		const wrapper = document.querySelector(element);
 		if (!inner || !wrapper) return {};
 		if (this.noTagName){
 			inner = inner.children[0];
 		}
-		for (let el of wrapper.querySelectorAll('[id=""]')) {
+		for (const el of wrapper.querySelectorAll('[id=""]')) {
 			el.removeAttribute('id');
 		}
 		if (clean){

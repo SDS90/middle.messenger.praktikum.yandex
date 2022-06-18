@@ -42,6 +42,27 @@
 
 Реализованы тесты для шаблонизатора, роутера, компонента, модуля отправки запросов.
 
+## По итогам четвёртого спринта (ветка spint_4) переработана сборка:
+
+Сборка переведена с Parcel на Webpack
+
+Создан Dockerfile для создания docker-контейнера
+
+Создан деплой на Heroku: https://yandexchat.herokuapp.com
+
+Настроен pre-commit с использованием husky
+
+Проведён аудит пакетов
+
+## TODO
+
+Отправка файлов в сообщениях
+
+Аватары у сообщений чата
+
+Поиск чатов
+
+
 ## Команды:
 - `npm run start` - проект запускается на http://localhost:3000
 - `npm run build` - сборка проекта
@@ -49,4 +70,4 @@
 - `npm run eslint` - линтинг проекта
 
 
-Ссылка на pull request: https://github.com/SDS90/middle.messenger.praktikum.yandex/pull/4
+Ссылка на pull request: https://github.com/SDS90/middle.messenger.praktikum.yandex/pull/5

@@ -30,7 +30,7 @@ export default class Error extends Block {
 		if (!template){
 			template = errorBlockTemplate;
 		}
-		super(params, template);
+		super(params, template, false);
 	}
 
 }

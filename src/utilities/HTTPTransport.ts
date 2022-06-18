@@ -6,15 +6,15 @@ const METHODS = {
 	DELETE: 'DELETE',
 };
 
-function queryStringify(data) {
+function queryStringify(data: any) {
 	let result: string = "";
 	if (typeof data == 'object') {
-		result = ""
-		for (let key in data){
+		result = "";
+		for (const key in data){
 			if (result == ""){
-				result = result + "?"
+				result = result + "?";
 			} else {
-				result = result + "&"
+				result = result + "&";
 			}
 			result = result + key + "=" + data[key];
 		}
@@ -23,25 +23,29 @@ function queryStringify(data) {
 }
  
 class HTTPTransport {
-	get = (url: string, options = {}) => {
+	get = (url: string, options: any) => {
 		return this.request(url, {...options, method: METHODS.GET}, options.timeout);
 	};
 
-	post = (url: string, options = {}) => {
+	post = (url: string, options: any) => {
 		return this.request(url, {...options, method: METHODS.POST}, options.timeout);
 	};
 
-	put = (url: string, options = {}) => {
+	put = (url: string, options: any) => {
 		return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
 	};
 
-	delete = (url: string, options = {}) => { 
+	delete = (url: string, options: any) => { 
 		return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
 	};
 
-	request = (url: string, options = {}, timeout = 5000) => {
+	request = (url: string, options: any, timeout = 5000) => {
 		return new Promise(function(resolve, reject) {
 			const xhr = new window.XMLHttpRequest();
+
+			if (!options){
+				options = {};
+			}
 
 			if ((options.method == METHODS.GET) && options.data && (typeof options.data == 'object')){
 				xhr.open(options.method, queryStringify(options.data));
@@ -49,7 +53,7 @@ class HTTPTransport {
 				xhr.open(options.method, url);
 			}
 
-			for (let key in options.headers){
+			for (const key in options.headers){
 				xhr.setRequestHeader(key, options.headers[key]);
 			}
 

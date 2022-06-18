@@ -5,7 +5,6 @@
 	"rules": {
 		"indent": [2, "tab"],
 		"max-len": [2, 200],
-		"@typescript-eslint/no-unused-vars": 2,
 		"no-var": "error",
 	    "semi": "error",
 	    "@typescript-eslint/no-this-alias": [
@@ -17,9 +16,11 @@
 		  ],
 	    "no-multi-spaces": "error",
 	    "space-in-parens": "error",
+	    "@typescript-eslint/no-unused-vars": "off",
+	    "@typescript-eslint/no-inferrable-types": "off",
 	    "no-multiple-empty-lines": "error",
 	    "prefer-const": "error",
 	    "no-useless-escape": "off",
-	    "no-use-before-define": ["error", { "functions": false, "classes": true, "variables": true }]
+	    "no-use-before-define": ["off", { "functions": false, "classes": true, "variables": true }]
 	}
 } 

@@ -7,7 +7,6 @@ function isEqual(lhs: string, rhs: string) {
 function renderBlock(query: string, block: Block) {
 	const root = document.querySelector(query);
 	if (root && block) {
-		//root.append(block.getContent());
 		return root;
 	}
 	return false;
@@ -41,14 +40,9 @@ class Route {
 	}
 
 	render() {
-		//if (!this.block) {
-			this.block = new this.blockClass();
-			renderBlock(this.props.rootQuery, this.block);
-			return;
-		//}
-		//if (this.block && (Object.keys(this.block).length)) {
-		//	this.block.show();
-		//}
+		this.block = new this.blockClass({}, '', false);
+		renderBlock(this.props.rootQuery, this.block);
+		return;
 	}
 }
 

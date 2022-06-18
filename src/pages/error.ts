@@ -2,13 +2,16 @@
 
 import Button, { ButtonParams } from '../elements/button-block';
 import Error, { ErrorParams } from '../elements/error-block';
-import authorization from './authorization';
 
 const documentTitle = "Ошибка";
 
 const errorBlock: ErrorParams = {
 	title: 'Ошибка 404',
 	errorText: 'Страница не найдена'
+};
+
+let errorBackFunction = function(): void{
+	window.history.back();
 };
 
 const errorButtons: ButtonParams[] = [
@@ -24,11 +27,7 @@ const errorButtons: ButtonParams[] = [
 	},
 ];
 
-let errorBackFunction = function(): void{
-	window.history.back();
-}
-
-export function showError(InnerErrorParams: ErrorParams, innerBackFunction, innerErrorButtons: ButtonParams): void {
+export function showError(InnerErrorParams: ErrorParams, innerBackFunction: any, innerErrorButtons: ButtonParams[]): void {
 	if (!InnerErrorParams){
 		InnerErrorParams = errorBlock;
 	}
@@ -48,10 +47,10 @@ export function showError(InnerErrorParams: ErrorParams, innerBackFunction, inne
 
 	document.title = documentTitle + ': ' + InnerErrorParams.title;
 
-	new Error(InnerErrorParams).insertBlock("#app", true);
+	new Error(InnerErrorParams, '').insertBlock("#app", true);
 
 	errorButtons.forEach(function(button) {
-		new Button(button).insertBlock(button.element);
+		new Button(button, '').insertBlock(button.element, false);
 	});
 }
 

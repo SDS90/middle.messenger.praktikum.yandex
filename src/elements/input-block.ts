@@ -34,13 +34,13 @@ export default class Input extends Block {
 		if (!template){
 			template = inputBlockTemplate;
 		}
-		super(params, template);
+		super(params, template, false);
 	}
 
-	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement | Element | null> {
 
 		const insertedBlock = super.insertBlock(element, clean);
-		const $this = this;
+		const $this = this.props;
 		if (insertedBlock.inner){
 			const input = insertedBlock.inner.querySelector('input');
 			if (input){
@@ -49,7 +49,7 @@ export default class Input extends Block {
 				});
 				input.addEventListener('blur', function(event){
 					this.classList.remove('focus-input');
-					$this.props.onBlur(event);
+					$this.onBlur(event);
 					validValue(this);
 				});
 			}			

@@ -1,7 +1,13 @@
 export function showBodyMask(){
-	document.getElementById("app").classList.add('loading');
+	const app = document.getElementById("app");
+	if (app){
+		app.classList.add('loading');
+	}	
 }
 
 export function hideBodyMask(){
-	document.getElementById("app").classList.remove('loading');
+	const app = document.getElementById("app");
+	if (app){
+		app.classList.remove('loading');
+	}
 }

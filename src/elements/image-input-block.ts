@@ -25,18 +25,18 @@ export default class ImageInput extends Block {
 		if (!template){
 			template = inputImageTemplate;
 		}
-		super(params, template);
+		super(params, template, false);
 	}
 
-	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement | Element | null> {
 
 		const insertedBlock = super.insertBlock(element, clean);
-		const $this = this;
+		const $this = this.props;
 		if (insertedBlock.inner){
 			const input = insertedBlock.inner.querySelector('input');
 			if (input){
 				input.addEventListener('change', function(event){
-					$this.props.onChanged(event);
+					$this.onChanged(event);
 				});
 			}			
 		}

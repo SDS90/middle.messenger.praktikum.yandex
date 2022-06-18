@@ -30,14 +30,11 @@ const profileImageInputs: InputImageParams[] = [
 		imageTitle: '',
 		onChanged: (event) => {
 			event.preventDefault();
-			const form: HTMLFormElement = document.querySelector(".reg-form");
+			const form: any = document.querySelector(".reg-form");
 			if (!form) return;
 
 			const data: FormData = new FormData(form);
-			console.log(data)
-			changeAvatar(data, function(){
-
-			});
+			changeAvatar(data);
 		}
 	}
 ];
@@ -54,7 +51,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Неверный формат email',
 		validationType: 'email',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -67,7 +64,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Логин должен содержать от 3 до 20 латинских символов, может содержать цифры, но не состоять из них, без пробелов, без спецсимволов',
 		validationType: 'login',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -80,7 +77,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Первая буква должна быть заглавной, без пробелов, цифр и спецсимволов, кроме дефиса',
 		validationType: 'name',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -93,7 +90,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Первая буква должна быть заглавной, без пробелов, цифр и спецсимволов, кроме дефиса',
 		validationType: 'name',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -106,7 +103,7 @@ const profileInputs: InputParams[] = [
 		errorText: 'Телефон должен содержать от 10 до 15 символов, состоит из цифр, может начинаться с плюса',
 		validationType: 'phone',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 ];
 
@@ -118,11 +115,15 @@ const changePasswordButtons: ButtonParams[] = [
 		classes: 'reg-link',
 		onClick: (event) => {
 			event.preventDefault();
-			const changePasswordButton = document.getElementById(event.target.getAttribute('id'));
-			let showElement = changePasswordButton.parentElement.nextElementSibling;
-			while (showElement){
-				showElement.children[0].classList.remove("none-block");
-				showElement = showElement.nextElementSibling;
+			if (event.target){
+				const changePasswordButton = document.getElementById((event.target as HTMLElement).id);
+				if (changePasswordButton && changePasswordButton.parentElement){
+					let showElement = changePasswordButton.parentElement.nextElementSibling;
+					while (showElement){
+						showElement.children[0].classList.remove("none-block");
+						showElement = showElement.nextElementSibling;
+					}
+				}
 			}
 		},
 	},
@@ -140,7 +141,7 @@ const changePasswordInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: 'none-block',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -153,7 +154,7 @@ const changePasswordInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: 'none-block',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -166,22 +167,22 @@ const changePasswordInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: 'none-block',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 ];
 
 const profileButtons: ButtonParams[] = [
 	{
 		element: '.buttons-wrapper',
-		id: '',
+		id: 'sendChangedData',
 		name: 'Изменить данные',
 		classes: 'add-link',
 		onClick: (event) => {
 			event.preventDefault();
-			onSubmitForm('.reg-form', function(formData){
+			onSubmitForm('.reg-form', function(formData: any){
 				formData.display_name = formData.first_name;
 				//Изменение данных
-				UsersController.updateUserProfile(formData, function(answer){
+				UsersController.updateUserProfile(formData, function(answer: any){
 					if (answer){
 						setChangeUserDataError(answer);
 					} else {
@@ -198,7 +199,7 @@ const profileButtons: ButtonParams[] = [
 	},
 	{
 		element: '.buttons-wrapper',
-		id: '',
+		id: 'backFromProfile',
 		name: 'Назад',
 		classes: 'reg-link',
 		onClick: (event) => {
@@ -214,20 +215,20 @@ function redirectToChat(){
 }
 
 //Изменение аватара
-function changeAvatar(formData, callback){
-	UsersController.updateUserPhoto(formData, function(answer){
+function changeAvatar(formData: any){
+	UsersController.updateUserPhoto(formData, function(answer: any){
 		if (answer && answer.avatar){
-			setUserAvatar(answer.avatar)
+			setUserAvatar(answer.avatar);
 		}							
 	});
 }
 
 //Изменение пароля
-function changePassword(formData, callback){
+function changePassword(formData: any, callback: any){
 	UsersController.updateUserPassword({
 		oldPassword: formData.old_password,
 		newPassword: formData.password
-	}, function(answer){
+	}, function(answer: any){
 		if (answer){
 			setChangeUserDataError(answer);
 		} else {
@@ -237,55 +238,61 @@ function changePassword(formData, callback){
 }
 
 //Сообщение об ошибке
-function setChangeUserDataError(error){
-	document.getElementById("formInfoBlock").textContent = error;
+function setChangeUserDataError(error: any){
+	const formInfoBlock = document.getElementById("formInfoBlock");
+	if (formInfoBlock){
+		formInfoBlock.textContent = error;
+	}
 	getUserData();
 }
 
 //Установить аватар
-function setUserAvatar(url){
-	document.getElementById("userAvatar").setAttribute("src", resourcesLink + url);
+function setUserAvatar(url: any){
+	const userAvatar = document.getElementById("userAvatar");
+	if (userAvatar){
+		userAvatar.setAttribute("src", resourcesLink + url);
+	}
 }
 
 //Получение данных пользователя
 function getUserData(){
-	AuthentificationController2.checkAuth(function(answer){
-		for (let key in answer){
-			let element = document.querySelector(".reg-form [name=" + key + "]");
+	AuthentificationController2.checkAuth(function(answer: any){
+		for (const key in answer){
+			const element = document.querySelector(".reg-form [name=" + key + "]");
 			if (element){
 				element.setAttribute("value", answer[key]);
 			}
-			if ((key === "avatar") && (answer[key]) ){
+			if ((key === "avatar") && (answer[key])){
 				setUserAvatar(answer[key]);
 			}
 		}
-	})
+	});
 }
 
 export default function(): void {
 
 	document.title = documentTitle;
 
-	new Form(profileForm).insertBlock("#app", true);
+	new Form(profileForm, '').insertBlock("#app", true);
 
 	profileImageInputs.forEach(function(imageInput) {
-		new ImageInput(imageInput).insertBlock(imageInput.element);
+		new ImageInput(imageInput, '').insertBlock(imageInput.element, false);
 	});
 
 	profileInputs.forEach(function(input) {
-		new Input(input).insertBlock(input.element);
+		new Input(input, '').insertBlock(input.element, false);
 	});
 
 	changePasswordButtons.forEach(function(button) {
-		new Button(button).insertBlock(button.element);
+		new Button(button, '').insertBlock(button.element, false);
 	});
 
 	changePasswordInputs.forEach(function(input) {
-		new Input(input).insertBlock(input.element);
+		new Input(input, '').insertBlock(input.element, false);
 	});
 
 	profileButtons.forEach(function(button) {
-		new Button(button).insertBlock(button.element);
+		new Button(button, '').insertBlock(button.element, false);
 	});
 
 	getUserData();

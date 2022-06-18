@@ -20,9 +20,9 @@ router
 	.use('*', error)
 	.start();
 
-AuthentificationController2.checkAuth(function(answer){
+AuthentificationController2.checkAuth(function(answer: any){
 	const pathArray = window.location.pathname.split("/");
 	if (answer.id && (pathArray[1] == "")){
 		router.go('/messenger');
 	}
-})
+});

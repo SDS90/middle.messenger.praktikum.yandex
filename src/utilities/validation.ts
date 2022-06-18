@@ -13,30 +13,37 @@ const validationRegex: Record<string, RegExp> = {
 	password: new RegExp(/^((?=.*?[A-Z])(?=.*?[0-9])\S{8,40})\S$/),
 };
 
-export const validValue = function(input: HTMLInputElement): boolean {
+
+export const validValue = function(input: HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement): boolean {
 	const validationType = input.getAttribute("data-validation-type");
 	const errorText = input.getAttribute("data-error-text");
 
 	const value = input.value;
-	const regex = validationRegex[validationType];
+	let regex: any;
+	if (validationType){
+		regex = validationRegex[validationType];
+	}	
 
 	const inputWrapper = input.parentElement;
-	const errorBlock = inputWrapper.querySelector(".error-text-block");
 
-	if (regex && !regex.test(value)) {
-		inputWrapper.classList.add('error-input');
+	if (inputWrapper){
+		const errorBlock = inputWrapper.querySelector(".error-text-block");
+
+		if (regex && !regex.test(value)) {
+			inputWrapper.classList.add('error-input');
+			if (errorBlock){
+				if (errorText){
+					errorBlock.textContent = errorText;
+				} else {
+					errorBlock.textContent = defaultValidationErrorMessage;
+				}
+			}		
+			return false;
+		}
+		inputWrapper.classList.remove('error-input');
 		if (errorBlock){
-			if (errorText){
-				errorBlock.textContent = errorText;
-			} else {
-				errorBlock.textContent = defaultValidationErrorMessage;
-			}
-		}		
-		return false;
-	}
-	inputWrapper.classList.remove('error-input');
-	if (errorBlock){
-		errorBlock.textContent = "";
+			errorBlock.textContent = "";
+		}
 	}
 	return true;
 };
@@ -67,11 +74,14 @@ export const validForm = function(form: HTMLFormElement): boolean {
 				if (errorWrapper) {
 					errorWrapper.classList.add("error-input");
 
-					if (errorText){
-						errorWrapper.querySelector(".error-text-block").textContent = errorText;
-					} else {
-						errorWrapper.querySelector(".error-text-block").textContent = requiredFieldMessage;
-					}
+					const errorTextBlock = errorWrapper.querySelector(".error-text-block");
+					if (errorTextBlock){
+						if (errorText){
+							errorTextBlock.textContent = errorText;
+						} else {
+							errorTextBlock.textContent = requiredFieldMessage;
+						}
+					}					
 				}
 
 				if (infoBlock){
@@ -89,7 +99,9 @@ export const validForm = function(form: HTMLFormElement): boolean {
 	
 	if (password && repeatPassword && (password != repeatPassword)){
 		isFormValid = false;
-		infoBlock.textContent = repeatPasswordErrorMessage;
+		if (infoBlock){
+			infoBlock.textContent = repeatPasswordErrorMessage;
+		}		
 	}	
 	return isFormValid;
 };

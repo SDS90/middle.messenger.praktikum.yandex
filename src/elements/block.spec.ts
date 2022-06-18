@@ -23,7 +23,7 @@ describe('Тестирование кнопки', () => {
 			if (!template){
 				template = buttonBlockTemplate;
 			}
-			super(params, template);
+			super(params, template, false);
 		}
 
 		init(): void {
@@ -71,7 +71,10 @@ describe('Тестирование кнопки', () => {
 	});
 
 	it('Текст кнопки', () => {
-		expect(button.getContent().textContent).to.eq('buttonName');
+		const buttonContent = button.getContent();
+		if (buttonContent){
+			expect(buttonContent.textContent).to.eq('buttonName');
+		}
 	});
 
 	it('Изменим пропсы', () => {

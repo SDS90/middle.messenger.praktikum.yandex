@@ -26,7 +26,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Неверный формат email',
 		validationType: 'email',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -39,7 +39,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Логин должен содержать от 3 до 20 латинских символов, может содержать цифры, но не состоять из них, без пробелов, без спецсимволов',
 		validationType: 'login',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -52,7 +52,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Первая буква должна быть заглавной, без пробелов, цифр и спецсимволов, кроме дефиса',
 		validationType: 'name',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -65,7 +65,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Первая буква должна быть заглавной, без пробелов, цифр и спецсимволов, кроме дефиса',
 		validationType: 'name',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -78,7 +78,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Телефон должен содержать от 10 до 15 символов, состоит из цифр, может начинаться с плюса',
 		validationType: 'phone',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -91,7 +91,7 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 	{
 		element: '.reg-form-fieldset',
@@ -104,28 +104,31 @@ const registrationInputs: InputParams[] = [
 		errorText: 'Пароль должен содержать от 8 до 40 символов, обязательно хотя бы одну заглавную букву и цифру',
 		validationType: 'password',
 		classList: '',
-		onBlur: (event) => {}
+		onBlur: () => {return;}
 	},
 ];
 
 const registrationButtons: ButtonParams[] = [
 	{
 		element: '.buttons-wrapper',
-		id: '',
+		id: 'registerUserButton',
 		name: 'Зарегистрироваться',
 		classes: 'add-link',
 		onClick: (event) => {
 			event.preventDefault();
-			onSubmitForm('.reg-form', function(formData){
-				AuthentificationController2.signUp(formData, function(error){
-					document.getElementById("formInfoBlock").textContent = error;
+			onSubmitForm('.reg-form', function(formData: any){
+				AuthentificationController2.signUp(formData, function(error: any){
+					const formInfoBlock = document.getElementById("formInfoBlock");
+					if (formInfoBlock){
+						formInfoBlock.textContent = error;
+					}
 				});
 			});
 		},
 	},
 	{
 		element: '.buttons-wrapper',
-		id: '',
+		id: 'backToAuthorizationButton',
 		name: 'Назад',
 		classes: 'reg-link',
 		onClick: (event) => {
@@ -139,13 +142,13 @@ export default function(): void {
 
 	document.title = documentTitle;
 
-	new Form(registrationForm).insertBlock("#app", true);
+	new Form(registrationForm, '').insertBlock("#app", true);
 
 	registrationInputs.forEach(function(input) {
-		new Input(input).insertBlock(input.element);
+		new Input(input, '').insertBlock(input.element, false);
 	});
 
 	registrationButtons.forEach(function(button) {
-		new Button(button).insertBlock(button.element);
+		new Button(button, '').insertBlock(button.element, false);
 	});
 }

@@ -16,6 +16,6 @@ export default class ChatName extends Block {
 		if (!template){
 			template = chatNameTemplate;
 		}
-		super(params, template);
+		super(params, template, false);
 	}
 }

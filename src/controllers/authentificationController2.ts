@@ -3,7 +3,7 @@ import { router } from '../utilities/createRouter';
 import { AuthorizationSignInInterface, AuthorizationSignUpInterface } from '../interfaces/interfaces';
 import { showBodyMask, hideBodyMask } from '../utilities/effects';
 
-function afterAuthorizationAnswer(answer, callback, redirect: string){
+function afterAuthorizationAnswer(answer: any, callback: any, redirect: string){
 	if (answer.error && callback){
 		if (answer.reason){
 			callback(answer.reason);
@@ -18,7 +18,7 @@ function afterAuthorizationAnswer(answer, callback, redirect: string){
 	hideBodyMask();
 }
 
-function afterAuthorizationError(error, callback, redirect: string){
+function afterAuthorizationError(error: any, callback: any, redirect: string){
 	if (error.response && callback){
 		callback(error.response);
 	} else {
@@ -28,49 +28,49 @@ function afterAuthorizationError(error, callback, redirect: string){
 }
 
 class AuthentificationController2 {
-	signIn(user: AuthorizationSignInInterface, callback) {
+	signIn(user: AuthorizationSignInInterface, callback: any) {
 		showBodyMask();
 		return apiAuthorization.signIn(user)
-		.then((answer) => {
-			afterAuthorizationAnswer(answer, callback, '/messenger');
-		})
-		.catch((error) => {
-			console.error(error);
-			afterAuthorizationError(error, callback, '/500');
-		});
+			.then((answer) => {
+				afterAuthorizationAnswer(answer, callback, '/messenger');
+			})
+			.catch((error) => {
+				console.error(error);
+				afterAuthorizationError(error, callback, '/500');
+			});
 	}
 
-	signUp(user: AuthorizationSignUpInterface, callback) {
+	signUp(user: AuthorizationSignUpInterface, callback: any) {
 		showBodyMask();
 		return apiAuthorization.signUp(user)
-		.then((answer) => {
-			afterAuthorizationAnswer(answer, callback, '/messenger');
-		})
-		.catch((error) => {
-			console.error(error);
-			afterAuthorizationError(error, callback, '/500');
-		});
+			.then((answer) => {
+				afterAuthorizationAnswer(answer, callback, '/messenger');
+			})
+			.catch((error) => {
+				console.error(error);
+				afterAuthorizationError(error, callback, '/500');
+			});
 	}
 
 	signOut() {
 		showBodyMask();
 		return apiAuthorization.signOut()
-		.then((answer) => {
-			hideBodyMask();
-			router.go('/');
-		});
+			.then(() => {
+				hideBodyMask();
+				router.go('/');
+			});
 	}
 
-	checkAuth(callback) {
+	checkAuth(callback: any) {
 		return apiAuthorization.checkAuth()
-		.then((answer) => {
-			callback(answer);	
-		})
-		.catch((error) => {
-			console.error(error);
-			hideBodyMask();
-			router.go('/');
-		});
+			.then((answer: any) => {
+				callback(answer);	
+			})
+			.catch((error) => {
+				console.error(error);
+				hideBodyMask();
+				router.go('/');
+			});
 	}
 }
 

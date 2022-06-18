@@ -15,6 +15,6 @@ export default class FilesName extends Block {
 		if (!template){
 			template = filesNameTemplate;
 		}
-		super(params, template);
+		super(params, template, false);
 	}
 }

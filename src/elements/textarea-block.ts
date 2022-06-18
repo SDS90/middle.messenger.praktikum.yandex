@@ -23,10 +23,10 @@ export default class Textarea extends Block {
 		if (!template){
 			template = textareaBlockTemplate;
 		}
-		super(params, template);
+		super(params, template, false);
 	}
 
-	insertBlock(element: string, clean: boolean): Record<string, HTMLElement> {
+	insertBlock(element: string, clean: boolean): Record<string, HTMLElement | Element | null> {
 
 		const insertedBlock = super.insertBlock(element, clean);
 		if (insertedBlock.inner){
