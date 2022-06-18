@@ -42,7 +42,7 @@ class Router {
 
 	start() {
 		window.onpopstate = () => {
-		const pathname = this.hasRoute(window.location.pathname);
+			const pathname = this.hasRoute(window.location.pathname);
 			this.onRoute(pathname);
 		};
 		const pathname = this.hasRoute(window.location.pathname);
